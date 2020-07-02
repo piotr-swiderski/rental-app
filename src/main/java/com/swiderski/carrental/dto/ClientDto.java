@@ -1,35 +1,21 @@
-package com.swiderski.carrental.entity;
+package com.swiderski.carrental.dto;
 
-import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity(name = "client_table")
-public class Client {
+public class ClientDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "surname", nullable = false)
     private String surname;
-
-    @Column(name = "email", nullable = false)
     private String email;
-
-    @Column(name = "money")
     private double money;
+    private Set<CarDto> rentCars;
 
-    @OneToMany
-    private Set<Car> rentCars;
-
-    public Client() {
+    public ClientDto() {
     }
 
-    public Client(long id, String name, String surname, String email, double money, Set<Car> rentCars) {
+    public ClientDto(long id, String name, String surname, String email, double money, Set<CarDto> rentCars) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -78,11 +64,11 @@ public class Client {
         this.money = money;
     }
 
-    public Set<Car> getRentCars() {
+    public Set<CarDto> getRentCars() {
         return rentCars;
     }
 
-    public void setRentCars(Set<Car> rentCars) {
+    public void setRentCars(Set<CarDto> rentCars) {
         this.rentCars = rentCars;
     }
 
@@ -90,13 +76,13 @@ public class Client {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
-        return id == client.id &&
-                Double.compare(client.money, money) == 0 &&
-                Objects.equals(name, client.name) &&
-                Objects.equals(surname, client.surname) &&
-                Objects.equals(email, client.email) &&
-                Objects.equals(rentCars, client.rentCars);
+        ClientDto clientDto = (ClientDto) o;
+        return id == clientDto.id &&
+                Double.compare(clientDto.money, money) == 0 &&
+                Objects.equals(name, clientDto.name) &&
+                Objects.equals(surname, clientDto.surname) &&
+                Objects.equals(email, clientDto.email) &&
+                Objects.equals(rentCars, clientDto.rentCars);
     }
 
     @Override
@@ -105,5 +91,3 @@ public class Client {
     }
 
 }
-
-

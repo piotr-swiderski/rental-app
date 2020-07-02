@@ -1,32 +1,19 @@
-package com.swiderski.carrental.entity;
+package com.swiderski.carrental.dto;
 
-import javax.persistence.*;
+import com.swiderski.carrental.entity.EngineType;
 import java.util.Objects;
 
-@Entity(name = "car_table")
-public class Car {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "car_id")
+public class CarDto {
+
     private long id;
-
-    @Column(name = "brand")
     private String brand;
-
-    @Column(name = "colour")
     private String colour;
-
-    @Enumerated(EnumType.ORDINAL)
     private EngineType engineType;
-
-    @Column(name = "production_year")
     private int productionYear;
-
-    @Column(name = "cost")
     private double cost;
 
-    public Car(long id, String brand, String colour, EngineType engineType, int productionYear, double cost) {
+    public CarDto(long id, String brand, String colour, EngineType engineType, int productionYear, double cost) {
         this.id = id;
         this.brand = brand;
         this.colour = colour;
@@ -35,7 +22,7 @@ public class Car {
         this.cost = cost;
     }
 
-    public Car() {
+    public CarDto() {
     }
 
     public long getId() {
@@ -90,13 +77,13 @@ public class Car {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Car car = (Car) o;
-        return id == car.id &&
-                productionYear == car.productionYear &&
-                Double.compare(car.cost, cost) == 0 &&
-                Objects.equals(brand, car.brand) &&
-                Objects.equals(colour, car.colour) &&
-                engineType == car.engineType;
+        CarDto carDto = (CarDto) o;
+        return id == carDto.id &&
+                productionYear == carDto.productionYear &&
+                Double.compare(carDto.cost, cost) == 0 &&
+                Objects.equals(brand, carDto.brand) &&
+                Objects.equals(colour, carDto.colour) &&
+                engineType == carDto.engineType;
     }
 
     @Override
