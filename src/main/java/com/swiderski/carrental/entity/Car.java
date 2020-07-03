@@ -26,9 +26,6 @@ public class Car {
     @Column(name = "cost")
     private double cost;
 
-    @Column(name = "")
-    private boolean status;
-
     public Car(long id, String brand, String colour, EngineType engineType, int productionYear, double cost) {
         this.id = id;
         this.brand = brand;

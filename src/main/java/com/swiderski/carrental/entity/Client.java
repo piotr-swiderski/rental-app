@@ -2,13 +2,13 @@ package com.swiderski.carrental.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity(name = "client_table")
 public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "client_id")
     private long id;
 
     @Column(name = "name", nullable = false)
@@ -20,22 +20,22 @@ public class Client {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "money")
-    private double money;
+    @Column(name = "address")
+    private String address;
 
-    @OneToMany
-    private Set<Car> rentCars;
+    @Column(name = "phone")
+    private String phone;
 
     public Client() {
     }
 
-    public Client(long id, String name, String surname, String email, double money, Set<Car> rentCars) {
+    public Client(long id, String name, String surname, String email, String address, String phone) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.money = money;
-        this.rentCars = rentCars;
+        this.address = address;
+        this.phone = phone;
     }
 
     public long getId() {
@@ -70,21 +70,22 @@ public class Client {
         this.email = email;
     }
 
-    public double getMoney() {
-        return money;
+    public String getAddress() {
+        return address;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Set<Car> getRentCars() {
-        return rentCars;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setRentCars(Set<Car> rentCars) {
-        this.rentCars = rentCars;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -92,18 +93,17 @@ public class Client {
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
         return id == client.id &&
-                Double.compare(client.money, money) == 0 &&
                 Objects.equals(name, client.name) &&
                 Objects.equals(surname, client.surname) &&
                 Objects.equals(email, client.email) &&
-                Objects.equals(rentCars, client.rentCars);
+                Objects.equals(address, client.address) &&
+                Objects.equals(phone, client.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, money, rentCars);
+        return Objects.hash(id, name, surname, email, address, phone);
     }
-
 }
 
 

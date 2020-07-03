@@ -74,7 +74,7 @@ class ClientMapperTest {
     public Client getClient() {
         Car car = new Car(1, "toyota", "red", EngineType.diesel, 2020, 2000);
         HashSet<Car> cars = new HashSet<>(Collections.singletonList(car));
-        return new Client(1, "jan", "kowalski", "jan@gmail.com", 200, cars);
+        return new Client(1, "jan", "kowalski", "jan@gmail.com", "dasds", "123");
     }
 
     public ClientDto getClientDto() {
