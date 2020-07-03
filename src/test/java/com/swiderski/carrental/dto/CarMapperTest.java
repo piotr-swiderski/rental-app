@@ -1,11 +1,13 @@
 package com.swiderski.carrental.dto;
 
 import com.swiderski.carrental.entity.Car;
-import com.swiderski.carrental.entity.EngineType;
 import com.swiderski.carrental.mapper.CarMapper;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.swiderski.carrental.dto.Utils.getCar;
+import static com.swiderski.carrental.dto.Utils.getCarDto;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 class CarMapperTest {
@@ -15,8 +17,8 @@ class CarMapperTest {
     @Test
     public void shouldMapCarToCarDto() {
         //given
-        Car car = new Car(1, "toyota", "red", EngineType.diesel, 2020, 2000);
-        CarDto carDto = new CarDto(1, "toyota", "red", EngineType.diesel, 2020, 2000);
+        Car car = getCar();
+        CarDto carDto = getCarDto();
         //when
         CarDto carDtoMapper = carMapper.carToCarDto(car);
         //then
@@ -26,8 +28,8 @@ class CarMapperTest {
     @Test
     public void shouldMapCarDtoToCar() {
         //given
-        CarDto carDto = new CarDto(1, "toyota", "red", EngineType.diesel, 2020, 2000);
-        Car car = new Car(1, "toyota", "red", EngineType.diesel, 2020, 2000);
+        CarDto carDto = getCarDto();
+        Car car = getCar();
         //when
         Car carMapper = this.carMapper.carDtoToCar(carDto);
         //then
@@ -37,8 +39,9 @@ class CarMapperTest {
     @Test
     public void shouldAssertFalseWhenMapCarToCarDto() {
         //given
-        Car car = new Car(1, "toyota", "red", EngineType.diesel, 2020, 2000);
-        CarDto carDto = new CarDto(1, "toyotaaaa", "red", EngineType.diesel, 2020, 2000);
+        Car car = getCar();
+        CarDto carDto = getCarDto();
+        carDto.setBrand("Honda");
         //when
         CarDto carDtoMapper = carMapper.carToCarDto(car);
         //then
@@ -48,13 +51,12 @@ class CarMapperTest {
     @Test
     public void shouldMapAssertFalseWhenMapCarDtoToCar() {
         //given
-        CarDto carDto = new CarDto(1, "toyotaaa", "red", EngineType.diesel, 2020, 2000);
-        Car car = new Car(1, "toyota", "red", EngineType.diesel, 2020, 2000);
+        CarDto carDto = getCarDto();
+        Car car = getCar();
+        car.setBrand("Honda");
         //when
-        Car carMapper = this.carMapper.carDtoToCar(carDto);
+        Car carMapped = carMapper.carDtoToCar(carDto);
         //then
-        assertNotEquals(car, carMapper);
+        assertNotEquals(car, carMapped);
     }
-
-
 }

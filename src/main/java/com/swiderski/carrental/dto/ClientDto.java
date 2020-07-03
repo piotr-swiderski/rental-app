@@ -1,7 +1,6 @@
 package com.swiderski.carrental.dto;
 
 import java.util.Objects;
-import java.util.Set;
 
 public class ClientDto {
 
@@ -9,19 +8,19 @@ public class ClientDto {
     private String name;
     private String surname;
     private String email;
-    private double money;
-    private Set<CarDto> rentCars;
+    private String address;
+    private String phone;
 
     public ClientDto() {
     }
 
-    public ClientDto(long id, String name, String surname, String email, double money, Set<CarDto> rentCars) {
+    public ClientDto(long id, String name, String surname, String email, String address, String phone) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.money = money;
-        this.rentCars = rentCars;
+        this.address = address;
+        this.phone = phone;
     }
 
     public long getId() {
@@ -56,20 +55,20 @@ public class ClientDto {
         this.email = email;
     }
 
-    public double getMoney() {
-        return money;
+    public String getAddress() {
+        return address;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Set<CarDto> getRentCars() {
-        return rentCars;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setRentCars(Set<CarDto> rentCars) {
-        this.rentCars = rentCars;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -78,16 +77,15 @@ public class ClientDto {
         if (o == null || getClass() != o.getClass()) return false;
         ClientDto clientDto = (ClientDto) o;
         return id == clientDto.id &&
-                Double.compare(clientDto.money, money) == 0 &&
                 Objects.equals(name, clientDto.name) &&
                 Objects.equals(surname, clientDto.surname) &&
                 Objects.equals(email, clientDto.email) &&
-                Objects.equals(rentCars, clientDto.rentCars);
+                Objects.equals(address, clientDto.address) &&
+                Objects.equals(phone, clientDto.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, money, rentCars);
+        return Objects.hash(id, name, surname, email, address, phone);
     }
-
 }

@@ -1,7 +1,5 @@
 package com.swiderski.carrental.entity;
 
-import com.sun.xml.bind.v2.model.core.ID;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -15,20 +13,28 @@ public class Rental {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="car_id", nullable = false)
+    @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name="client_id", nullable=false)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @Column(name =  "date_rented_begin")
+    @Column(name = "date_rented_begin")
     private LocalDate rentalBegin;
 
     @Column(name = "date_rented_end")
     private LocalDate rentalEnd;
 
     public Rental() {
+    }
+
+    public Rental(long id, Car car, Client client, LocalDate rentalBegin, LocalDate rentalEnd) {
+        this.id = id;
+        this.car = car;
+        this.client = client;
+        this.rentalBegin = rentalBegin;
+        this.rentalEnd = rentalEnd;
     }
 
     public long getId() {
