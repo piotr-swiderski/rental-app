@@ -1,8 +1,10 @@
 create table car_table (
     car_id  bigserial not null,
-    brand varchar(50),
+    brand varchar(50) not null,
+   -- model varchar(50) not null,
+   -- model_version varchar(50) not null,
     colour varchar(50),
-    cost float,
+    cost float not null,
     engine_type integer,
     production_year integer,
     primary key (car_id)

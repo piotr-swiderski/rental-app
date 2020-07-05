@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -22,6 +24,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car saveCar(Car car) {
         return carRepository.save(car);
+    }
+
+    @Override
+    public Set<Car> getAllCars() {
+        return new HashSet<>(carRepository.findAll());
     }
 
     @Override
@@ -45,7 +52,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car getCarById(long id) {
         return getOptionalCarById(id).orElseThrow(EntityNotFoundException::new);
-    }
+    } //todo
 
     private Optional<Car> getOptionalCarById(long id) {
         return carRepository.findById(id);

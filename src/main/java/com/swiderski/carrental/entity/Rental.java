@@ -1,5 +1,7 @@
 package com.swiderski.carrental.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -21,6 +23,7 @@ public class Rental {
     private Client client;
 
     @Column(name = "date_rented_begin")
+    @CreationTimestamp
     private LocalDate rentalBegin;
 
     @Column(name = "date_rented_end")
@@ -92,5 +95,56 @@ public class Rental {
     @Override
     public int hashCode() {
         return Objects.hash(id, car, client, rentalBegin, rentalEnd);
+    }
+
+
+    public static final class RentalBuilder {
+        private long id;
+        private Car car;
+        private Client client;
+        private LocalDate rentalBegin;
+        private LocalDate rentalEnd;
+
+        private RentalBuilder() {
+        }
+
+        public static RentalBuilder aRental() {
+            return new RentalBuilder();
+        }
+
+        public RentalBuilder withId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public RentalBuilder withCar(Car car) {
+            this.car = car;
+            return this;
+        }
+
+        public RentalBuilder withClient(Client client) {
+            this.client = client;
+            return this;
+        }
+
+        public RentalBuilder withRentalBegin(LocalDate rentalBegin) {
+            this.rentalBegin = rentalBegin;
+            return this;
+        }
+
+        public RentalBuilder withRentalEnd(LocalDate rentalEnd) {
+            this.rentalEnd = rentalEnd;
+            return this;
+        }
+
+        public Rental build() {
+            Rental rental = new Rental();
+            rental.setId(id);
+            rental.setCar(car);
+            rental.setClient(client);
+            rental.setRentalBegin(rentalBegin);
+            rental.setRentalEnd(rentalEnd);
+            return rental;
+        }
     }
 }

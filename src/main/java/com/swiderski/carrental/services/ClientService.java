@@ -2,6 +2,8 @@ package com.swiderski.carrental.services;
 
 import com.swiderski.carrental.entity.Client;
 
+import java.util.Set;
+
 public interface ClientService {
 
     Client saveClient(Client client);
@@ -11,4 +13,6 @@ public interface ClientService {
     Client getClientById(long id);
 
     Client deleteClient(long id);
+
+    Set<Client> getAllClients();
 }
