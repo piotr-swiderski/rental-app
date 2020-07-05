@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("rental-api/car")
+@RequestMapping("car-rental-api/car")
 public class CarController {
 
     private final CarService carService;
@@ -21,19 +21,19 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping(value = "/getAll")
+    @GetMapping(value = "/all")
     public Set<CarDto> getAllCars() {
         Set<Car> allCars = carService.getAllCars();
         return carMapper.carSetToCarDtoSet(allCars);
     }
 
-    @GetMapping(value = "/getById/{id}")
+    @GetMapping(value = "/{id}")
     public CarDto getCarById(@PathVariable long id) {
         Car carById = carService.getCarById(id);
         return carMapper.carToCarDto(carById);
     }
 
-    @PostMapping(value = "/addCar")
+    @PostMapping(value = "/add")
     public CarDto addCar(@RequestBody CarDto carDto) {
         Car car = carMapper.carDtoToCar(carDto);
         carService.saveCar(car);

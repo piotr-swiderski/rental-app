@@ -43,7 +43,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client getClientById(long id) {
         return getOptionalClient(id)
-                .orElseThrow(() -> new NotFoundException(id, Client.class.getName()));
+                .orElseThrow(() -> new NotFoundException(id, Client.class.getSimpleName()));
     }
 
     @Override
