@@ -17,7 +17,7 @@ public class Car {
     @Column(name = "colour")
     private String colour;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private EngineType engineType;
 
     @Column(name = "production_year")

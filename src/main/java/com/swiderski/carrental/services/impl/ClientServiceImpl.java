@@ -1,12 +1,12 @@
 package com.swiderski.carrental.services.impl;
 
 import com.swiderski.carrental.entity.Client;
+import com.swiderski.carrental.exception.NotFoundException;
 import com.swiderski.carrental.repository.ClientRepository;
 import com.swiderski.carrental.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -37,13 +37,14 @@ public class ClientServiceImpl implements ClientService {
             client.setId(id);
             clientRepository.save(client);
         });
-        return client;
+        return client; //todo if not present
     }
 
     @Override
     public Client getClientById(long id) {
-        return getOptionalClient(id).orElseThrow(EntityNotFoundException::new);
-    } //todo
+        return getOptionalClient(id)
+                .orElseThrow(() -> new NotFoundException(id, Client.class.getName()));
+    }
 
     @Override
     public Client deleteClient(long id) {

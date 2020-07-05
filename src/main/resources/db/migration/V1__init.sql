@@ -5,7 +5,7 @@ create table car_table (
    -- model_version varchar(50) not null,
     colour varchar(50),
     cost float not null,
-    engine_type integer,
+    engine_type varchar(50),
     production_year integer,
     primary key (car_id)
 );

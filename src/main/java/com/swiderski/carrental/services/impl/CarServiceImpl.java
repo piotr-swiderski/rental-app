@@ -1,12 +1,12 @@
 package com.swiderski.carrental.services.impl;
 
 import com.swiderski.carrental.entity.Car;
+import com.swiderski.carrental.exception.NotFoundException;
 import com.swiderski.carrental.repository.CarRepository;
 import com.swiderski.carrental.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -40,19 +40,19 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car updateCar(long id, Car car) {
-
         getOptionalCarById(id).ifPresent(c -> {
             car.setId(id);
             carRepository.save(car);
         });
-        return car;
+        return car; //todo if not present
     }
 
 
     @Override
     public Car getCarById(long id) {
-        return getOptionalCarById(id).orElseThrow(EntityNotFoundException::new);
-    } //todo
+        return getOptionalCarById(id)
+                .orElseThrow(() -> new NotFoundException(id, Car.class.getSimpleName()));
+    }
 
     private Optional<Car> getOptionalCarById(long id) {
         return carRepository.findById(id);

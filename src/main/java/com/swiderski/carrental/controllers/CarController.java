@@ -1,0 +1,56 @@
+package com.swiderski.carrental.controllers;
+
+import com.swiderski.carrental.dto.CarDto;
+import com.swiderski.carrental.entity.Car;
+import com.swiderski.carrental.mapper.CarMapper;
+import com.swiderski.carrental.services.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
+
+@RestController
+@RequestMapping("rental-api/car")
+public class CarController {
+
+    private final CarService carService;
+    private final CarMapper carMapper = CarMapper.INSTANCE;
+
+    @Autowired
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
+
+    @GetMapping(value = "/getAll")
+    public Set<CarDto> getAllCars() {
+        Set<Car> allCars = carService.getAllCars();
+        return carMapper.carSetToCarDtoSet(allCars);
+    }
+
+    @GetMapping(value = "/getById/{id}")
+    public CarDto getCarById(@PathVariable long id) {
+        Car carById = carService.getCarById(id);
+        return carMapper.carToCarDto(carById);
+    }
+
+    @PostMapping(value = "/addCar")
+    public CarDto addCar(@RequestBody CarDto carDto) {
+        Car car = carMapper.carDtoToCar(carDto);
+        carService.saveCar(car);
+        return carDto;
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public CarDto deleteCar(@PathVariable long id) {
+        Car car = carService.deleteCarById(id);
+        return carMapper.carToCarDto(car);
+    }
+
+    @PutMapping("/update/{id}")
+    public CarDto updateCar(@PathVariable long id, @RequestBody CarDto carDto) {
+        Car car = carMapper.carDtoToCar(carDto);
+        Car carUpdated = carService.updateCar(id, car);
+        return carMapper.carToCarDto(carUpdated);
+    }
+
+}

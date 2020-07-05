@@ -3,13 +3,13 @@ package com.swiderski.carrental.services.impl;
 import com.swiderski.carrental.entity.Car;
 import com.swiderski.carrental.entity.Client;
 import com.swiderski.carrental.entity.Rental;
+import com.swiderski.carrental.exception.NotFoundException;
 import com.swiderski.carrental.repository.RentalRepository;
 import com.swiderski.carrental.services.CarService;
 import com.swiderski.carrental.services.ClientService;
 import com.swiderski.carrental.services.RentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +29,8 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public Rental getRentalById(long id) {
-        return rentalRepository.findById(id).orElseThrow(EntityNotFoundException::new); //todo exception
+        return rentalRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, Rental.class.getName()));
     }
 
     @Override
