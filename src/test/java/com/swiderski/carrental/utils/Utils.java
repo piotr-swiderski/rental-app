@@ -9,9 +9,12 @@ import com.swiderski.carrental.entity.EngineType;
 import com.swiderski.carrental.entity.Rental;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 public class Utils {
 
+    public static final long carId = 0;
     public static final String carBrand = "Toyota";
     public static final String carColour = "Red";
     public static final String carModelName = "corolla";
@@ -19,6 +22,16 @@ public class Utils {
     public static final EngineType carEngineType = EngineType.diesel;
     public static final int carProductionYear = 2020;
     public static final double carCost = 2000;
+
+    public static final long carTwoId = 1;
+    public static final String carTwoBrand = "Honda";
+    public static final String carTwoColour = "blue";
+    public static final String carTwoModelName = "civic";
+    public static final String carTwoModelVersion = "2";
+    public static final EngineType carTwoEngineType = EngineType.benzine;
+    public static final int carTwoProductionYear = 2000;
+    public static final double carTwoCost = 800;
+
 
     public static final String clientName = "Jan";
     public static final String clientSurname = "Kowalski";
@@ -57,6 +70,7 @@ public class Utils {
 
     public static Car getCar() {
         return Car.CarBuilder.aCar()
+                .withId(carId)
                 .withBrand(carBrand)
                 .withColour(carColour)
                 .withCost(carCost)
@@ -69,6 +83,7 @@ public class Utils {
 
     public static CarDto getCarDto() {
         return CarDto.CarDtoBuilder.aCarDto()
+                .withId(carId)
                 .withBrand(carBrand)
                 .withColour(carColour)
                 .withCost(carCost)
@@ -79,12 +94,42 @@ public class Utils {
                 .build();
     }
 
+    public static Car getSecondCar() {
+        return Car.CarBuilder.aCar()
+                .withId(carTwoId)
+                .withBrand(carTwoBrand)
+                .withColour(carTwoColour)
+                .withCost(carTwoCost)
+                .withModel(carTwoModelName)
+                .withModelVersion(carTwoModelVersion)
+                .withProductionYear(carTwoProductionYear)
+                .withEngineType(carTwoEngineType)
+                .build();
+    }
+
+    public static CarDto getSecondCarDto() {
+        return CarDto.CarDtoBuilder.aCarDto()
+                .withId(carTwoId)
+                .withBrand(carTwoBrand)
+                .withColour(carTwoColour)
+                .withCost(carTwoCost)
+                .withModel(carTwoModelName)
+                .withModelVersion(carTwoModelVersion)
+                .withProductionYear(carTwoProductionYear)
+                .withEngineType(carTwoEngineType)
+                .build();
+    }
+
     public static Rental getRental() {
         return new Rental(1, getCar(), getClient(), rentalBegin, rentalEnd);
     }
 
     public static RentalDto getRentalDto() {
         return new RentalDto(1, getCarDto(), getClientDto(), rentalBegin, rentalEnd);
+    }
+
+    public static List<Car> getCars() {
+        return Arrays.asList(getCar(), getSecondCar());
     }
 
 }
