@@ -18,15 +18,13 @@ import java.util.Set;
 @RequestMapping("/car-rental-api/rent")
 public class RentalController {
 
-    private final RentalMapper rentalMapper;
     private final RentService rentService;
-    private final CarMapper carMapper;
+    private final RentalMapper rentalMapper = RentalMapper.INSTANCE;
+    private final CarMapper carMapper = CarMapper.INSTANCE;
 
     @Autowired
-    public RentalController(RentalMapper rentalMapper, RentService rentService, CarMapper carMapper) {
-        this.rentalMapper = rentalMapper;
+    public RentalController(RentService rentService) {
         this.rentService = rentService;
-        this.carMapper = carMapper;
     }
 
     @GetMapping("/all")

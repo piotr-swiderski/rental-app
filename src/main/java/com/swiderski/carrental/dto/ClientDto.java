@@ -1,6 +1,5 @@
 package com.swiderski.carrental.dto;
 
-import javax.persistence.Column;
 import java.util.Objects;
 
 public class ClientDto {
@@ -15,17 +14,6 @@ public class ClientDto {
     private String phone;
 
     public ClientDto() {
-    }
-
-    public ClientDto(long id, String name, String surname, String email, String city, String street, String zipCode, String phone) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.city = city;
-        this.street = street;
-        this.zipCode = zipCode;
-        this.phone = phone;
     }
 
     public long getId() {
@@ -92,6 +80,25 @@ public class ClientDto {
         this.phone = phone;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClientDto clientDto = (ClientDto) o;
+        return id == clientDto.id &&
+                Objects.equals(name, clientDto.name) &&
+                Objects.equals(surname, clientDto.surname) &&
+                Objects.equals(email, clientDto.email) &&
+                Objects.equals(city, clientDto.city) &&
+                Objects.equals(street, clientDto.street) &&
+                Objects.equals(zipCode, clientDto.zipCode) &&
+                Objects.equals(phone, clientDto.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, email, city, street, zipCode, phone);
+    }
 
     public static final class ClientDtoBuilder {
         private long id;

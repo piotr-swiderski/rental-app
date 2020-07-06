@@ -1,6 +1,7 @@
 package com.swiderski.carrental.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "client_table")
 public class Client {
@@ -98,6 +99,25 @@ public class Client {
         this.phone = phone;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id == client.id &&
+                Objects.equals(name, client.name) &&
+                Objects.equals(surname, client.surname) &&
+                Objects.equals(email, client.email) &&
+                Objects.equals(city, client.city) &&
+                Objects.equals(street, client.street) &&
+                Objects.equals(zipCode, client.zipCode) &&
+                Objects.equals(phone, client.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, email, city, street, zipCode, phone);
+    }
 
     public static final class ClientBuilder {
         private long id;
