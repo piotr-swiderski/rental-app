@@ -39,17 +39,19 @@ public class RentServiceImpl implements RentService {
     @Override
     public Rental rentCar(long carId, long clientId) {
         Client clientById = clientService.getClientById(clientId);
-        Car carById = getAvailableCars().stream()
-                .filter(c -> c.getId() == carId)
-                .findFirst()
-                .orElseThrow(() -> new CarRentedException(carId));
+        Car carById = getCarToRent(carId);
 
         Rental rental = Rental.RentalBuilder.aRental()
                 .withCar(carById)
                 .withClient(clientById)
                 .build();
-        return rentalRepository.save(rental);
 
+        return rentalRepository.save(rental);
+    }
+
+    private Car getCarToRent(long carId) {
+        return rentalRepository.getCarToRent(carId)
+                .orElseThrow(() -> new CarRentedException(carId));
     }
 
     @Override

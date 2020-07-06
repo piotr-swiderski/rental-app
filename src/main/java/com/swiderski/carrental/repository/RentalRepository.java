@@ -13,17 +13,20 @@ import java.util.Set;
 public interface RentalRepository extends JpaRepository<Rental, Long> {
 
     @Query("SELECT c FROM car_table c " +
-            "left join rental_table r on c.id = r.car.id " +
-            "where r.rentalBegin is null or r.rentalEnd is not null ")
+            "where c.id not in (" +
+            "select r.car.id from rental_table r " +
+            "where r.rentalEnd is null) ")
     Set<Car> findAllAvailableCar();
 
-    @Query("select c from  car_table c " +
-            "left join rental_table r on c.id = r.car.id " +
-            "where r.rentalBegin is not null and r.rentalEnd is null")
+    @Query("SELECT c FROM car_table c " +
+            "where c.id in (" +
+            "select r.car.id from rental_table r " +
+            "where r.rentalEnd is null and r.rentalBegin is not null ) ")
     Set<Car> findAllRentedCars();
 
-    @Query("select c from car_table c " +
-            "left join rental_table r on c.id = r.car.id " +
-            "where (r.rentalBegin is null or r.rentalBegin is not null) and c.id = ?1 ")
+    @Query("SELECT c FROM car_table c " +
+            "where c.id = ?1 and c.id not in (" +
+            "select r.car.id from rental_table r " +
+            "where r.rentalEnd is null) ")
     Optional<Car> getCarToRent(long carId);
 }

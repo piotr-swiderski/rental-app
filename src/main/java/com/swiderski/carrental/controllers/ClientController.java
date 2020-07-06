@@ -11,6 +11,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("car-rental-api/client")
+@CrossOrigin
 public class ClientController {
 
     private final ClientService clientService;
