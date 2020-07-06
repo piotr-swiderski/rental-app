@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CarMapper {
 
     CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);

@@ -14,11 +14,12 @@ import java.util.Set;
 public class CarController {
 
     private final CarService carService;
-    private final CarMapper carMapper = CarMapper.INSTANCE;
+    private final CarMapper carMapper;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarService carService, CarMapper carMapper) {
         this.carService = carService;
+        this.carMapper = carMapper;
     }
 
     @GetMapping(value = "/all")
