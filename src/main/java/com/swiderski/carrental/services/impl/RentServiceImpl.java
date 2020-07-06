@@ -3,6 +3,7 @@ package com.swiderski.carrental.services.impl;
 import com.swiderski.carrental.entity.Car;
 import com.swiderski.carrental.entity.Client;
 import com.swiderski.carrental.entity.Rental;
+import com.swiderski.carrental.exception.CarRentedException;
 import com.swiderski.carrental.exception.NotFoundException;
 import com.swiderski.carrental.repository.RentalRepository;
 import com.swiderski.carrental.services.CarService;
@@ -38,7 +39,10 @@ public class RentServiceImpl implements RentService {
     @Override
     public Rental rentCar(long carId, long clientId) {
         Client clientById = clientService.getClientById(clientId);
-        Car carById = carService.getCarById(carId);
+        Car carById = getAvailableCars().stream()
+                .filter(c -> c.getId() == carId)
+                .findFirst()
+                .orElseThrow(() -> new CarRentedException(carId));
 
         Rental rental = Rental.RentalBuilder.aRental()
                 .withCar(carById)

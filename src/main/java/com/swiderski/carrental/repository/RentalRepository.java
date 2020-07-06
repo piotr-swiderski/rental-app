@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -20,4 +21,9 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
             "left join rental_table r on c.id = r.car.id " +
             "where r.rentalBegin is not null and r.rentalEnd is null")
     Set<Car> findAllRentedCars();
+
+    @Query("select c from car_table c " +
+            "left join rental_table r on c.id = r.car.id " +
+            "where (r.rentalBegin is null or r.rentalBegin is not null) and c.id = ?1 ")
+    Optional<Car> getCarToRent(long carId);
 }

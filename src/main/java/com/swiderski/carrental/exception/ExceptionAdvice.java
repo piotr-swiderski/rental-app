@@ -7,12 +7,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class NotFoundAdvice {
+public class ExceptionAdvice {
 
     @ResponseBody
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String notFoundHandler(NotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(CarRentedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String carRentedException(CarRentedException e) {
         return e.getMessage();
     }
 }

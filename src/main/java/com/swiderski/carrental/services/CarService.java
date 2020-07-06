@@ -17,5 +17,4 @@ public interface CarService {
 
     Set<Car> getAllCars();
 
-
 }
