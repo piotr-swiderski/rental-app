@@ -33,19 +33,30 @@ public class Utils {
     public static final double carTwoCost = 800;
 
 
+    public static final long clientId = 0;
     public static final String clientName = "Jan";
     public static final String clientSurname = "Kowalski";
-    public static final String clientEmail = "Email";
+    public static final String clientEmail = "jankowalski@gmail.com";
     public static final String clientStreet = "Zwierzyniecka 12";
     public static final String clientCity = "Bialystok";
     public static final String clientZipCode = "12-122";
     public static final String clientPhone = "123456789";
+
+    public static final long clientTwoId = 1;
+    public static final String clientTwoName = "John";
+    public static final String clientTwoSurname = "Malinowski";
+    public static final String clientTwoEmail = "janmalinowski@gmail.com";
+    public static final String clientTwoStreet = "Pogodna 12";
+    public static final String clientTwoCity = "Bialystok";
+    public static final String clientTwoZipCode = "12-122";
+    public static final String clientTwoPhone = "123456789";
 
     public static final LocalDate rentalBegin = LocalDate.of(2020, 5, 15);
     public static final LocalDate rentalEnd = LocalDate.of(2020, 5, 25);
 
     public static Client getClient() {
         return Client.ClientBuilder.aClient()
+                .withId(clientId)
                 .withName(clientName)
                 .withSurname(clientSurname)
                 .withEmail(clientEmail)
@@ -53,6 +64,19 @@ public class Utils {
                 .withStreet(clientStreet)
                 .withZipCode(clientZipCode)
                 .withPhone(clientPhone)
+                .build();
+    }
+
+    public static Client getSecondClient() {
+        return Client.ClientBuilder.aClient()
+                .withId(carTwoId)
+                .withName(clientTwoName)
+                .withSurname(clientTwoSurname)
+                .withEmail(clientTwoEmail)
+                .withCity(clientTwoCity)
+                .withStreet(clientTwoStreet)
+                .withZipCode(clientTwoZipCode)
+                .withPhone(clientTwoPhone)
                 .build();
     }
 
@@ -130,6 +154,10 @@ public class Utils {
 
     public static List<Car> getCars() {
         return Arrays.asList(getCar(), getSecondCar());
+    }
+
+    public static List<Client> getClients() {
+        return Arrays.asList(getClient(), getSecondClient());
     }
 
 }

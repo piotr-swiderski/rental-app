@@ -99,7 +99,6 @@ class CarServiceImplTest {
 
         Throwable exception = assertThrows(NotFoundException.class, () -> carService.getCarById(carId));
         assertEquals(expectedMessages, exception.getMessage());
-
     }
 
 }
