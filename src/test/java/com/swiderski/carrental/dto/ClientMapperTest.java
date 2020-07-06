@@ -4,8 +4,8 @@ import com.swiderski.carrental.entity.Client;
 import com.swiderski.carrental.mapper.ClientMapper;
 import org.junit.jupiter.api.Test;
 
-import static com.swiderski.carrental.dto.Utils.getClient;
-import static com.swiderski.carrental.dto.Utils.getClientDto;
+import static com.swiderski.carrental.utils.Utils.getClient;
+import static com.swiderski.carrental.utils.Utils.getClientDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 

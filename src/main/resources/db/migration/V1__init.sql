@@ -1,8 +1,8 @@
 create table car_table (
     car_id  bigserial not null,
     brand varchar(50) not null,
-   -- model varchar(50) not null,
-   -- model_version varchar(50) not null,
+    model_name varchar(50) not null,
+    model_version varchar(50) not null,
     colour varchar(50),
     cost float not null,
     engine_type varchar(50),
@@ -15,7 +15,9 @@ create table client_table (
     name varchar(50) not null,
     surname varchar(50) not null,
     email varchar(50) not null,
-    address varchar(50) not null,
+    city varchar(50) not null,
+    street varchar(50) not null,
+    zip_code varchar(50) not null,
     phone varchar(50) not null,
     primary key (client_id)
 );

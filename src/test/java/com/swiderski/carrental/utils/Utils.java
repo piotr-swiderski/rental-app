@@ -1,5 +1,8 @@
-package com.swiderski.carrental.dto;
+package com.swiderski.carrental.utils;
 
+import com.swiderski.carrental.dto.CarDto;
+import com.swiderski.carrental.dto.ClientDto;
+import com.swiderski.carrental.dto.RentalDto;
 import com.swiderski.carrental.entity.Car;
 import com.swiderski.carrental.entity.Client;
 import com.swiderski.carrental.entity.EngineType;
@@ -11,6 +14,8 @@ public class Utils {
 
     public static final String carBrand = "Toyota";
     public static final String carColour = "Red";
+    public static final String carModelName = "corolla";
+    public static final String carModelVersion = "LE";
     public static final EngineType carEngineType = EngineType.diesel;
     public static final int carProductionYear = 2020;
     public static final double carCost = 2000;
@@ -18,26 +23,60 @@ public class Utils {
     public static final String clientName = "Jan";
     public static final String clientSurname = "Kowalski";
     public static final String clientEmail = "Email";
-    public static final String clientAddress = "Bialystok 12";
+    public static final String clientStreet = "Zwierzyniecka 12";
+    public static final String clientCity = "Bialystok";
+    public static final String clientZipCode = "12-122";
     public static final String clientPhone = "123456789";
 
     public static final LocalDate rentalBegin = LocalDate.of(2020, 5, 15);
     public static final LocalDate rentalEnd = LocalDate.of(2020, 5, 25);
 
     public static Client getClient() {
-        return new Client(1, clientName, clientSurname, clientEmail, clientAddress, clientPhone);
+        return Client.ClientBuilder.aClient()
+                .withName(clientName)
+                .withSurname(clientSurname)
+                .withEmail(clientEmail)
+                .withCity(clientCity)
+                .withStreet(clientStreet)
+                .withZipCode(clientZipCode)
+                .withPhone(clientPhone)
+                .build();
     }
 
     public static ClientDto getClientDto() {
-        return new ClientDto(1, clientName, clientSurname, clientEmail, clientAddress, clientPhone);
+        return ClientDto.ClientDtoBuilder.aClientDto()
+                .withName(clientName)
+                .withSurname(clientSurname)
+                .withEmail(clientEmail)
+                .withCity(clientCity)
+                .withStreet(clientStreet)
+                .withZipCode(clientZipCode)
+                .withPhone(clientPhone)
+                .build();
     }
 
     public static Car getCar() {
-        return new Car(1, carBrand, carColour, carEngineType, carProductionYear, carCost);
+        return Car.CarBuilder.aCar()
+                .withBrand(carBrand)
+                .withColour(carColour)
+                .withCost(carCost)
+                .withModel(carModelName)
+                .withModelVersion(carModelVersion)
+                .withProductionYear(carProductionYear)
+                .withEngineType(carEngineType)
+                .build();
     }
 
     public static CarDto getCarDto() {
-        return new CarDto(1, carBrand, carColour, carEngineType, carProductionYear, carCost);
+        return CarDto.CarDtoBuilder.aCarDto()
+                .withBrand(carBrand)
+                .withColour(carColour)
+                .withCost(carCost)
+                .withModel(carModelName)
+                .withModelVersion(carModelVersion)
+                .withProductionYear(carProductionYear)
+                .withEngineType(carEngineType)
+                .build();
     }
 
     public static Rental getRental() {

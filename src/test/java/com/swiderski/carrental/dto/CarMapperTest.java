@@ -4,8 +4,8 @@ import com.swiderski.carrental.entity.Car;
 import com.swiderski.carrental.mapper.CarMapper;
 import org.junit.jupiter.api.Test;
 
-import static com.swiderski.carrental.dto.Utils.getCar;
-import static com.swiderski.carrental.dto.Utils.getCarDto;
+import static com.swiderski.carrental.utils.Utils.getCar;
+import static com.swiderski.carrental.utils.Utils.getCarDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 

@@ -14,6 +14,12 @@ public class Car {
     @Column(name = "brand")
     private String brand;
 
+    @Column(name = "model_name")
+    private String model;
+
+    @Column(name = "model_version")
+    private String modelVersion;
+
     @Column(name = "colour")
     private String colour;
 
@@ -25,15 +31,6 @@ public class Car {
 
     @Column(name = "cost")
     private double cost;
-
-    public Car(long id, String brand, String colour, EngineType engineType, int productionYear, double cost) {
-        this.id = id;
-        this.brand = brand;
-        this.colour = colour;
-        this.engineType = engineType;
-        this.productionYear = productionYear;
-        this.cost = cost;
-    }
 
     public Car() {
     }
@@ -52,6 +49,22 @@ public class Car {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getModelVersion() {
+        return modelVersion;
+    }
+
+    public void setModelVersion(String modelVersion) {
+        this.modelVersion = modelVersion;
     }
 
     public String getColour() {
@@ -95,12 +108,86 @@ public class Car {
                 productionYear == car.productionYear &&
                 Double.compare(car.cost, cost) == 0 &&
                 Objects.equals(brand, car.brand) &&
+                Objects.equals(model, car.model) &&
+                Objects.equals(modelVersion, car.modelVersion) &&
                 Objects.equals(colour, car.colour) &&
                 engineType == car.engineType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, brand, colour, engineType, productionYear, cost);
+        return Objects.hash(id, brand, model, modelVersion, colour, engineType, productionYear, cost);
+    }
+
+
+    public static final class CarBuilder {
+        private long id;
+        private String brand;
+        private String model;
+        private String modelVersion;
+        private String colour;
+        private EngineType engineType;
+        private int productionYear;
+        private double cost;
+
+        private CarBuilder() {
+        }
+
+        public static CarBuilder aCar() {
+            return new CarBuilder();
+        }
+
+        public CarBuilder withId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public CarBuilder withBrand(String brand) {
+            this.brand = brand;
+            return this;
+        }
+
+        public CarBuilder withModel(String model) {
+            this.model = model;
+            return this;
+        }
+
+        public CarBuilder withModelVersion(String modelVersion) {
+            this.modelVersion = modelVersion;
+            return this;
+        }
+
+        public CarBuilder withColour(String colour) {
+            this.colour = colour;
+            return this;
+        }
+
+        public CarBuilder withEngineType(EngineType engineType) {
+            this.engineType = engineType;
+            return this;
+        }
+
+        public CarBuilder withProductionYear(int productionYear) {
+            this.productionYear = productionYear;
+            return this;
+        }
+
+        public CarBuilder withCost(double cost) {
+            this.cost = cost;
+            return this;
+        }
+
+        public Car build() {
+            Car car = new Car();
+            car.setId(id);
+            car.setBrand(brand);
+            car.setModel(model);
+            car.setModelVersion(modelVersion);
+            car.setColour(colour);
+            car.setEngineType(engineType);
+            car.setProductionYear(productionYear);
+            car.setCost(cost);
+            return car;
+        }
     }
 }

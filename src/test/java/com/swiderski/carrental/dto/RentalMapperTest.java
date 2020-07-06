@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static com.swiderski.carrental.dto.Utils.getRental;
-import static com.swiderski.carrental.dto.Utils.getRentalDto;
+import static com.swiderski.carrental.utils.Utils.getRental;
+import static com.swiderski.carrental.utils.Utils.getRentalDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
