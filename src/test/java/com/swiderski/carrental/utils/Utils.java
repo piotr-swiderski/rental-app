@@ -51,6 +51,8 @@ public class Utils {
     public static final String clientTwoZipCode = "12-122";
     public static final String clientTwoPhone = "123456789";
 
+    public static final long rentalId = 0;
+    public static final long rentalSecondId = 1;
     public static final LocalDate rentalBegin = LocalDate.of(2020, 5, 15);
     public static final LocalDate rentalEnd = LocalDate.of(2020, 5, 25);
 
@@ -145,11 +147,15 @@ public class Utils {
     }
 
     public static Rental getRental() {
-        return new Rental(1, getCar(), getClient(), rentalBegin, rentalEnd);
+        return new Rental(rentalId, getCar(), getClient(), rentalBegin, rentalEnd);
+    }
+
+    public static Rental getSecondRental() {
+        return new Rental(rentalSecondId, getSecondCar(), getSecondClient(), rentalBegin, rentalEnd);
     }
 
     public static RentalDto getRentalDto() {
-        return new RentalDto(1, getCarDto(), getClientDto(), rentalBegin, rentalEnd);
+        return new RentalDto(rentalId, getCarDto(), getClientDto(), rentalBegin, rentalEnd);
     }
 
     public static List<Car> getCars() {
@@ -158,6 +164,10 @@ public class Utils {
 
     public static List<Client> getClients() {
         return Arrays.asList(getClient(), getSecondClient());
+    }
+
+    public static List<Rental> getRentals() {
+        return Arrays.asList(getRental(), getSecondRental());
     }
 
 }

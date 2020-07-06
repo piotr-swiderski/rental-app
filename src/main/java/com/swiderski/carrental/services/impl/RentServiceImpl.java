@@ -32,7 +32,7 @@ public class RentServiceImpl implements RentService {
     @Override
     public Rental getRentalById(long id) {
         return rentalRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id, Rental.class.getName()));
+                .orElseThrow(() -> new NotFoundException(id, Rental.class.getSimpleName()));
     }
 
     @Override
