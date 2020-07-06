@@ -47,7 +47,6 @@ public class CarServiceImpl implements CarService {
         return car; //todo if not present
     }
 
-
     @Override
     public Car getCarById(long id) {
         return getOptionalCarById(id)

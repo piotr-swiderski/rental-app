@@ -6,7 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {CarMapper.class, ClientMapper.class})
+import java.util.Set;
+
+@Mapper(uses = {CarMapper.class, ClientMapper.class}, componentModel = "spring")
 public interface RentalMapper {
 
     RentalMapper INSTANCE = Mappers.getMapper(RentalMapper.class);
@@ -18,4 +20,6 @@ public interface RentalMapper {
     @Mapping(source = "clientDto", target = "client")
     @Mapping(source = "carDto", target = "car")
     Rental rentalDtoToRental(RentalDto rentalDto);
+
+    Set<RentalDto> rentalSetToRentalDtoSet(Set<Rental> rentalSet);
 }

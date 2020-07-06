@@ -18,6 +18,6 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 
     @Query("select c from  car_table c " +
             "left join rental_table r on c.id = r.car.id " +
-            "where r.rentalBegin is not null and r.rentalEnd is null" )
+            "where r.rentalBegin is not null and r.rentalEnd is null")
     Set<Car> findAllRentedCars();
 }

@@ -9,11 +9,13 @@ import com.swiderski.carrental.services.CarService;
 import com.swiderski.carrental.services.ClientService;
 import com.swiderski.carrental.services.RentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class RentServiceImpl implements RentService {
 
     private final CarService carService;
