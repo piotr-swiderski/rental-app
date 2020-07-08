@@ -33,7 +33,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client updateClient(long id, Client client) {
-        getClientById(id); //todo
+        getClientById(id);
         getOptionalClient(id).ifPresent(c -> {
             client.setId(id);
             clientRepository.save(client);

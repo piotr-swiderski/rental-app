@@ -40,11 +40,12 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car updateCar(long id, Car car) {
+        getCarById(id);
         getOptionalCarById(id).ifPresent(c -> {
             car.setId(id);
             carRepository.save(car);
         });
-        return car; //todo if not present
+        return car;
     }
 
     @Override
