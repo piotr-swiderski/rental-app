@@ -3,6 +3,7 @@ package com.swiderski.carrental.controllers;
 import com.swiderski.carrental.dto.CarDto;
 import com.swiderski.carrental.dto.RentalDto;
 import com.swiderski.carrental.services.RentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ public class RentalController extends AbstractController<RentService, RentalDto>
 
     private final RentService rentService;
 
+    @Autowired
     public RentalController(RentService service, RentService rentService) {
         super(service);
         this.rentService = rentService;
