@@ -6,15 +6,15 @@ import java.util.Objects;
 public class RentalDto {
 
     private long id;
-    private CarDto carDto;
-    private ClientDto clientDto;
+    private CarDto car;
+    private ClientDto client;
     private LocalDate rentalBegin;
     private LocalDate rentalEnd;
 
-    public RentalDto(long id, CarDto carDto, ClientDto clientDto, LocalDate rentalBegin, LocalDate rentalEnd) {
+    public RentalDto(long id, CarDto car, ClientDto client, LocalDate rentalBegin, LocalDate rentalEnd) {
         this.id = id;
-        this.carDto = carDto;
-        this.clientDto = clientDto;
+        this.car = car;
+        this.client = client;
         this.rentalBegin = rentalBegin;
         this.rentalEnd = rentalEnd;
     }
@@ -30,20 +30,20 @@ public class RentalDto {
         this.id = id;
     }
 
-    public CarDto getCarDto() {
-        return carDto;
+    public CarDto getCar() {
+        return car;
     }
 
-    public void setCarDto(CarDto carDto) {
-        this.carDto = carDto;
+    public void setCar(CarDto car) {
+        this.car = car;
     }
 
-    public ClientDto getClientDto() {
-        return clientDto;
+    public ClientDto getClient() {
+        return client;
     }
 
-    public void setClientDto(ClientDto clientDto) {
-        this.clientDto = clientDto;
+    public void setClient(ClientDto client) {
+        this.client = client;
     }
 
     public LocalDate getRentalBegin() {
@@ -68,14 +68,14 @@ public class RentalDto {
         if (o == null || getClass() != o.getClass()) return false;
         RentalDto rentalDto = (RentalDto) o;
         return id == rentalDto.id &&
-                Objects.equals(carDto, rentalDto.carDto) &&
-                Objects.equals(clientDto, rentalDto.clientDto) &&
+                Objects.equals(car, rentalDto.car) &&
+                Objects.equals(client, rentalDto.client) &&
                 Objects.equals(rentalBegin, rentalDto.rentalBegin) &&
                 Objects.equals(rentalEnd, rentalDto.rentalEnd);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, carDto, clientDto, rentalBegin, rentalEnd);
+        return Objects.hash(id, car, client, rentalBegin, rentalEnd);
     }
 }

@@ -1,9 +1,14 @@
 package com.swiderski.carrental.services.impl;
 
+import com.swiderski.carrental.dto.CarDto;
+import com.swiderski.carrental.dto.ClientDto;
+import com.swiderski.carrental.dto.RentalDto;
 import com.swiderski.carrental.entity.Car;
-import com.swiderski.carrental.entity.Client;
 import com.swiderski.carrental.entity.Rental;
 import com.swiderski.carrental.exception.NotFoundException;
+import com.swiderski.carrental.mapper.CarMapper;
+import com.swiderski.carrental.mapper.ClientMapper;
+import com.swiderski.carrental.mapper.RentalMapper;
 import com.swiderski.carrental.repository.RentalRepository;
 import com.swiderski.carrental.services.CarService;
 import com.swiderski.carrental.services.ClientService;
@@ -13,8 +18,12 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +50,16 @@ public class RentServiceImplTest {
     @InjectMocks
     RentServiceImpl rentService;
 
+    @Spy
+    RentalMapper rentalMapper = RentalMapper.INSTANCE;
+
+    @Spy
+    CarMapper carMapper = CarMapper.INSTANCE;
+
+    @Spy
+    ClientMapper clientMapper = ClientMapper.INSTANCE;
+
+
     @BeforeEach
     void init_mocks() {
         MockitoAnnotations.initMocks(this);
@@ -50,11 +69,12 @@ public class RentServiceImplTest {
     public void getRentalById_shouldReturnedRentalById() {
         //given
         Rental rental = getRental();
+        RentalDto rentalDto = getRentalDto();
         when(rentalRepository.findById(rentalId)).thenReturn(Optional.of(rental));
         //when
-        Rental rentalById = rentService.getRentalById(rentalId);
+        RentalDto rentalById = rentService.getById(rentalId);
         //then
-        assertEquals(rental, rentalById);
+        assertEquals(rentalDto, rentalById);
     }
 
     @Test
@@ -62,23 +82,24 @@ public class RentServiceImplTest {
         when(rentalRepository.findById(rentalId)).thenReturn(Optional.empty());
         String expectedMessages = "Could not find " + Rental.class.getSimpleName() + " with id = " + rentalId;
 
-        Throwable exception = assertThrows(NotFoundException.class, () -> rentService.getRentalById(rentalId));
+        Throwable exception = assertThrows(NotFoundException.class, () -> rentService.getById(rentalId));
         assertEquals(expectedMessages, exception.getMessage());
     }
 
     @Test
     public void rentCar_shouldRentCar() {
         //given
-        Car car = getCar();
-        Client client = getClient();
-        Rental rentalExpected = getRental();
-        when(carService.getCarById(carId)).thenReturn(car);
-        when(clientService.getClientById(clientId)).thenReturn(client);
-        when(rentalRepository.save(any(Rental.class))).thenReturn(rentalExpected);
+        CarDto car = getCarDto();
+        ClientDto clientDto = getClientDto();
+        Rental rental = getRental();
+        RentalDto rentalExpectedDto = getRentalDto();
+        when(carService.getById(carId)).thenReturn(car);
+        when(clientService.getById(clientId)).thenReturn(clientDto);
+        when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
         //when
-        Rental rental = rentService.rentCar(carId, clientId);
+        RentalDto rentalSaved = rentService.rentCar(carId, clientId);
         //then
-        assertEquals(rentalExpected, rental);
+        assertEquals(rentalExpectedDto, rentalSaved);
     }
 
     @Test
@@ -87,21 +108,24 @@ public class RentServiceImplTest {
         Rental rental = getRental();
         Rental rentalExpected = getRental();
         rentalExpected.setRentalEnd(rentalEnd);
+        RentalDto rentalDtoExpected = getRentalDto();
+        rentalDtoExpected.setRentalEnd(rentalEnd);
         when(rentalRepository.findById(rentalId)).thenReturn(Optional.of(rental));
         when(rentalRepository.save(any(Rental.class))).thenReturn(rentalExpected);
         //when
-        Rental finishRental = rentService.returnCar(rentalId, rentalEnd);
+        RentalDto finishRental = rentService.returnCar(rentalId, rentalEnd);
         //then
-        assertEquals(rentalExpected, finishRental);
+        assertEquals(rentalDtoExpected, finishRental);
     }
 
     @Test
     public void getAvailableCars() {
         //given
         List<Car> cars = getCars();
-        when(rentalRepository.findAllAvailableCar()).thenReturn(new HashSet<>(cars));
+        List<CarDto> carsDto = getCarsDto();
+        when(rentalRepository.findAllAvailableCar()).thenReturn((Set<Car>) cars);
         //when
-        Set<Car> availableCars = rentService.getAvailableCars();
+        Set<CarDto> availableCars = rentService.getAvailableCars();
         //then
         assertEquals(2, availableCars.size());
     }
@@ -110,9 +134,10 @@ public class RentServiceImplTest {
     public void getRentedCars() {
         //given
         List<Car> cars = getCars();
+        List<CarDto> carsDto = getCarsDto();
         when(rentalRepository.findAllRentedCars()).thenReturn(new HashSet<>(cars));
         //when
-        Set<Car> rentedCars = rentService.getRentedCars();
+        Set<CarDto> rentedCars = rentService.getRentedCars();
         //then
         assertEquals(2, rentedCars.size());
     }
@@ -121,10 +146,10 @@ public class RentServiceImplTest {
     public void getAllRentals() {
         //given
         List<Rental> rentals = getRentals();
-        when(rentalRepository.findAll()).thenReturn(rentals);
+        when(rentalRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
         //when
-        Set<Rental> allRentals = rentService.getAllRentals();
+        Collection<RentalDto> all = rentService.getAll(pageNo, pageSize, sortBy);
         //then
-        assertEquals(new HashSet<>(rentals), allRentals);
+        assertEquals(rentals, all);
     }
 }

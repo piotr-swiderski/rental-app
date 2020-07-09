@@ -5,9 +5,11 @@ import com.swiderski.carrental.entity.Car;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
-@Mapper()
+@Mapper(componentModel = "spring")
 public interface CarMapper {
 
     CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);
@@ -18,4 +20,7 @@ public interface CarMapper {
 
     Set<CarDto> carSetToCarDtoSet(Set<Car> carSet);
 
+    Collection<CarDto> carCollectionToCarDtoCollection(Collection<Car> cars);
+
+    List<CarDto> carListToCarDtoList(List<Car> cars);
 }

@@ -1,61 +1,66 @@
 package com.swiderski.carrental.services.impl;
 
+import com.swiderski.carrental.dto.ClientDto;
 import com.swiderski.carrental.entity.Client;
 import com.swiderski.carrental.exception.NotFoundException;
+import com.swiderski.carrental.mapper.ClientMapper;
 import com.swiderski.carrental.repository.ClientRepository;
 import com.swiderski.carrental.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+    private final ClientMapper clientMapper;
 
     @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository) {
+    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper clientMapper) {
         this.clientRepository = clientRepository;
+        this.clientMapper = clientMapper;
     }
 
     @Override
-    public Client saveClient(Client client) {
-        return clientRepository.save(client);
+    public ClientDto save(ClientDto client) {
+        Client clientMapped = clientMapper.clientDtoDtoClient(client);
+        Client pagedResult = clientRepository.save(clientMapped);
+        return clientMapper.clientToClientDto(pagedResult);
     }
 
     @Override
-    public Set<Client> getAllClients() {
-        return new HashSet<>(clientRepository.findAll());
+    public List<ClientDto> getAll(int pageNo, int pageSize, String sortBy) {
+        PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        List<Client> all = clientRepository.findAll(paging).getContent();
+        return clientMapper.clientListToClientDtoList(all);
     }
 
     @Override
-    public Client updateClient(long id, Client client) {
-        getClientById(id);
-        getOptionalClient(id).ifPresent(c -> {
-            client.setId(id);
-            clientRepository.save(client);
-        });
-
-        return client;
+    public ClientDto update(long id, ClientDto client) {
+        client.setId(id);
+        return save(client);
     }
 
     @Override
-    public Client getClientById(long id) {
-        return getOptionalClient(id)
+    public ClientDto getById(long id) {
+        Client client = getClient(id);
+        return clientMapper.clientToClientDto(client);
+    }
+
+    @Override
+    public ClientDto delete(long id) {
+        Client client = getClient(id);
+        clientRepository.delete(client);
+        return clientMapper.clientToClientDto(client);
+    }
+
+    private Client getClient(long id) {
+        return clientRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id, Client.class.getSimpleName()));
-    }
-
-    @Override
-    public Client deleteClient(long id) {
-        Client clientById = getClientById(id);
-        clientRepository.delete(clientById);
-        return clientById;
-    }
-
-    private Optional<Client> getOptionalClient(long id) {
-        return clientRepository.findById(id);
     }
 }

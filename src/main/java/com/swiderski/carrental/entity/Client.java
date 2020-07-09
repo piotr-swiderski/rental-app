@@ -17,7 +17,7 @@ public class Client {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "city")

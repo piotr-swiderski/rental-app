@@ -1,7 +1,9 @@
 package com.swiderski.carrental.services.impl;
 
+import com.swiderski.carrental.dto.ClientDto;
 import com.swiderski.carrental.entity.Client;
 import com.swiderski.carrental.exception.NotFoundException;
+import com.swiderski.carrental.mapper.ClientMapper;
 import com.swiderski.carrental.repository.ClientRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,15 +11,20 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static com.swiderski.carrental.utils.Utils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,6 +36,9 @@ public class ClientServiceImplTest {
     @InjectMocks
     ClientServiceImpl clientService;
 
+    @Spy
+    ClientMapper clientMapper = ClientMapper.INSTANCE;
+
     @BeforeEach
     void init_mocks() {
         MockitoAnnotations.initMocks(this);
@@ -37,21 +47,23 @@ public class ClientServiceImplTest {
     @Test
     public void saveClient_savedClient() {
         //given
+        ClientDto clientDto = getClientDto();
         Client client = getClient();
-        when(clientRepository.save(client)).thenReturn(client);
+        when(clientRepository.save(any(Client.class))).thenReturn(client);
         //when
-        Client savedClient = clientService.saveClient(client);
+        ClientDto savedClient = clientService.save(clientDto);
         //then
-        assertEquals(client, savedClient);
+        assertEquals(clientDto, savedClient);
     }
 
     @Test
     public void getAllClients() {
         //given
+        List<ClientDto> clientsDto = getClientsDto();
         List<Client> clients = getClients();
-        when(clientRepository.findAll()).thenReturn(clients);
+        when(clientRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(clients));
         //when
-        Set<Client> returnedClients = clientService.getAllClients();
+        Collection<ClientDto> returnedClients = clientService.getAll(pageNo, pageSize, sortBy);
         //then
         assertEquals(2, returnedClients.size());
     }
@@ -62,22 +74,25 @@ public class ClientServiceImplTest {
         Client client = getClient();
         Client modifiedClient = getClient();
         modifiedClient.setName("XXX");
-        when(clientRepository.findById(clientId)).thenReturn(Optional.of(client));
+        ClientDto modifiedClientDto = getClientDto();
+        modifiedClientDto.setName("XXX");
+        when(clientRepository.save(any(Client.class))).thenReturn(modifiedClient);
         //when
-        Client updateClient = clientService.updateClient(clientId, modifiedClient);
+        ClientDto updateClient = clientService.update(clientId, modifiedClientDto);
         //then
-        assertEquals(modifiedClient, updateClient);
+        assertEquals(modifiedClientDto, updateClient);
     }
 
     @Test
     public void getClientById_shouldReturnedClientById() {
         //given
         Client client = getClient();
+        ClientDto clientDto = getClientDto();
         when(clientRepository.findById(clientId)).thenReturn(Optional.of(client));
         //when
-        Client clientById = clientService.getClientById(clientId);
+        ClientDto clientById = clientService.getById(clientId);
         //then
-        assertEquals(client, clientById);
+        assertEquals(clientDto, clientById);
     }
 
     @Test
@@ -85,7 +100,7 @@ public class ClientServiceImplTest {
         when(clientRepository.findById(clientId)).thenReturn(Optional.empty());
         String expectedMessages = "Could not find " + Client.class.getSimpleName() + " with id = " + clientId;
 
-        Throwable exception = assertThrows(NotFoundException.class, () -> clientService.getClientById(clientId));
+        Throwable exception = assertThrows(NotFoundException.class, () -> clientService.getById(clientId));
         assertEquals(expectedMessages, exception.getMessage());
     }
 
@@ -93,10 +108,11 @@ public class ClientServiceImplTest {
     public void deleteClient() {
         //given
         Client client = getClient();
+        ClientDto clientDto = getClientDto();
         when(clientRepository.findById(clientId)).thenReturn(Optional.of(client));
         //when
-        Client deletedClient = clientService.deleteClient(clientId);
+        ClientDto deletedClient = clientService.delete(clientId);
         //then
-        assertEquals(client, deletedClient);
+        assertEquals(clientDto, deletedClient);
     }
 }

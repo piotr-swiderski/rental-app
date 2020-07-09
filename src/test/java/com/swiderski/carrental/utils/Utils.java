@@ -56,6 +56,10 @@ public class Utils {
     public static final LocalDate rentalBegin = LocalDate.of(2020, 5, 15);
     public static final LocalDate rentalEnd = LocalDate.of(2020, 5, 25);
 
+    public static final int pageNo = 0;
+    public static final int pageSize = 10;
+    public static final String sortBy = "id";
+
     public static Client getClient() {
         return Client.ClientBuilder.aClient()
                 .withId(clientId)
@@ -162,8 +166,17 @@ public class Utils {
         return Arrays.asList(getCar(), getSecondCar());
     }
 
+
+    public static List<CarDto> getCarsDto() {
+        return Arrays.asList(getCarDto(), getSecondCarDto());
+    }
+
     public static List<Client> getClients() {
         return Arrays.asList(getClient(), getSecondClient());
+    }
+
+    public static List<ClientDto> getClientsDto() {
+        return Arrays.asList(getClientDto(), getClientDto());
     }
 
     public static List<Rental> getRentals() {

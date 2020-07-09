@@ -1,22 +1,18 @@
 package com.swiderski.carrental.services;
 
-import com.swiderski.carrental.entity.Car;
-import com.swiderski.carrental.entity.Rental;
+import com.swiderski.carrental.dto.CarDto;
+import com.swiderski.carrental.dto.RentalDto;
 
 import java.time.LocalDate;
 import java.util.Set;
 
-public interface RentService {
+public interface RentService extends CrudService<RentalDto> {
 
-    Rental getRentalById(long id);
+    RentalDto rentCar(long carId, long clientId);
 
-    Rental rentCar(long carId, long clientId);
+    RentalDto returnCar(long id, LocalDate returnDate);
 
-    Rental returnCar(long id, LocalDate returnDate);
+    Set<CarDto> getAvailableCars();
 
-    Set<Car> getAvailableCars();
-
-    Set<Car> getRentedCars();
-
-    Set<Rental> getAllRentals();
+    Set<CarDto> getRentedCars();
 }
