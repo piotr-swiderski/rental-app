@@ -1,9 +1,18 @@
 package com.swiderski.carrental.dto;
 
+import com.swiderski.carrental.car.CarMapper;
+import com.swiderski.carrental.client.ClientMapper;
 import com.swiderski.carrental.rental.Rental;
 import com.swiderski.carrental.rental.RentalDto;
 import com.swiderski.carrental.rental.RentalMapper;
-import org.junit.jupiter.api.Test;
+import com.swiderski.carrental.rental.RentalMapperImpl;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mapstruct.factory.Mappers;
+import org.mockito.InjectMocks;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDate;
 
@@ -12,9 +21,19 @@ import static com.swiderski.carrental.utils.Utils.getRentalDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+@RunWith(MockitoJUnitRunner.class)
 public class RentalMapperTest {
 
-    RentalMapper rentalMapper = RentalMapper.INSTANCE;
+    @InjectMocks
+    RentalMapper rentalMapper = RentalMapperImpl.INSTANCE;
+
+    @Before
+    public void setUp() {
+        ClientMapper clientMapper = Mappers.getMapper(ClientMapper.class); // Initialization of the mapper
+        ReflectionTestUtils.setField(rentalMapper, "clientMapper", clientMapper);
+        CarMapper carMapper = Mappers.getMapper(CarMapper.class); // Initialization of the mapper
+        ReflectionTestUtils.setField(rentalMapper, "carMapper", carMapper);
+    }
 
     @Test
     public void shouldMapRentalToRentalDto() {

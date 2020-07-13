@@ -40,8 +40,7 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
         rentalDto.setCar(carDto);
         rentalDto.setClient(clientDto);
 
-        save(rentalDto);
-        return rentalDto;
+        return save(rentalDto);
     }
 
     private Car getCarToRent(long carId) {

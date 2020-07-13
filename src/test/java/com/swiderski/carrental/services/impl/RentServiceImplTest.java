@@ -13,18 +13,18 @@ import com.swiderski.carrental.rental.Rental;
 import com.swiderski.carrental.rental.RentalDto;
 import com.swiderski.carrental.rental.RentalMapper;
 import com.swiderski.carrental.rental.RentalRepository;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,17 +51,17 @@ public class RentServiceImplTest {
 
     @Spy
     RentalMapper rentalMapper = RentalMapper.INSTANCE;
-
     @Spy
     CarMapper carMapper = CarMapper.INSTANCE;
-
     @Spy
     ClientMapper clientMapper = ClientMapper.INSTANCE;
 
-
-    @BeforeEach
-    void init_mocks() {
-        MockitoAnnotations.initMocks(this);
+    @Before
+    public void init_mocks() {
+        ClientMapper clientMapper = Mappers.getMapper(ClientMapper.class); // Initialization of the mapper
+        ReflectionTestUtils.setField(rentalMapper, "clientMapper", clientMapper);
+        CarMapper carMapper = Mappers.getMapper(CarMapper.class); // Initialization of the mapper
+        ReflectionTestUtils.setField(rentalMapper, "carMapper", carMapper);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class RentServiceImplTest {
         //given
         Rental rental = getRental();
         RentalDto rentalDto = getRentalDto();
-        when(rentalRepository.findById(rentalId)).thenReturn(Optional.of(rental));
+        when(rentalRepository.findById(any())).thenReturn(Optional.of(rental));
         //when
         RentalDto rentalById = rentService.getById(rentalId);
         //then
@@ -79,7 +79,7 @@ public class RentServiceImplTest {
     @Test
     public void getRentalById_shouldThrowNotFoundException() {
         when(rentalRepository.findById(rentalId)).thenReturn(Optional.empty());
-        String expectedMessages = "Could not find " + Rental.class.getSimpleName() + " with id = " + rentalId;
+        String expectedMessages = "Could not find " + "entity" + " with id = " + rentalId;
 
         Throwable exception = assertThrows(NotFoundException.class, () -> rentService.getById(rentalId));
         assertEquals(expectedMessages, exception.getMessage());
@@ -88,12 +88,13 @@ public class RentServiceImplTest {
     @Test
     public void rentCar_shouldRentCar() {
         //given
-        CarDto car = getCarDto();
+        CarDto carDto = getCarDto();
+        Car car = getCar();
         ClientDto clientDto = getClientDto();
         Rental rental = getRental();
         RentalDto rentalExpectedDto = getRentalDto();
-        when(carService.getById(carId)).thenReturn(car);
         when(clientService.getById(clientId)).thenReturn(clientDto);
+        when(rentalRepository.getCarToRent(carId)).thenReturn(Optional.of(car));
         when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
         //when
         RentalDto rentalSaved = rentService.rentCar(carId, clientId);
@@ -145,10 +146,11 @@ public class RentServiceImplTest {
     public void getAllRentals() {
         //given
         List<Rental> rentals = getRentals();
+        List<RentalDto> rentalsDto = getRentalsDto();
         when(rentalRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
         //when
-        Collection<RentalDto> all = rentService.getAll(pageNo, pageSize, sortBy);
+        List<RentalDto> all = rentService.getAll(pageNo, pageSize, sortBy);
         //then
-        assertEquals(rentals, all);
+        assertEquals(rentalsDto, all);
     }
 }

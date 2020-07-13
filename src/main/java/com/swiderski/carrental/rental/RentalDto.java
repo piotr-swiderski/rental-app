@@ -73,4 +73,15 @@ public class RentalDto extends AbstractDto {
     public int hashCode() {
         return Objects.hash(id, car, client, rentalBegin, rentalEnd);
     }
+
+    @Override
+    public String toString() {
+        return "RentalDto{" +
+                "car=" + car +
+                ", client=" + client +
+                ", rentalBegin=" + rentalBegin +
+                ", rentalEnd=" + rentalEnd +
+                ", id=" + id +
+                '}';
+    }
 }

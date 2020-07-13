@@ -1,12 +1,12 @@
 package com.swiderski.carrental.utils;
 
-import com.swiderski.carrental.car.CarDto;
-import com.swiderski.carrental.client.ClientDto;
-import com.swiderski.carrental.rental.RentalDto;
 import com.swiderski.carrental.car.Car;
-import com.swiderski.carrental.client.Client;
+import com.swiderski.carrental.car.CarDto;
 import com.swiderski.carrental.car.EngineType;
+import com.swiderski.carrental.client.Client;
+import com.swiderski.carrental.client.ClientDto;
 import com.swiderski.carrental.rental.Rental;
+import com.swiderski.carrental.rental.RentalDto;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -155,11 +155,15 @@ public class Utils {
     }
 
     public static Rental getSecondRental() {
-        return new Rental(rentalSecondId, getSecondCar(), getSecondClient(), rentalBegin, rentalEnd);
+        return new Rental(rentalSecondId, getSecondCar(), getClient(), rentalBegin, rentalEnd);
     }
 
     public static RentalDto getRentalDto() {
         return new RentalDto(rentalId, getCarDto(), getClientDto(), rentalBegin, rentalEnd);
+    }
+
+    public static RentalDto getSecondRentalDto() {
+        return new RentalDto(rentalSecondId, getSecondCarDto(), getClientDto(), rentalBegin, rentalEnd);
     }
 
     public static List<Car> getCars() {
@@ -181,6 +185,10 @@ public class Utils {
 
     public static List<Rental> getRentals() {
         return Arrays.asList(getRental(), getSecondRental());
+    }
+
+    public static List<RentalDto> getRentalsDto() {
+        return Arrays.asList(getRentalDto(), getSecondRentalDto());
     }
 
 }
