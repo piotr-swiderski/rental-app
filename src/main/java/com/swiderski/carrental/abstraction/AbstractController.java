@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @CrossOrigin
-public abstract class AbstractController<T extends CommonService<E>, E> {
+public abstract class AbstractController<T extends CommonService<E>, E extends AbstractDto> {
 
     private final T service;
 

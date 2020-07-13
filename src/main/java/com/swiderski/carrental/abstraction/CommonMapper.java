@@ -3,7 +3,7 @@ package com.swiderski.carrental.abstraction;
 import java.util.List;
 import java.util.Set;
 
-public interface CommonMapper<E extends AbstractEntity, D> {
+public interface CommonMapper<E extends AbstractEntity, D extends AbstractDto> {
 
     D toDto(E e);
 
