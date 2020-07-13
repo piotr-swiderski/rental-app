@@ -2,11 +2,12 @@ package com.swiderski.carrental.rental;
 
 import com.swiderski.carrental.abstraction.CommonRepository;
 import com.swiderski.carrental.car.Car;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface RentalRepository extends CommonRepository<Rental> {
@@ -15,13 +16,13 @@ public interface RentalRepository extends CommonRepository<Rental> {
             "where c.id not in (" +
             "select r.car.id from rental_table r " +
             "where r.rentalEnd is null) ")
-    Set<Car> findAllAvailableCar();
+    Page<Car> findAllAvailableCar(Pageable pageable);
 
     @Query("SELECT c FROM car_table c " +
             "where c.id in (" +
             "select r.car.id from rental_table r " +
             "where r.rentalEnd is null and r.rentalBegin is not null ) ")
-    Set<Car> findAllRentedCars();
+    Page<Car> findAllRentedCars(Pageable pageable);
 
     @Query("SELECT c FROM car_table c " +
             "where c.id = ?1 and c.id not in (" +

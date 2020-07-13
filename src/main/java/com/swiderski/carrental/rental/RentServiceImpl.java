@@ -7,10 +7,12 @@ import com.swiderski.carrental.car.CarMapper;
 import com.swiderski.carrental.client.ClientDto;
 import com.swiderski.carrental.client.ClientService;
 import com.swiderski.carrental.exception.CarRentedException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class RentServiceImpl extends AbstractService<Rental, RentalDto> implements RentService {
@@ -55,14 +57,16 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     }
 
     @Override
-    public Set<CarDto> getAvailableCars() {
-        Set<Car> allAvailableCar = rentalRepository.findAllAvailableCar();
-        return carMapper.toSetDto(allAvailableCar);
+    public List<CarDto> getAvailableCars(int pageNo, int pageSize, String sortBy) {
+        PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        List<Car> allAvailableCar = rentalRepository.findAllAvailableCar(paging).getContent();
+        return carMapper.toListDto(allAvailableCar);
     }
 
     @Override
-    public Set<CarDto> getRentedCars() {
-        Set<Car> allRentedCars = rentalRepository.findAllRentedCars();
-        return carMapper.toSetDto(allRentedCars);
+    public List<CarDto> getRentedCars(int pageNo, int pageSize, String sortBy) {
+        PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        List<Car> allRentedCars = rentalRepository.findAllRentedCars(paging).getContent();
+        return carMapper.toListDto(allRentedCars);
     }
 }

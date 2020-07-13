@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/car-rental-api/rent")
@@ -26,13 +26,17 @@ public class RentalController extends AbstractController<RentService, RentalDto>
     }
 
     @GetMapping("/availableCars")
-    public Set<CarDto> getAllAvailableCars() {
-        return rentService.getAvailableCars();
+    public List<CarDto> getAllAvailableCars(@RequestParam(defaultValue = "0") Integer pageNo,
+                                            @RequestParam(defaultValue = "10") Integer pageSize,
+                                            @RequestParam(defaultValue = "id") String sortBy) {
+        return rentService.getAvailableCars(pageNo, pageSize, sortBy);
     }
 
     @GetMapping("/rentedCars")
-    public Set<CarDto> getRentedCars() {
-        return rentService.getRentedCars();
+    public List<CarDto> getRentedCars(@RequestParam(defaultValue = "0") Integer pageNo,
+                                      @RequestParam(defaultValue = "10") Integer pageSize,
+                                      @RequestParam(defaultValue = "id") String sortBy) {
+        return rentService.getRentedCars(pageNo, pageSize, sortBy);
     }
 
     @PostMapping("/rent")

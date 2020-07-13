@@ -4,7 +4,7 @@ import com.swiderski.carrental.abstraction.CommonService;
 import com.swiderski.carrental.car.CarDto;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 public interface RentService extends CommonService<RentalDto> {
 
@@ -12,7 +12,7 @@ public interface RentService extends CommonService<RentalDto> {
 
     RentalDto returnCar(long id, LocalDate returnDate);
 
-    Set<CarDto> getAvailableCars();
+    List<CarDto> getAvailableCars(int pageNo, int pageSize, String sortBy);
 
-    Set<CarDto> getRentedCars();
+    List<CarDto> getRentedCars(int pageNo, int pageSize, String sortBy);
 }

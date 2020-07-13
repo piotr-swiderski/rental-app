@@ -1,18 +1,18 @@
 package com.swiderski.carrental.services.impl;
 
-import com.swiderski.carrental.car.CarDto;
-import com.swiderski.carrental.client.ClientDto;
-import com.swiderski.carrental.rental.RentalDto;
 import com.swiderski.carrental.car.Car;
-import com.swiderski.carrental.rental.Rental;
-import com.swiderski.carrental.exception.NotFoundException;
+import com.swiderski.carrental.car.CarDto;
 import com.swiderski.carrental.car.CarMapper;
+import com.swiderski.carrental.car.CarService;
+import com.swiderski.carrental.client.ClientDto;
 import com.swiderski.carrental.client.ClientMapper;
+import com.swiderski.carrental.client.ClientService;
+import com.swiderski.carrental.exception.NotFoundException;
+import com.swiderski.carrental.rental.RentServiceImpl;
+import com.swiderski.carrental.rental.Rental;
+import com.swiderski.carrental.rental.RentalDto;
 import com.swiderski.carrental.rental.RentalMapper;
 import com.swiderski.carrental.rental.RentalRepository;
-import com.swiderski.carrental.car.CarService;
-import com.swiderski.carrental.client.ClientService;
-import com.swiderski.carrental.rental.RentServiceImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
@@ -25,10 +25,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static com.swiderski.carrental.utils.Utils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -124,9 +122,9 @@ public class RentServiceImplTest {
         //given
         List<Car> cars = getCars();
         List<CarDto> carsDto = getCarsDto();
-        when(rentalRepository.findAllAvailableCar()).thenReturn((Set<Car>) cars);
+        when(rentalRepository.findAllAvailableCar(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Set<CarDto> availableCars = rentService.getAvailableCars();
+        List<CarDto> availableCars = rentService.getAvailableCars(pageNo, pageSize, sortBy);
         //then
         assertEquals(2, availableCars.size());
     }
@@ -136,9 +134,9 @@ public class RentServiceImplTest {
         //given
         List<Car> cars = getCars();
         List<CarDto> carsDto = getCarsDto();
-        when(rentalRepository.findAllRentedCars()).thenReturn(new HashSet<>(cars));
+        when(rentalRepository.findAllRentedCars(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Set<CarDto> rentedCars = rentService.getRentedCars();
+        List<CarDto> rentedCars = rentService.getRentedCars(pageNo, pageSize, sortBy);
         //then
         assertEquals(2, rentedCars.size());
     }
