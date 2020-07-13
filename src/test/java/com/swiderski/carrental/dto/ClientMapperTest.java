@@ -1,7 +1,8 @@
 package com.swiderski.carrental.dto;
 
-import com.swiderski.carrental.entity.Client;
-import com.swiderski.carrental.mapper.ClientMapper;
+import com.swiderski.carrental.client.Client;
+import com.swiderski.carrental.client.ClientDto;
+import com.swiderski.carrental.client.ClientMapper;
 import org.junit.jupiter.api.Test;
 
 import static com.swiderski.carrental.utils.Utils.getClient;
@@ -20,7 +21,7 @@ class ClientMapperTest {
         Client client = getClient();
         ClientDto clientDto = getClientDto();
         //when
-        ClientDto clientDtoMapper = clientMapper.clientToClientDto(client);
+        ClientDto clientDtoMapper = clientMapper.toDto(client);
         //then
         assertEquals(clientDto, clientDtoMapper);
     }
@@ -31,7 +32,7 @@ class ClientMapperTest {
         ClientDto clientDto = getClientDto();
         Client client = getClient();
         //when
-        Client clientMap = clientMapper.clientDtoDtoClient(clientDto);
+        Client clientMap = clientMapper.fromDto(clientDto);
         //then
         assertEquals(client, clientMap);
     }
@@ -43,7 +44,7 @@ class ClientMapperTest {
         Client client = getClient();
         client.setName("john");
         //when
-        Client clientMap = clientMapper.clientDtoDtoClient(clientDto);
+        Client clientMap = clientMapper.fromDto(clientDto);
         //then
         assertNotEquals(client, clientMap);
     }
@@ -55,7 +56,7 @@ class ClientMapperTest {
         Client client = getClient();
         client.setName("john");
         //when
-        ClientDto clientDtoMap = clientMapper.clientToClientDto(client);
+        ClientDto clientDtoMap = clientMapper.toDto(client);
         //then
         assertNotEquals(clientDto, clientDtoMap);
     }

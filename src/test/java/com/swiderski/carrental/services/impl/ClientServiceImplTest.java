@@ -1,10 +1,11 @@
 package com.swiderski.carrental.services.impl;
 
-import com.swiderski.carrental.dto.ClientDto;
-import com.swiderski.carrental.entity.Client;
+import com.swiderski.carrental.client.Client;
+import com.swiderski.carrental.client.ClientDto;
+import com.swiderski.carrental.client.ClientMapper;
+import com.swiderski.carrental.client.ClientRepository;
+import com.swiderski.carrental.client.ClientServiceImpl;
 import com.swiderski.carrental.exception.NotFoundException;
-import com.swiderski.carrental.mapper.ClientMapper;
-import com.swiderski.carrental.repository.ClientRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
@@ -15,7 +16,6 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.util.Collection;
 import java.util.List;
@@ -53,6 +53,8 @@ public class ClientServiceImplTest {
         //when
         ClientDto savedClient = clientService.save(clientDto);
         //then
+        System.out.println(savedClient);
+        System.out.println(clientDto);
         assertEquals(clientDto, savedClient);
     }
 
@@ -98,7 +100,7 @@ public class ClientServiceImplTest {
     @Test
     public void getClientById_shouldThrowNotFoundException() {
         when(clientRepository.findById(clientId)).thenReturn(Optional.empty());
-        String expectedMessages = "Could not find " + Client.class.getSimpleName() + " with id = " + clientId;
+        String expectedMessages = "Could not find " + "entity" + " with id = " + clientId;
 
         Throwable exception = assertThrows(NotFoundException.class, () -> clientService.getById(clientId));
         assertEquals(expectedMessages, exception.getMessage());

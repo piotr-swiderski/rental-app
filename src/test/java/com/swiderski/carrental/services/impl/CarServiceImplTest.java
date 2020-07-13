@@ -1,10 +1,11 @@
 package com.swiderski.carrental.services.impl;
 
-import com.swiderski.carrental.dto.CarDto;
-import com.swiderski.carrental.entity.Car;
+import com.swiderski.carrental.car.CarDto;
+import com.swiderski.carrental.car.Car;
+import com.swiderski.carrental.car.CarServiceImpl;
 import com.swiderski.carrental.exception.NotFoundException;
-import com.swiderski.carrental.mapper.CarMapper;
-import com.swiderski.carrental.repository.CarRepository;
+import com.swiderski.carrental.car.CarMapper;
+import com.swiderski.carrental.car.CarRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -109,7 +110,7 @@ class CarServiceImplTest {
     @Test
     void getCarById_shouldThrowNotFoundException() {
         when(carRepository.findById(carId)).thenReturn(Optional.empty());
-        String expectedMessages = "Could not find " + Car.class.getSimpleName() + " with id = " + carId;
+        String expectedMessages = "Could not find " + "entity" + " with id = " + carId;
 
         Throwable exception = assertThrows(NotFoundException.class, () -> carService.getById(carId));
         assertEquals(expectedMessages, exception.getMessage());

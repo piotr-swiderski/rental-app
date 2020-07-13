@@ -1,7 +1,8 @@
 package com.swiderski.carrental.dto;
 
-import com.swiderski.carrental.entity.Rental;
-import com.swiderski.carrental.mapper.RentalMapper;
+import com.swiderski.carrental.rental.Rental;
+import com.swiderski.carrental.rental.RentalDto;
+import com.swiderski.carrental.rental.RentalMapper;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class RentalMapperTest {
         Rental rental = getRental();
         RentalDto rentalDto = getRentalDto();
         //when
-        RentalDto rentalDtoMapper = rentalMapper.rentalToRentalDto(rental);
+        RentalDto rentalDtoMapper = rentalMapper.toDto(rental);
         //then
         assertEquals(rentalDto, rentalDtoMapper);
     }
@@ -32,7 +33,7 @@ public class RentalMapperTest {
         RentalDto rentalDto = getRentalDto();
         Rental rental = getRental();
         //when
-        Rental rentalMapped = rentalMapper.rentalDtoToRental(rentalDto);
+        Rental rentalMapped = rentalMapper.fromDto(rentalDto);
         //then
         assertEquals(rental, rentalMapped);
     }
@@ -44,7 +45,7 @@ public class RentalMapperTest {
         Rental rental = getRental();
         rental.setRentalBegin(LocalDate.of(2000, 1, 1));
         //when
-        Rental rentalMapped = rentalMapper.rentalDtoToRental(rentalDto);
+        Rental rentalMapped = rentalMapper.fromDto(rentalDto);
         //then
         assertNotEquals(rental, rentalMapped);
     }
@@ -56,7 +57,7 @@ public class RentalMapperTest {
         Rental rental = getRental();
         rental.setRentalBegin(LocalDate.of(2000, 1, 1));
         //when
-        RentalDto rentalDtoMapped = rentalMapper.rentalToRentalDto(rental);
+        RentalDto rentalDtoMapped = rentalMapper.toDto(rental);
         //then
         assertNotEquals(rentalDto, rentalDtoMapped);
     }

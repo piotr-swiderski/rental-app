@@ -1,7 +1,8 @@
 package com.swiderski.carrental.dto;
 
-import com.swiderski.carrental.entity.Car;
-import com.swiderski.carrental.mapper.CarMapper;
+import com.swiderski.carrental.car.Car;
+import com.swiderski.carrental.car.CarDto;
+import com.swiderski.carrental.car.CarMapper;
 import org.junit.jupiter.api.Test;
 
 import static com.swiderski.carrental.utils.Utils.getCar;
@@ -20,7 +21,7 @@ class CarMapperTest {
         Car car = getCar();
         CarDto carDto = getCarDto();
         //when
-        CarDto carDtoMapper = carMapper.carToCarDto(car);
+        CarDto carDtoMapper = carMapper.toDto(car);
         //then
         assertEquals(carDto, carDtoMapper);
     }
@@ -31,7 +32,7 @@ class CarMapperTest {
         CarDto carDto = getCarDto();
         Car car = getCar();
         //when
-        Car carMapper = this.carMapper.carDtoToCar(carDto);
+        Car carMapper = this.carMapper.fromDto(carDto);
         //then
         assertEquals(car, carMapper);
     }
@@ -43,7 +44,7 @@ class CarMapperTest {
         CarDto carDto = getCarDto();
         carDto.setBrand("Honda");
         //when
-        CarDto carDtoMapper = carMapper.carToCarDto(car);
+        CarDto carDtoMapper = carMapper.toDto(car);
         //then
         assertNotEquals(carDto, carDtoMapper);
     }
@@ -55,7 +56,7 @@ class CarMapperTest {
         Car car = getCar();
         car.setBrand("Honda");
         //when
-        Car carMapped = carMapper.carDtoToCar(carDto);
+        Car carMapped = carMapper.fromDto(carDto);
         //then
         assertNotEquals(car, carMapped);
     }
