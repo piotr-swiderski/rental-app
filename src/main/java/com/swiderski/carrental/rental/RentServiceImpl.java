@@ -7,6 +7,8 @@ import com.swiderski.carrental.car.CarMapper;
 import com.swiderski.carrental.client.ClientDto;
 import com.swiderski.carrental.client.ClientService;
 import com.swiderski.carrental.exception.CarRentedException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -56,16 +58,18 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     }
 
     @Override
-    public List<CarDto> getAvailableCars(int pageNo, int pageSize, String sortBy) {
+    public Page<CarDto> getAvailableCars(int pageNo, int pageSize, String sortBy) {
         PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        List<Car> allAvailableCar = rentalRepository.findAllAvailableCar(paging).getContent();
-        return carMapper.toListDto(allAvailableCar);
+        Page<Car> allAvailableCarPage = rentalRepository.findAllAvailableCar(paging);
+        List<CarDto> pageResult = carMapper.toListDto(allAvailableCarPage.getContent());
+        return new PageImpl<>(pageResult, paging, allAvailableCarPage.getTotalElements());
     }
 
     @Override
-    public List<CarDto> getRentedCars(int pageNo, int pageSize, String sortBy) {
+    public Page<CarDto> getRentedCars(int pageNo, int pageSize, String sortBy) {
         PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        List<Car> allRentedCars = rentalRepository.findAllRentedCars(paging).getContent();
-        return carMapper.toListDto(allRentedCars);
+        Page<Car> allRentedCars = rentalRepository.findAllRentedCars(paging);
+        List<CarDto> pageList = carMapper.toListDto(allRentedCars.getContent());
+        return new PageImpl<>(pageList, paging, allRentedCars.getTotalElements());
     }
 }

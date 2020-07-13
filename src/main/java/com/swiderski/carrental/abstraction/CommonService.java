@@ -1,6 +1,6 @@
 package com.swiderski.carrental.abstraction;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface CommonService<D> {
 
@@ -8,7 +8,7 @@ public interface CommonService<D> {
 
     D getById(long id);
 
-    List<D> getAll(int pageNo, int pageSize, String sortBy);
+    Page<D> getAll(int pageNo, int pageSize, String sortBy);
 
     D update(long id, D dto);
 

@@ -21,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -125,9 +126,9 @@ public class RentServiceImplTest {
         List<CarDto> carsDto = getCarsDto();
         when(rentalRepository.findAllAvailableCar(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        List<CarDto> availableCars = rentService.getAvailableCars(pageNo, pageSize, sortBy);
+        Page<CarDto> availableCars = rentService.getAvailableCars(pageNo, pageSize, sortBy);
         //then
-        assertEquals(2, availableCars.size());
+        assertEquals(2, availableCars.getTotalElements());
     }
 
     @Test
@@ -137,9 +138,9 @@ public class RentServiceImplTest {
         List<CarDto> carsDto = getCarsDto();
         when(rentalRepository.findAllRentedCars(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        List<CarDto> rentedCars = rentService.getRentedCars(pageNo, pageSize, sortBy);
+        Page<CarDto> rentedCars = rentService.getRentedCars(pageNo, pageSize, sortBy);
         //then
-        assertEquals(2, rentedCars.size());
+        assertEquals(2, rentedCars.getTotalElements());
     }
 
     @Test
@@ -149,8 +150,8 @@ public class RentServiceImplTest {
         List<RentalDto> rentalsDto = getRentalsDto();
         when(rentalRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
         //when
-        List<RentalDto> all = rentService.getAll(pageNo, pageSize, sortBy);
+        Page<RentalDto> all = rentService.getAll(pageNo, pageSize, sortBy);
         //then
-        assertEquals(rentalsDto, all);
+        assertEquals(rentalsDto, all.getContent());
     }
 }

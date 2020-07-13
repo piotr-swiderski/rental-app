@@ -1,11 +1,11 @@
 package com.swiderski.carrental.services.impl;
 
-import com.swiderski.carrental.car.CarDto;
 import com.swiderski.carrental.car.Car;
-import com.swiderski.carrental.car.CarServiceImpl;
-import com.swiderski.carrental.exception.NotFoundException;
+import com.swiderski.carrental.car.CarDto;
 import com.swiderski.carrental.car.CarMapper;
 import com.swiderski.carrental.car.CarRepository;
+import com.swiderski.carrental.car.CarServiceImpl;
+import com.swiderski.carrental.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -14,10 +14,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,9 +62,9 @@ class CarServiceImplTest {
         List<Car> cars = getCars();
         when(carRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Collection<CarDto> allCars = carService.getAll(0, 10, "id");
+        Page<CarDto> allCars = carService.getAll(0, 10, "id");
         //then
-        assertEquals(2, allCars.size());
+        assertEquals(2, allCars.getTotalElements());
     }
 
     @Test

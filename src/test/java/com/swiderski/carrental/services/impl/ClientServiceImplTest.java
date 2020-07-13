@@ -14,10 +14,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,9 +65,9 @@ public class ClientServiceImplTest {
         List<Client> clients = getClients();
         when(clientRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(clients));
         //when
-        Collection<ClientDto> returnedClients = clientService.getAll(pageNo, pageSize, sortBy);
+        Page<ClientDto> returnedClients = clientService.getAll(pageNo, pageSize, sortBy);
         //then
-        assertEquals(2, returnedClients.size());
+        assertEquals(2, returnedClients.getTotalElements());
     }
 
     @Test

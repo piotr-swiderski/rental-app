@@ -2,6 +2,8 @@ package com.swiderski.carrental.abstraction;
 
 
 import com.swiderski.carrental.exception.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
@@ -36,10 +38,11 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
     }
 
     @Override
-    public List<D> getAll(int pageNo, int pageSize, String sortBy) {
+    public Page<D> getAll(int pageNo, int pageSize, String sortBy) {
         PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        List<E> pagedResult = commonRepository.findAll(paging).getContent();
-        return commonMapper.toListDto(pagedResult);
+        Page<E> pagedResult = commonRepository.findAll(paging);
+        List<D> pageList = commonMapper.toListDto(pagedResult.getContent());
+        return new PageImpl<>(pageList, paging, pagedResult.getTotalElements());
     }
 
     @Override
