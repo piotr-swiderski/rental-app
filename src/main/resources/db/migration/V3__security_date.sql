@@ -16,8 +16,8 @@ insert into permission_role (permission_id, role_id) values
 (2,2),
 (3,2);
 
-insert into user_table (id, username, password, email) values ('1', 'admin', '{bcrypt}$2a$10$fgGN6ElQWmDXnodqaFZ3ZuNiLs.b2ZDnEifuzNe9x9P2iKd1g4VyO', 'admin@admin.com');
-insert into user_table (id, username, password, email) values ('2', 'user', '{bcrypt}$2a$10$zQYiNMJ1oH8.7ELKUrgtYup6.LZpP1StZ8MSnNREo51VG7GM.THJK', 'user@user.com');
+insert into user_table (id, username, password, email) values ('1', 'admin', '$2a$10$fgGN6ElQWmDXnodqaFZ3ZuNiLs.b2ZDnEifuzNe9x9P2iKd1g4VyO', 'admin@admin.com');
+insert into user_table (id, username, password, email) values ('2', 'user', '$2a$10$zQYiNMJ1oH8.7ELKUrgtYup6.LZpP1StZ8MSnNREo51VG7GM.THJK', 'user@user.com');
 
 insert into role_user (role_id, user_id) values
 (1,1),

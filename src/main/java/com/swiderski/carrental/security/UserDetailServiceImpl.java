@@ -3,7 +3,6 @@ package com.swiderski.carrental.security;
 import com.swiderski.carrental.security.models.AuthUserDetail;
 import com.swiderski.carrental.security.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,7 +27,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException("Username or password wrong"));
 
-        UserDetails userDetails = new AuthUserDetail(user);
-        return userDetails; //todo USER ROLE
+        return new AuthUserDetail(user);
     }
 }
