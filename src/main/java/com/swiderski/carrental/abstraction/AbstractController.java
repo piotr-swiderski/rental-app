@@ -1,6 +1,7 @@
 package com.swiderski.carrental.abstraction;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public Page<E> getAll(@RequestParam(defaultValue = "0") Integer pageNo,
                           @RequestParam(defaultValue = "10") Integer pageSize,
                           @RequestParam(defaultValue = "id") String sortBy) {
