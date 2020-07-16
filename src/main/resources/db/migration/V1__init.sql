@@ -7,7 +7,7 @@ create table car_table (
     cost float not null,
     engine_type varchar(50),
     production_year integer,
-    created_date timestamp,
+    created_date timestamp not null,
     modified_date timestamp,
     primary key (id)
 );
@@ -21,7 +21,7 @@ create table client_table (
     street varchar(50) not null,
     zip_code varchar(50) not null,
     phone varchar(50) not null,
-    created_date timestamp,
+    created_date timestamp not null,
     modified_date timestamp,
     primary key (id)
 );
@@ -30,7 +30,7 @@ create table rental_table (
     id bigserial not null,
     car_id bigserial  references car_table(id),
     client_id bigserial references client_table(id),
-    created_date timestamp,
+    created_date timestamp not null,
     modified_date timestamp,
     date_rented_begin date,
     date_rented_end date,

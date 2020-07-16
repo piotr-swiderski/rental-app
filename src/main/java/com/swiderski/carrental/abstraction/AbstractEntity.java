@@ -16,7 +16,7 @@ public abstract class AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(name = "created_date")
+    @Column(name = "created_date", nullable = false, updatable = false)
     @CreationTimestamp
     LocalDateTime createdDate;
 
