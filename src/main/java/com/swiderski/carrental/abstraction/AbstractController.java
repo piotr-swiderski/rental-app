@@ -14,6 +14,7 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public Page<E> getAll(@RequestParam(defaultValue = "0") Integer pageNo,
                           @RequestParam(defaultValue = "10") Integer pageSize,
                           @RequestParam(defaultValue = "id") String sortBy) {
@@ -21,22 +22,25 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasRole('USER')")
     public E getById(@PathVariable long id) {
         return service.getById(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('create_profile')")
     public E save(@RequestBody E dto) {
         return service.save(dto);
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('delete_profile')")
     public E delete(@PathVariable long id) {
         return service.delete(id);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('update_profile')")
     public E update(@PathVariable long id, @RequestBody E dto) {
         return service.update(id, dto);
     }

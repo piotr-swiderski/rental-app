@@ -21,4 +21,5 @@ insert into user_table (id, username, password, email) values ('2', 'user', '$2a
 
 insert into role_user (role_id, user_id) values
 (1,1),
+(2,1),
 (2,2);

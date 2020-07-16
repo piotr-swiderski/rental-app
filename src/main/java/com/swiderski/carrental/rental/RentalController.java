@@ -5,6 +5,7 @@ import com.swiderski.carrental.car.CarDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class RentalController extends AbstractController<RentService, RentalDto>
     }
 
     @GetMapping("/availableCars")
+    @PreAuthorize("hasRole('USER')")
     public Page<CarDto> getAllAvailableCars(@RequestParam(defaultValue = "0") Integer pageNo,
                                             @RequestParam(defaultValue = "10") Integer pageSize,
                                             @RequestParam(defaultValue = "id") String sortBy) {
@@ -33,6 +35,7 @@ public class RentalController extends AbstractController<RentService, RentalDto>
     }
 
     @GetMapping("/rentedCars")
+    @PreAuthorize("hasRole('USER')")
     public Page<CarDto> getRentedCars(@RequestParam(defaultValue = "0") Integer pageNo,
                                       @RequestParam(defaultValue = "10") Integer pageSize,
                                       @RequestParam(defaultValue = "id") String sortBy) {
@@ -40,11 +43,13 @@ public class RentalController extends AbstractController<RentService, RentalDto>
     }
 
     @PostMapping("/rent")
+    @PreAuthorize("hasRole('USER')")
     public RentalDto rentCar(@RequestParam long carId, @RequestParam long clientId) {
         return rentService.rentCar(carId, clientId);
     }
 
     @PostMapping("/return")
+    @PreAuthorize("hasRole('USER')")
     public RentalDto returnCar(@RequestParam long rentalId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate returnedDate) {
         return rentService.returnCar(rentalId, returnedDate);
     }
