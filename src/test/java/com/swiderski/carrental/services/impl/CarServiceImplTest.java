@@ -1,11 +1,11 @@
 package com.swiderski.carrental.services.impl;
 
-import com.swiderski.carrental.car.Car;
-import com.swiderski.carrental.car.CarDto;
-import com.swiderski.carrental.car.CarMapper;
-import com.swiderski.carrental.car.CarRepository;
-import com.swiderski.carrental.car.CarServiceImpl;
-import com.swiderski.carrental.exception.NotFoundException;
+import com.swiderski.carrental.crud.car.Car;
+import com.swiderski.carrental.crud.car.CarDto;
+import com.swiderski.carrental.crud.car.CarMapper;
+import com.swiderski.carrental.crud.car.CarRepository;
+import com.swiderski.carrental.crud.car.CarServiceImpl;
+import com.swiderski.carrental.crud.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

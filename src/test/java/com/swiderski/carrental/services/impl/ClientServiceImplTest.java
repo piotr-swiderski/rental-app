@@ -1,11 +1,11 @@
 package com.swiderski.carrental.services.impl;
 
-import com.swiderski.carrental.client.Client;
-import com.swiderski.carrental.client.ClientDto;
-import com.swiderski.carrental.client.ClientMapper;
-import com.swiderski.carrental.client.ClientRepository;
-import com.swiderski.carrental.client.ClientServiceImpl;
-import com.swiderski.carrental.exception.NotFoundException;
+import com.swiderski.carrental.crud.client.Client;
+import com.swiderski.carrental.crud.client.ClientDto;
+import com.swiderski.carrental.crud.client.ClientMapper;
+import com.swiderski.carrental.crud.client.ClientRepository;
+import com.swiderski.carrental.crud.client.ClientServiceImpl;
+import com.swiderski.carrental.crud.exception.NotFoundException;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
