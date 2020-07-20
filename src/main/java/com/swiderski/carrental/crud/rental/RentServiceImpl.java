@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +34,7 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     }
 
     @Override
+    @Transactional
     public RentalDto rentCar(long carId, long clientId) {
         ClientDto clientDto = clientService.getById(clientId);
         Car car = getCarToRent(carId);
@@ -50,6 +52,7 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     }
 
     @Override
+    @Transactional
     public RentalDto returnCar(long id, LocalDate returnDate) {
         RentalDto rental = getById(id);
         rental.setRentalEnd(returnDate);
@@ -58,6 +61,7 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     }
 
     @Override
+    @Transactional
     public Page<CarDto> getAvailableCars(int pageNo, int pageSize, String sortBy) {
         PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         Page<Car> allAvailableCarPage = rentalRepository.findAllAvailableCar(paging);
@@ -66,6 +70,7 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     }
 
     @Override
+    @Transactional
     public Page<CarDto> getRentedCars(int pageNo, int pageSize, String sortBy) {
         PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         Page<Car> allRentedCars = rentalRepository.findAllRentedCars(paging);

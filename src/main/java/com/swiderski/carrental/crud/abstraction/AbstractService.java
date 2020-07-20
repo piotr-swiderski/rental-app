@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
     }
 
     @Override
+    @Transactional
     public D save(D dto) {
         E entity = commonMapper.fromDto(dto);
         E savedResult = commonRepository.save(entity);
@@ -28,6 +30,7 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
     }
 
     @Override
+    @Transactional
     public D getById(long id) {
         E entity = getEntityById(id);
         return commonMapper.toDto(entity);
@@ -38,6 +41,7 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
     }
 
     @Override
+    @Transactional
     public Page<D> getAll(int pageNo, int pageSize, String sortBy) {
         PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         Page<E> pagedResult = commonRepository.findAll(paging);
@@ -46,6 +50,7 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
     }
 
     @Override
+    @Transactional
     public D update(long id, D dto) {
         dto.setId(id);
         E entity = commonMapper.fromDto(dto);
@@ -54,6 +59,7 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
     }
 
     @Override
+    @Transactional
     public D delete(long id) {
         E entity = getEntityById(id);
         commonRepository.delete(entity);
