@@ -1,0 +1,12 @@
+#security:
+#  oauth2:
+#    client:
+#      client-id: client
+#      client-secret: client
+#      access-token-uri: http://localhost:9091/oauth/token
+#      user-authorization-uri: http://localhost:9091/oauth/authorize
+#      client-authentication-scheme: form
+#    resource:
+#      user-info-uri: http://localhost:9091/userinfo
+##      jwt:
+##        key-value: "12345"

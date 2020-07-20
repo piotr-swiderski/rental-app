@@ -21,7 +21,7 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('create_profile')")
     public Page<E> getAll(@RequestParam(defaultValue = "0") Integer pageNo,
                           @RequestParam(defaultValue = "10") Integer pageSize,
                           @RequestParam(defaultValue = "id") String sortBy) {
@@ -29,6 +29,7 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('create_profile')")
     public E getById(@PathVariable long id) {
         return service.getById(id);
     }
