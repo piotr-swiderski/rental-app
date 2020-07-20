@@ -1,12 +1,12 @@
 package com.swiderski.carrental.utils;
 
-import com.swiderski.carrental.car.Car;
-import com.swiderski.carrental.car.CarDto;
-import com.swiderski.carrental.car.EngineType;
-import com.swiderski.carrental.client.Client;
-import com.swiderski.carrental.client.ClientDto;
-import com.swiderski.carrental.rental.Rental;
-import com.swiderski.carrental.rental.RentalDto;
+import com.swiderski.carrental.crud.car.Car;
+import com.swiderski.carrental.crud.car.CarDto;
+import com.swiderski.carrental.crud.car.EngineType;
+import com.swiderski.carrental.crud.client.Client;
+import com.swiderski.carrental.crud.client.ClientDto;
+import com.swiderski.carrental.crud.rental.Rental;
+import com.swiderski.carrental.crud.rental.RentalDto;
 
 import java.time.LocalDate;
 import java.util.Arrays;
