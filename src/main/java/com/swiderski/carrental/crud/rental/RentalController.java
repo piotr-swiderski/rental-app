@@ -21,9 +21,9 @@ public class RentalController extends AbstractController<RentService, RentalDto>
     private final RentService rentService;
 
     @Autowired
-    public RentalController(RentService service, RentService rentService) {
+    public RentalController(RentService service) {
         super(service);
-        this.rentService = rentService;
+        this.rentService = service;
     }
 
     @GetMapping("/availableCars")

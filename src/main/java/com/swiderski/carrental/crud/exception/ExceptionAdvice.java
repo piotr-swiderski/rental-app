@@ -30,4 +30,11 @@ public class ExceptionAdvice {
     public String dataIntegrityViolationExceptionHandler() {
         return "Integrity exception";
     }
+
+    @ResponseBody
+    @ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badRequestHandler(RuntimeException e) {
+        return "bad request";
+    }
 }

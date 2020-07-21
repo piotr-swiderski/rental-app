@@ -150,7 +150,7 @@ public class RentServiceImplTest {
         List<RentalDto> rentalsDto = getRentalsDto();
         when(rentalRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
         //when
-        Page<RentalDto> all = rentService.getAll(pageNo, pageSize, sortBy);
+        Page<RentalDto> all = rentService.getAll(null, pageNo, pageSize, sortBy);
         //then
         assertEquals(rentalsDto, all.getContent());
     }

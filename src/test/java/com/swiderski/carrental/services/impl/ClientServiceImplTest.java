@@ -65,7 +65,7 @@ public class ClientServiceImplTest {
         List<Client> clients = getClients();
         when(clientRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(clients));
         //when
-        Page<ClientDto> returnedClients = clientService.getAll(pageNo, pageSize, sortBy);
+        Page<ClientDto> returnedClients = clientService.getAll(null, pageNo, pageSize, sortBy);
         //then
         assertEquals(2, returnedClients.getTotalElements());
     }

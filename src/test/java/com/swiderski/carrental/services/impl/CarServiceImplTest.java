@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +63,7 @@ class CarServiceImplTest {
         List<Car> cars = getCars();
         when(carRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Page<CarDto> allCars = carService.getAll(0, 10, "id");
+        Page<CarDto> allCars = carService.getAll(null,0, 10, "id");
         //then
         assertEquals(2, allCars.getTotalElements());
     }
