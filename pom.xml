@@ -71,7 +71,7 @@
             <scope>test</scope>
         </dependency>
 
-<!--        security-->
+        <!--        security-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
@@ -81,27 +81,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-security</artifactId>
             <version>2.2.2.RELEASE</version>
-        </dependency>
-
-<!--        rsql search-->
-        <dependency>
-            <groupId>io.github.perplexhub</groupId>
-            <artifactId>rsql-querydsl-spring-boot-starter</artifactId>
-            <version>5.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.perplexhub</groupId>
-            <artifactId>rsql-jpa-spring-boot-starter</artifactId>
-            <version>5.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springlets</groupId>
-            <artifactId>springlets-boot-starter-data-jpa</artifactId>
-            <version>1.2.0.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>com.sipios</groupId>
