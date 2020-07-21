@@ -1,6 +1,7 @@
 package com.swiderski.carrental.crud.abstraction;
 
 import com.sipios.springsearch.anotation.SearchSpec;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,9 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin
+@PropertySource("classpath:/application.properties")
+@RequestMapping(value = {"${rest.api.version}"})
 public abstract class AbstractController<T extends CommonService<E>, E extends AbstractDto> {
 
     private final T service;

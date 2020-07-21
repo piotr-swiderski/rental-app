@@ -3,6 +3,7 @@ package com.swiderski.carrental.crud.rental;
 import com.swiderski.carrental.crud.abstraction.AbstractController;
 import com.swiderski.carrental.crud.car.CarDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/car-rental-api/rent")
+@PropertySource("classpath:/application.properties")
+@RequestMapping(value = {"${rest.api.version}/rentals"})
 public class RentalController extends AbstractController<RentService, RentalDto> {
 
     private final RentService rentService;
