@@ -1,6 +1,7 @@
 package com.swiderski.carrental.crud.abstraction;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 public interface CommonService<D> {
@@ -9,7 +10,7 @@ public interface CommonService<D> {
 
     D getById(long id);
 
-    Page<D> getAll(Specification specification, int pageNo, int pageSize, String sortBy);
+    Page<D> getAll(Specification specification, Pageable pageable);
 
     D update(long id, D dto);
 

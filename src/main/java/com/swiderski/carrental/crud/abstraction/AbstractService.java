@@ -4,8 +4,7 @@ package com.swiderski.carrental.crud.abstraction;
 import com.swiderski.carrental.crud.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,11 +42,10 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
 
     @Override
     @Transactional
-    public Page<D> getAll(Specification specs, int pageNo, int pageSize, String sortBy) {
-        PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        Page<E> pagedResult = commonRepository.findAll(specs, paging);
+    public Page<D> getAll(Specification specs, Pageable pageable) {
+        Page<E> pagedResult = commonRepository.findAll(specs, pageable);
         List<D> pageList = commonMapper.toListDto(pagedResult.getContent());
-        return new PageImpl<>(pageList, paging, pagedResult.getTotalElements());
+        return new PageImpl<>(pageList, pageable, pagedResult.getTotalElements());
     }
 
     @Override

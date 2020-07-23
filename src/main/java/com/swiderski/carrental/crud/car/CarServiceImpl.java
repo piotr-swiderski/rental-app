@@ -9,5 +9,4 @@ public class CarServiceImpl extends AbstractService<Car, CarDto> implements CarS
     public CarServiceImpl(CarMapper carMapper, CarRepository commonRepository) {
         super(carMapper, commonRepository);
     }
-
 }

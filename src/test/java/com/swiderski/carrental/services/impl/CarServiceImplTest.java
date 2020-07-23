@@ -63,7 +63,7 @@ class CarServiceImplTest {
         List<Car> cars = getCars();
         when(carRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Page<CarDto> allCars = carService.getAll(null,0, 10, "id");
+        Page<CarDto> allCars = carService.getAll(null,null);
         //then
         assertEquals(2, allCars.getTotalElements());
     }

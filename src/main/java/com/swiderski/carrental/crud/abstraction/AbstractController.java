@@ -26,14 +26,14 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
         this.service = service;
     }
 
-    @GetMapping
-    @PreAuthorize("hasAuthority('create_profile')")
-    public Page<E> getAll(@SearchSpec Specification specs,
-                          @RequestParam(defaultValue = "0") Integer pageNo,
-                          @RequestParam(defaultValue = "10") Integer pageSize,
-                          @RequestParam(defaultValue = "id") String sortBy) {
-        return service.getAll(specs, pageNo, pageSize, sortBy);
-    }
+//    @GetMapping
+//    @PreAuthorize("hasAuthority('create_profile')")
+//    public Page<E> getAll(@SearchSpec Specification specs,
+//                          @RequestParam(defaultValue = "0") Integer pageNo,
+//                          @RequestParam(defaultValue = "10") Integer pageSize,
+//                          @RequestParam(defaultValue = "id") String sortBy) {
+//        return service.getAll(specs, pageNo, pageSize, sortBy);
+//    }
 
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasAuthority('create_profile')")
