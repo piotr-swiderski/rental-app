@@ -39,12 +39,12 @@ public class CarController extends AbstractController<CarService, CarDto> {
                                @PageableDefault Pageable pageable) {
 
         Specification<Car> carSpecification = Specification
-                .where(hasBrand(brand))
-                .and(hasColour(colour))
-                .and(hasModel(model))
-                .and(yearFrom(yearFrom))
-                .and(yearTo(yearTo))
-                .and(hasEngineType(engineType));
+                .where(hasBrand(brand)
+                        .and(hasColour(colour)
+                                .and(hasModel(model)
+                                        .and(yearFrom(yearFrom)
+                                                .and(yearTo(yearTo)
+                                                        .and(hasEngineType(engineType)))))));
 
         return carService.getAll(carSpecification, pageable);
     }

@@ -1,52 +1,48 @@
 package com.swiderski.carrental.crud.rental;
 
-import com.swiderski.carrental.crud.client.Client;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 
 public final class RentalSpecification {
 
     private RentalSpecification() {
     }
 
-    public static Specification<Client> hasName(String name) {
-        return likePrediction(name, "name");
+    public static Specification<Rental> rentedFromDate(LocalDate rentalFrom) {
+        if (rentalFrom == null) {
+            return (root, cq, cb) -> cb.isTrue(cb.literal(true));
+        }
+        return ((root, cq, cb) ->
+                cb.greaterThanOrEqualTo(root.get("rentalBegin").as(LocalDate.class), rentalFrom));
     }
 
-    public static Specification<Client> hasSurname(String surname) {
-        return likePrediction(surname, "surname");
+    public static Specification<Rental> rentedToDate(LocalDate rentalTo) {
+        if (rentalTo == null) {
+            return (root, cq, cb) -> cb.isTrue(cb.literal(true));
+        }
+        return ((root, cq, cb) ->
+                cb.greaterThanOrEqualTo(root.get("rentalEnd").as(LocalDate.class), rentalTo));
     }
 
-    public static Specification<Client> hasEmail(String email) {
-        return likePrediction(email, "email");
+    public static Specification<Rental> hasCarModel(String brand) {
+        if (brand == null) {
+            return (root, cq, cb) -> cb.isTrue(cb.literal(true));
+        }
+        return (root, cq, cb) -> cb.like(cb.lower(root.join("car").get("brand")), "%" + brand.toLowerCase() + "%");
     }
 
-    public static Specification<Client> hasCity(String city) {
-        return likePrediction(city, "city");
-    }
-
-    public static Specification<Client> hasStreet(String street) {
-        return likePrediction(street, "street");
-    }
-
-    public static Specification<Client> hasZipCode(String zipCode) {
-        return likePrediction(zipCode, "zipCode");
-    }
-
-    public static Specification<Client> hasPhone(String phone) {
-        return likePrediction(phone, "phone");
-    }
 
     @NotNull
-    private static Specification<Client> likePrediction(String value, String field) {
+    private static Specification<Rental> likePrediction(String value, String field) {
         if (value == null) {
             return (root, cq, cb) -> cb.isTrue(cb.literal(true));
         }
-        return (Root<Client> root, CriteriaQuery<?> cq, CriteriaBuilder cb)
+        return (Root<Rental> root, CriteriaQuery<?> cq, CriteriaBuilder cb)
                 -> cb.like(cb.lower(root.get(field)), "%" + value.toLowerCase() + "%");
     }
 }

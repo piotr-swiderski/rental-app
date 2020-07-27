@@ -38,13 +38,12 @@ public class ClientController extends AbstractController<ClientService, ClientDt
                                   @PageableDefault Pageable pageable) {
         Specification<Client> specification = Specification
                 .where(hasName(name)
-                        .and(hasSurname(surname))
-                        .and(hasEmail(email))
-                        .and(hasCity(city))
-                        .and(hasStreet(street))
-                        .and(hasZipCode(zipCode))
-                        .and(hasPhone(phone))
-                );
+                        .and(hasSurname(surname)
+                                .and(hasEmail(email)
+                                        .and(hasCity(city)
+                                                .and(hasStreet(street)
+                                                        .and(hasZipCode(zipCode)
+                                                                .and(hasPhone(phone))))))));
 
         return clientService.getAll(specification, pageable);
     }
