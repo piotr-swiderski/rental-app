@@ -59,5 +59,4 @@ public final class CarSpecification {
         return (Root<Car> root, CriteriaQuery<?> cq, CriteriaBuilder cb)
                 -> cb.like(cb.lower(root.get(field)), "%" + value.toLowerCase() + "%");
     }
-
 }

@@ -33,8 +33,6 @@ public class CarController extends AbstractController<CarService, CarDto> {
                                @RequestParam(required = false) String colour,
                                @RequestParam(required = false) Integer yearFrom,
                                @RequestParam(required = false) Integer yearTo,
-                               @RequestParam(required = false) boolean isRented,
-                               @RequestParam(required = false) boolean isAvailable,
                                @RequestParam(required = false) EngineType engineType,
                                @PageableDefault Pageable pageable) {
 
