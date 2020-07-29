@@ -44,7 +44,7 @@ public class RentalController extends AbstractController<RentService, RentalDto>
         Specification<Rental> specification = Specification
                 .where(RentalSpecification.rentedFromDate(rentedFrom)
                         .and(RentalSpecification.rentedToDate(rentedTo)
-                                .and(RentalSpecification.hasCarModel(hasBrand))));
+                        .and(RentalSpecification.hasCarModel(hasBrand))));
         return rentService.getAll(specification, pageable);
     }
 

@@ -39,11 +39,11 @@ public class ClientController extends AbstractController<ClientService, ClientDt
         Specification<Client> specification = Specification
                 .where(hasName(name)
                         .and(hasSurname(surname)
-                                .and(hasEmail(email)
-                                        .and(hasCity(city)
-                                                .and(hasStreet(street)
-                                                        .and(hasZipCode(zipCode)
-                                                                .and(hasPhone(phone))))))));
+                        .and(hasEmail(email)
+                        .and(hasCity(city)
+                        .and(hasStreet(street)
+                        .and(hasZipCode(zipCode)
+                        .and(hasPhone(phone))))))));
 
         return clientService.getAll(specification, pageable);
     }

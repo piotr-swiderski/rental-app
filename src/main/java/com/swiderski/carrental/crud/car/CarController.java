@@ -39,10 +39,10 @@ public class CarController extends AbstractController<CarService, CarDto> {
         Specification<Car> carSpecification = Specification
                 .where(hasBrand(brand)
                         .and(hasColour(colour)
-                                .and(hasModel(model)
-                                        .and(yearFrom(yearFrom)
-                                                .and(yearTo(yearTo)
-                                                        .and(hasEngineType(engineType)))))));
+                        .and(hasModel(model)
+                        .and(yearFrom(yearFrom)
+                        .and(yearTo(yearTo)
+                        .and(hasEngineType(engineType)))))));
 
         return carService.getAll(carSpecification, pageable);
     }
