@@ -37,7 +37,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <scope>provided</scope>
+            <version>1.18.12</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -96,11 +97,7 @@
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.sipios</groupId>
-            <artifactId>spring-search</artifactId>
-            <version>0.2.0</version>
-        </dependency>
+
         <!--        swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -127,13 +124,11 @@
             <artifactId>kotlin-reflect</artifactId>
             <version>1.3.72</version>
         </dependency>
-
         <dependency>
-            <groupId>net.kaczmarzyk</groupId>
-            <artifactId>specification-arg-resolver</artifactId>
-            <version>2.1.1</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>5.4.19.Final</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -154,6 +149,16 @@
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.12</version>
+                        </path>
+                        <path>
+                            <groupId>org.hibernate</groupId>
+                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <version>5.4.19.Final</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

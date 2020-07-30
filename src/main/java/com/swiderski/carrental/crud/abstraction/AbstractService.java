@@ -42,14 +42,6 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
 
     @Override
     @Transactional
-    public Page<D> getAll(Specification specs, Pageable pageable) {
-        Page<E> pagedResult = commonRepository.findAll(specs, pageable);
-        List<D> pageList = commonMapper.toListDto(pagedResult.getContent());
-        return new PageImpl<>(pageList, pageable, pagedResult.getTotalElements());
-    }
-
-    @Override
-    @Transactional
     public D update(long id, D dto) {
         dto.setId(id);
         E entity = commonMapper.fromDto(dto);
