@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://swiderski.com/rental-service" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://swiderski.com/rental-service">
+
+    <wsdl:types>
+        <xs:schema targetNamespace="http://swiderski.com/rental-service">
+
+            <xs:complexType name="car">
+                <xs:sequence>
+                    <xs:element type="xs:long" name="id"/>
+                    <xs:element type="xs:string" name="brand"/>
+                    <xs:element type="xs:string" name="model"/>
+                    <xs:element type="xs:string" name="modelVersion"/>
+                    <xs:element type="xs:string" name="colour"/>
+                    <xs:element type="xs:string" name="engineType"/>
+                    <xs:element type="xs:int" name="productionYear"/>
+                    <xs:element type="xs:double" name="cost"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="CarObject">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element type="xs:long" name="id"/>
+                        <xs:element type="xs:string" name="brand"/>
+                        <xs:element type="xs:string" name="model"/>
+                        <xs:element type="xs:string" name="modelVersion"/>
+                        <xs:element type="xs:string" name="colour"/>
+                        <xs:element type="xs:string" name="engineType"/>
+                        <xs:element type="xs:int" name="productionYear"/>
+                        <xs:element type="xs:double" name="cost"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="CarRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element type="xs:long" name="id"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+
+            <xs:element name="CarListRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element type="xs:int" name="pageNo"/>
+                        <xs:element type="xs:int" name="pageSize"/>
+                        <xs:element type="xs:string" name="sortBy"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+
+            <xs:element name="carList">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element type="tns:car" name="car" maxOccurs="unbounded" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+        </xs:schema>
+    </wsdl:types>
+
+
+    <!--Define input and output parameters -->
+    <wsdl:message name="getCar">
+        <wsdl:part name="in" element="tns:CarRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getCars">
+        <wsdl:part name="in" element="tns:CarListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addCar">
+        <wsdl:part name="in" element="tns:CarObject"/>
+    </wsdl:message>
+    <wsdl:message name="getResponse">
+        <wsdl:part name="out" element="tns:CarObject"/>
+    </wsdl:message>
+    <wsdl:message name="listResponse">
+        <wsdl:part name="out" element="tns:carList"/>
+    </wsdl:message>
+
+    <!--Define port definition -->
+    <wsdl:portType name="carEndpoint">
+        <wsdl:operation name="Car">
+            <wsdl:input message="tns:getCar"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:portType name="carsEndpoint">
+        <wsdl:operation name="Cars">
+            <wsdl:input message="tns:getCars"/>
+            <wsdl:output message="tns:listResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:portType name="addCarEndpoint">
+        <wsdl:operation name="addCar">
+            <wsdl:input message="tns:addCar"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!--Bind Soap operation and service -->
+    <wsdl:binding name="carBinding" type="tns:carEndpoint">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Car">
+            <soap:operation soapAction="http://swiderski.com/rental-service"
+                            style="document"/>
+            <wsdl:input>
+                <soap:body parts="in" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="out" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:binding name="addCarBinding" type="tns:addCarEndpoint">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="addCar">
+            <soap:operation soapAction="http://swiderski.com/rental-service"
+                            style="document"/>
+            <wsdl:input>
+                <soap:body parts="in" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="out" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+
+    <wsdl:binding name="getCarsBinding" type="tns:carsEndpoint">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Cars">
+            <soap:operation soapAction="http://swiderski.com/rental-service"
+                            style="document"/>
+            <wsdl:input>
+                <soap:body parts="in" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="out" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+
+    <!--Define service -->
+    <wsdl:service name="CarEndpointService">
+        <wsdl:port name="carEndpoint" binding="tns:carBinding">
+            <soap:address location="http://localhost:9090/javainuse/ws/getCar"/>
+        </wsdl:port>
+    </wsdl:service>
+
+    <wsdl:service name="AddCarEndpointService">
+        <wsdl:port name="addCarEndpoint" binding="tns:addCarBinding">
+            <soap:address location="http://localhost:9090/javainuse/ws/addCar"/>
+        </wsdl:port>
+    </wsdl:service>
+
+    <wsdl:service name="GetCarsEndpointService">
+        <wsdl:port name="getCarsEndpoint" binding="tns:getCarsBinding">
+            <soap:address location="http://localhost:9090/javainuse/ws/getCars"/>
+        </wsdl:port>
+    </wsdl:service>
+
+
+</wsdl:definitions>
