@@ -1,11 +1,10 @@
 package com.swiderski.carrental.crud.car;
 
 import com.swiderski.carrental.crud.abstraction.CommonService;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CarService extends CommonService<CarDto> {
 
-    List<CarDto> getAllWithoutSpec(int pageNo, int pageSize, String sortBy);
-
+    Page<CarDto> getAll(CarParam carParam, Pageable pageable);
 }

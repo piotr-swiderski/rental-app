@@ -7,15 +7,21 @@ import com.swiderski.carrental.crud.car.CarMapper;
 import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.CarRentedException;
+import com.swiderski.carrental.crud.specification.SearchCriteria;
+import com.swiderski.carrental.crud.specification.SpecificationBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static com.swiderski.carrental.crud.specification.SearchOperation.GREATER_THAN_EQUAL;
+import static com.swiderski.carrental.crud.specification.SearchOperation.LESS_THAN_EQUAL;
 
 @Service
 public class RentServiceImpl extends AbstractService<Rental, RentalDto> implements RentService {
@@ -31,6 +37,18 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
         this.clientService = clientService;
         this.carMapper = carMapper;
         this.rentalMapper = rentalMapper;
+    }
+
+    @Override
+    public Page<RentalDto> getAll(RentalParam rentalParam, Pageable pageable) {
+        SpecificationBuilder<Rental> specificationBuilder = new SpecificationBuilder<>();
+        specificationBuilder
+                .add(new SearchCriteria(Rental_.RENTAL_BEGIN, rentalParam.getRentedFrom(), GREATER_THAN_EQUAL))
+                .add(new SearchCriteria(Rental_.RENTAL_END, rentalParam.getRentedTo(), LESS_THAN_EQUAL));
+
+        Page<Rental> rentalPage = commonRepository.findAll(specificationBuilder, pageable);
+        List<RentalDto> rentalDtos = commonMapper.toListDto(rentalPage.getContent());
+        return new PageImpl<>(rentalDtos, pageable, rentalPage.getTotalElements());
     }
 
     @Override

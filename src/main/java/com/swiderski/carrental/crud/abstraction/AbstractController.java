@@ -1,9 +1,7 @@
 package com.swiderski.carrental.crud.abstraction;
 
-import com.sipios.springsearch.anotation.SearchSpec;
+
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin
 @PropertySource("classpath:/application.properties")
@@ -25,15 +22,6 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
     public AbstractController(T service) {
         this.service = service;
     }
-
-//    @GetMapping
-//    @PreAuthorize("hasAuthority('create_profile')")
-//    public Page<E> getAll(@SearchSpec Specification specs,
-//                          @RequestParam(defaultValue = "0") Integer pageNo,
-//                          @RequestParam(defaultValue = "10") Integer pageSize,
-//                          @RequestParam(defaultValue = "id") String sortBy) {
-//        return service.getAll(specs, pageNo, pageSize, sortBy);
-//    }
 
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasAuthority('create_profile')")

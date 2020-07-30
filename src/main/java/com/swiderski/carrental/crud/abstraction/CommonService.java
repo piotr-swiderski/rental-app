@@ -10,8 +10,6 @@ public interface CommonService<D> {
 
     D getById(long id);
 
-    Page<D> getAll(Specification specification, Pageable pageable);
-
     D update(long id, D dto);
 
     D delete(long id);
