@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:tns="http://swiderski.com/rental-service/schema/car" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://swiderski.com/rental-service/schema/client" xmlns:xs="http://www.w3.org/2001/XMLSchema"
                   xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                  targetNamespace="http://swiderski.com/rental-service/schema/car">
+                  targetNamespace="http://swiderski.com/rental-service/schema/client">
 
     <wsdl:types>
-        <xs:schema targetNamespace="http://swiderski.com/rental-service/schema/car" elementFormDefault="qualified">
-            <xs:include schemaLocation="../schema/car.xsd"/>
+        <xs:schema targetNamespace="http://swiderski.com/rental-service/schema/client" elementFormDefault="qualified">
+            <xs:include schemaLocation="../schema/client.xsd"/>
         </xs:schema>
     </wsdl:types>
 
 
     <!--Define input and output parameters -->
-    <wsdl:message name="getCar">
-        <wsdl:part name="in" element="tns:CarRequest"/>
+    <wsdl:message name="getClient">
+        <wsdl:part name="in" element="tns:ClientRequest"/>
     </wsdl:message>
-    <wsdl:message name="getCars">
+    <wsdl:message name="getClients">
         <wsdl:part name="in" element="tns:PageRequest"/>
     </wsdl:message>
-    <wsdl:message name="addCar">
-        <wsdl:part name="in" element="tns:Car"/>
+    <wsdl:message name="addClient">
+        <wsdl:part name="in" element="tns:Client"/>
     </wsdl:message>
-    <wsdl:message name="deleteCar">
-        <wsdl:part name="in" element="tns:CarDeleteRequest"/>
+    <wsdl:message name="deleteClient">
+        <wsdl:part name="in" element="tns:ClientDeleteRequest"/>
     </wsdl:message>
-    <wsdl:message name="getResponse">
-        <wsdl:part name="out" element="tns:Car"/>
+    <wsdl:message name="clientResponse">
+        <wsdl:part name="out" element="tns:Client"/>
     </wsdl:message>
     <wsdl:message name="listResponse">
-        <wsdl:part name="out" element="tns:CarList"/>
+        <wsdl:part name="out" element="tns:ClientList"/>
     </wsdl:message>
 
     <!--Define port definition -->
-    <wsdl:portType name="carEndpoint">
-        <wsdl:operation name="Car">
-            <wsdl:input message="tns:getCar"/>
-            <wsdl:output message="tns:getResponse"/>
+    <wsdl:portType name="clientEndpoint">
+        <wsdl:operation name="Client">
+            <wsdl:input message="tns:getClient"/>
+            <wsdl:output message="tns:clientResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
-    <wsdl:portType name="carsEndpoint">
-        <wsdl:operation name="Cars">
-            <wsdl:input message="tns:getCars"/>
+    <wsdl:portType name="clientsEndpoint">
+        <wsdl:operation name="Clients">
+            <wsdl:input message="tns:getClients"/>
             <wsdl:output message="tns:listResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
-    <wsdl:portType name="addCarEndpoint">
-        <wsdl:operation name="addCar">
-            <wsdl:input message="tns:addCar"/>
-            <wsdl:output message="tns:getResponse"/>
+    <wsdl:portType name="addClientEndpoint">
+        <wsdl:operation name="addClient">
+            <wsdl:input message="tns:addClient"/>
+            <wsdl:output message="tns:clientResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
-    <wsdl:portType name="deleteCarEndpoint">
-        <wsdl:operation name="deleteCar">
-            <wsdl:input message="tns:deleteCar"/>
-            <wsdl:output message="tns:getResponse"/>
+    <wsdl:portType name="deleteClientEndpoint">
+        <wsdl:operation name="deleteClient">
+            <wsdl:input message="tns:deleteClient"/>
+            <wsdl:output message="tns:clientResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
     <!--Bind Soap operation and service -->
-    <wsdl:binding name="carBinding" type="tns:carEndpoint">
+    <wsdl:binding name="clientBinding" type="tns:clientEndpoint">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="Car">
+        <wsdl:operation name="Client">
             <soap:operation soapAction="http://swiderski.com/rental-service"
                             style="document"/>
             <wsdl:input>
@@ -76,9 +76,9 @@
         </wsdl:operation>
     </wsdl:binding>
 
-    <wsdl:binding name="deleteCarBinding" type="tns:deleteCarEndpoint">
+    <wsdl:binding name="deleteClientBinding" type="tns:deleteClientEndpoint">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="deleteCar">
+        <wsdl:operation name="deleteClient">
             <soap:operation soapAction="http://swiderski.com/rental-service"
                             style="document"/>
             <wsdl:input>
@@ -90,9 +90,9 @@
         </wsdl:operation>
     </wsdl:binding>
 
-    <wsdl:binding name="addCarBinding" type="tns:addCarEndpoint">
+    <wsdl:binding name="addClientBinding" type="tns:addClientEndpoint">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="addCar">
+        <wsdl:operation name="addClient">
             <soap:operation soapAction="http://swiderski.com/rental-service"
                             style="document"/>
             <wsdl:input>
@@ -105,9 +105,9 @@
     </wsdl:binding>
 
 
-    <wsdl:binding name="getCarsBinding" type="tns:carsEndpoint">
+    <wsdl:binding name="getClientsBinding" type="tns:clientsEndpoint">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="Cars">
+        <wsdl:operation name="Clients">
             <soap:operation soapAction="http://swiderski.com/rental-service"
                             style="document"/>
             <wsdl:input>
@@ -121,27 +121,27 @@
 
 
     <!--Define service -->
-    <wsdl:service name="CarEndpointService">
-        <wsdl:port name="carEndpoint" binding="tns:carBinding">
-            <soap:address location="http://localhost:9090/javainuse/ws/getCar"/>
+    <wsdl:service name="ClientEndpointService">
+        <wsdl:port name="clientEndpoint" binding="tns:clientBinding">
+            <soap:address location="http://localhost:9090/ws/getClient"/>
         </wsdl:port>
     </wsdl:service>
 
-    <wsdl:service name="AddCarEndpointService">
-        <wsdl:port name="addCarEndpoint" binding="tns:addCarBinding">
-            <soap:address location="http://localhost:9090/javainuse/ws/addCar"/>
+    <wsdl:service name="AddClientEndpointService">
+        <wsdl:port name="addClientEndpoint" binding="tns:addClientBinding">
+            <soap:address location="http://localhost:9090/ws/addClient"/>
         </wsdl:port>
     </wsdl:service>
 
-    <wsdl:service name="DeleteCarEndpointService">
-        <wsdl:port name="deleteCarEndpoint" binding="tns:deleteCarBinding">
-            <soap:address location="http://localhost:9090/javainuse/ws/deleteCar"/>
+    <wsdl:service name="DeleteClientEndpointService">
+        <wsdl:port name="deleteClientEndpoint" binding="tns:deleteClientBinding">
+            <soap:address location="http://localhost:9090/ws/deleteClient"/>
         </wsdl:port>
     </wsdl:service>
 
-    <wsdl:service name="GetCarsEndpointService">
-        <wsdl:port name="getCarsEndpoint" binding="tns:getCarsBinding">
-            <soap:address location="http://localhost:9090/javainuse/ws/getCars"/>
+    <wsdl:service name="GetClientsEndpointService">
+        <wsdl:port name="getClientsEndpoint" binding="tns:getClientsBinding">
+            <soap:address location="http://localhost:9090/ws/getClients"/>
         </wsdl:port>
     </wsdl:service>
 

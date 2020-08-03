@@ -57,6 +57,6 @@ public class SpecificationBuilder<E extends AbstractEntity> implements Specifica
                 predicates.add(cb.not(root.get(criteria.getKey())).in(criteria.getValue()));
             }
         }
-        return cb.and(predicates.toArray(new Predicate[0]));
+        return cb.and(predicates.toArray(Predicate[]::new));
     }
 }

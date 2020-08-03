@@ -1,8 +1,7 @@
 package com.swiderski.carrental.soap;
 
 import com.swiderski.carrental.crud.car.CarDto;
-import com.swiderski.rental_service.Car;
-import com.swiderski.rental_service.CarObject;
+import com.swiderski.rental_service.schema.car.CarData;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -10,9 +9,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CarWebMapper {
 
-    CarDto toDto(CarObject carObject);
+    CarDto toDto(CarData carData);
 
-    CarObject toCarWebObj(CarDto carDto);
+    CarData toCarData(CarDto carDto);
 
-    List<Car> toCarWebList(List<CarDto> carDtos);
+    List<CarData> toCarDataList(List<CarDto> carDtos);
 }

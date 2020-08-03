@@ -21,12 +21,26 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean(servlet, "/ws/*");
     }
 
-    @Bean(name = "helloworld")
-    public SimpleWsdl11Definition defaultWsdl11Definition() {
+    @Bean(name = "carSchema")
+    public SimpleWsdl11Definition carWsdl11Definition() {
         SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
-        wsdl11Definition.setWsdl(new ClassPathResource("/wsdl/simple.wsdl"));
         wsdl11Definition.setWsdl(new ClassPathResource("/wsdl/car.wsdl"));
         return wsdl11Definition;
     }
+
+    @Bean(name = "clientSchema")
+    public SimpleWsdl11Definition clientWsdl11Definition() {
+        SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
+        wsdl11Definition.setWsdl(new ClassPathResource("/wsdl/client.wsdl"));
+        return wsdl11Definition;
+    }
+
+    @Bean(name = "rentalSchema")
+    public SimpleWsdl11Definition rentalWsdl11Definition() {
+        SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
+        wsdl11Definition.setWsdl(new ClassPathResource("/wsdl/rental.wsdl"));
+        return wsdl11Definition;
+    }
+
 
 }

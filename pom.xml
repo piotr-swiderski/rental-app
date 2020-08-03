@@ -193,7 +193,7 @@
                             <sourceRoot>${project.build.directory}/generated-code/mysoapservice</sourceRoot>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>${basedir}/src/main/resources/wsdl/simple.wsdl</wsdl>
+                                    <wsdl>${basedir}/src/main/resources/wsdl/client.wsdl</wsdl>
                                     <wsdl>${basedir}/src/main/resources/wsdl/car.wsdl</wsdl>
                                     <extraargs>
                                         <extraarg>-all</extraarg>

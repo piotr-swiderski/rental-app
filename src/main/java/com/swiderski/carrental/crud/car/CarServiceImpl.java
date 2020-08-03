@@ -6,7 +6,9 @@ import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +37,10 @@ public class CarServiceImpl extends AbstractService<Car, CarDto> implements CarS
         Page<Car> carPage = commonRepository.findAll(specificationBuilder, pageable);
         List<CarDto> pageList = commonMapper.toListDto(carPage.getContent());
         return new PageImpl<>(pageList, pageable, carPage.getTotalElements());
+    }
+
+    @Override
+    public List<CarDto> getAllWithoutSpec(int pageNo, int pageSize, String sortBy) {
+        return commonMapper.toListDto(commonRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent());
     }
 }
