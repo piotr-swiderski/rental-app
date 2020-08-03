@@ -8,8 +8,9 @@ import com.swiderski.rental_service.schema.car.CarData;
 import com.swiderski.rental_service.schema.car.CarDeleteRequest;
 import com.swiderski.rental_service.schema.car.CarList;
 import com.swiderski.rental_service.schema.car.CarRequest;
+import com.swiderski.rental_service.schema.car.ListPageRequest;
 import com.swiderski.rental_service.schema.car.ObjectFactory;
-import com.swiderski.rental_service.schema.car.PageRequest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -81,7 +82,7 @@ public class CarEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PageRequest")
     @ResponsePayload
-    public CarList getCarList(@RequestPayload PageRequest request) {
+    public CarList getCarList(@RequestPayload ListPageRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
 
         int pageNo = request.getPageNo();
@@ -89,8 +90,8 @@ public class CarEndpoint {
         String sortBy = request.getSortBy();
 
         List<CarDto> allWithoutSpec = carService
-                .getAll(new CarParam(null, null, null, null, null, null),
-                        org.springframework.data.domain.PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent(); //todo
+                .getAll(new CarParam(),
+                        PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent();
         List<CarData> carDataList = carWebMapper.toCarDataList(allWithoutSpec);
 
         CarList carList = objectFactory.createCarList();

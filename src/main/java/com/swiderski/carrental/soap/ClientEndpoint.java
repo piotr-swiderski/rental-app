@@ -8,8 +8,9 @@ import com.swiderski.rental_service.schema.client.ClientData;
 import com.swiderski.rental_service.schema.client.ClientDeleteRequest;
 import com.swiderski.rental_service.schema.client.ClientList;
 import com.swiderski.rental_service.schema.client.ClientRequest;
+import com.swiderski.rental_service.schema.client.ListPageRequest;
 import com.swiderski.rental_service.schema.client.ObjectFactory;
-import com.swiderski.rental_service.schema.client.PageRequest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -81,7 +82,7 @@ public class ClientEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PageRequest")
     @ResponsePayload
-    public ClientList getClientList(@RequestPayload PageRequest request) {
+    public ClientList getClientList(@RequestPayload ListPageRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
 
         int pageNo = request.getPageNo();
@@ -89,8 +90,8 @@ public class ClientEndpoint {
         String sortBy = request.getSortBy();
 
         List<ClientDto> allWithoutSpec = clientService
-                .getAll(new ClientParam(null, null, null, null, null, null, null),
-                        org.springframework.data.domain.PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent(); //todo
+                .getAll(new ClientParam(),
+                        PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent();
         List<ClientData> clientDataList = clientWebMapper.toClientDataList(allWithoutSpec);
 
         ClientList clientList = objectFactory.createClientList();

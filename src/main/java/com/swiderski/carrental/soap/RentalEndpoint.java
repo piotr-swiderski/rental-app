@@ -3,13 +3,14 @@ package com.swiderski.carrental.soap;
 import com.swiderski.carrental.crud.rental.RentService;
 import com.swiderski.carrental.crud.rental.RentalDto;
 import com.swiderski.carrental.crud.rental.RentalParam;
+import com.swiderski.rental_service.schema.rental.ListPageRequest;
 import com.swiderski.rental_service.schema.rental.ObjectFactory;
-import com.swiderski.rental_service.schema.rental.PageRequest;
 import com.swiderski.rental_service.schema.rental.Rental;
 import com.swiderski.rental_service.schema.rental.RentalData;
 import com.swiderski.rental_service.schema.rental.RentalDeleteRequest;
 import com.swiderski.rental_service.schema.rental.RentalList;
 import com.swiderski.rental_service.schema.rental.RentalRequest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -81,7 +82,7 @@ public class RentalEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PageRequest")
     @ResponsePayload
-    public RentalList getRentalList(@RequestPayload PageRequest request) {
+    public RentalList getRentalList(@RequestPayload ListPageRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
 
         int pageNo = request.getPageNo();
@@ -89,8 +90,8 @@ public class RentalEndpoint {
         String sortBy = request.getSortBy();
 
         List<RentalDto> allWithoutSpec = rentService
-                .getAll(new RentalParam(null, null, null),
-                        org.springframework.data.domain.PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent(); //todo
+                .getAll(new RentalParam(),
+                        PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent();
         List<RentalData> rentalDataList = rentalWebMapper.toRentalDataList(allWithoutSpec);
 
         RentalList rentalList = objectFactory.createRentalList();
