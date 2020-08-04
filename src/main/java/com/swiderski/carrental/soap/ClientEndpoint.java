@@ -88,10 +88,9 @@ public class ClientEndpoint {
         int pageNo = request.getPageNo();
         int pageSize = request.getPageSize();
         String sortBy = request.getSortBy();
+        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        List<ClientDto> allWithoutSpec = clientService
-                .getAll(new ClientParam(),
-                        PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent();
+        List<ClientDto> allWithoutSpec = clientService.getAll(new ClientParam(), pageable).getContent();
         List<ClientData> clientDataList = clientWebMapper.toClientDataList(allWithoutSpec);
 
         ClientList clientList = objectFactory.createClientList();

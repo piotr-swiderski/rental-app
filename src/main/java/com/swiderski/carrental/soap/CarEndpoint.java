@@ -88,11 +88,10 @@ public class CarEndpoint {
         int pageNo = request.getPageNo();
         int pageSize = request.getPageSize();
         String sortBy = request.getSortBy();
+        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        List<CarDto> allWithoutSpec = carService
-                .getAll(new CarParam(),
-                        PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent();
-        List<CarData> carDataList = carWebMapper.toCarDataList(allWithoutSpec);
+        List<CarDto> cars = carService.getAll(new CarParam(), pageable).getContent();
+        List<CarData> carDataList = carWebMapper.toCarDataList(cars);
 
         CarList carList = objectFactory.createCarList();
         carList.getCar().addAll(carDataList);

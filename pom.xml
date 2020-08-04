@@ -190,14 +190,15 @@
                         <id>generate-sources</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <sourceRoot>${project.build.directory}/generated-code/mysoapservice</sourceRoot>
+                            <sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>${basedir}/src/main/resources/wsdl/client.wsdl</wsdl>
-                                    <wsdl>${basedir}/src/main/resources/wsdl/car.wsdl</wsdl>
-                                    <extraargs>
-                                        <extraarg>-all</extraarg>
-                                    </extraargs>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/car.wsdl</wsdl>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/rental.wsdl</wsdl>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/client.wsdl</wsdl>
+                                    <wsdlLocation>classpath:wsdl/client.wsdl</wsdlLocation>
+                                    <wsdlLocation>classpath:wsdl/car.wsdl</wsdlLocation>
+                                    <wsdlLocation>classpath:wsdl/rental.wsdl</wsdlLocation>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

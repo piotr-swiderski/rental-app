@@ -4,6 +4,7 @@ import com.swiderski.carrental.crud.abstraction.AbstractService;
 import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.car.CarMapper;
+import com.swiderski.carrental.crud.car.Car_;
 import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.CarRentedException;
@@ -14,9 +15,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -46,7 +52,14 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
                 .add(new SearchCriteria(Rental_.RENTAL_BEGIN, rentalParam.getRentedFrom(), GREATER_THAN_EQUAL))
                 .add(new SearchCriteria(Rental_.RENTAL_END, rentalParam.getRentedTo(), LESS_THAN_EQUAL));
 
-        Page<Rental> rentalPage = commonRepository.findAll(specificationBuilder, pageable);
+        Specification<Rental> specification = new Specification<>() {
+            @Override
+            public Predicate toPredicate(Root<Rental> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+                return cb.like(root.join(Rental_.CAR).get(Car_.BRAND), "%" + rentalParam.getHasBrand() + "%");
+            }
+        };
+
+        Page<Rental> rentalPage = commonRepository.findAll(specification, pageable);
         List<RentalDto> rentalDtos = commonMapper.toListDto(rentalPage.getContent());
         return new PageImpl<>(rentalDtos, pageable, rentalPage.getTotalElements());
     }

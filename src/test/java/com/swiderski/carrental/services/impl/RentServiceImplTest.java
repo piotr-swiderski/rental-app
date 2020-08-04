@@ -12,6 +12,7 @@ import com.swiderski.carrental.crud.rental.RentServiceImpl;
 import com.swiderski.carrental.crud.rental.Rental;
 import com.swiderski.carrental.crud.rental.RentalDto;
 import com.swiderski.carrental.crud.rental.RentalMapper;
+import com.swiderski.carrental.crud.rental.RentalParam;
 import com.swiderski.carrental.crud.rental.RentalRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -150,7 +151,7 @@ public class RentServiceImplTest {
         List<RentalDto> rentalsDto = getRentalsDto();
         when(rentalRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
         //when
-        Page<RentalDto> all = rentService.getAll(null, null);
+        Page<RentalDto> all = rentService.getAll(new RentalParam(), pageRequest);
         //then
         assertEquals(rentalsDto, all.getContent());
     }

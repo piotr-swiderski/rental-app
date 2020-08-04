@@ -88,10 +88,9 @@ public class RentalEndpoint {
         int pageNo = request.getPageNo();
         int pageSize = request.getPageSize();
         String sortBy = request.getSortBy();
+        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        List<RentalDto> allWithoutSpec = rentService
-                .getAll(new RentalParam(),
-                        PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent();
+        List<RentalDto> allWithoutSpec = rentService.getAll(new RentalParam(), pageable).getContent();
         List<RentalData> rentalDataList = rentalWebMapper.toRentalDataList(allWithoutSpec);
 
         RentalList rentalList = objectFactory.createRentalList();
