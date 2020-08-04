@@ -10,6 +10,9 @@ import com.swiderski.rental_service.schema.client.ClientList;
 import com.swiderski.rental_service.schema.client.ClientRequest;
 import com.swiderski.rental_service.schema.client.ListPageRequest;
 import com.swiderski.rental_service.schema.client.ObjectFactory;
+import com.swiderski.rental_service.schema.pageable.AnyType;
+import com.swiderski.rental_service.schema.pageable.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -80,7 +83,7 @@ public class ClientEndpoint {
         return client;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PageRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ListPageRequest")
     @ResponsePayload
     public ClientList getClientList(@RequestPayload ListPageRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
@@ -90,11 +93,12 @@ public class ClientEndpoint {
         String sortBy = request.getSortBy();
         PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        List<ClientDto> allWithoutSpec = clientService.getAll(new ClientParam(), pageable).getContent();
-        List<ClientData> clientDataList = clientWebMapper.toClientDataList(allWithoutSpec);
+        Page<ClientDto> page = clientService.getAll(new ClientParam(), pageable);
+        Pageable webPageable = clientWebMapper.toWebPageable(page);
+        List<AnyType> anyTypes = clientWebMapper.toAnyTypeList(page.getContent());
 
         ClientList clientList = objectFactory.createClientList();
-        clientList.getClient().addAll(clientDataList);
+        clientList.setPage(webPageable);
 
         return clientList;
     }

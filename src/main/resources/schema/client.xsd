@@ -1,6 +1,10 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://swiderski.com/rental-service/schema/client"
            elementFormDefault="qualified"
+           xmlns:page="http://swiderski.com/rental-service/schema/pageable"
            targetNamespace="http://swiderski.com/rental-service/schema/client">
+
+    <xs:import namespace="http://swiderski.com/rental-service/schema/pageable" schemaLocation="pageable.xsd"/>
+
 
     <xs:element name="Client">
         <xs:complexType>
@@ -23,7 +27,7 @@
     <xs:element name="ClientList">
         <xs:complexType>
             <xs:sequence>
-                <xs:element type="tns:ClientData" name="client" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element type="page:Pageable" name="page"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

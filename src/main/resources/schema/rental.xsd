@@ -1,11 +1,13 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://swiderski.com/rental-service/schema/rental"
            xmlns:car="http://swiderski.com/rental-service/schema/car"
            xmlns:client="http://swiderski.com/rental-service/schema/client"
+           xmlns:page="http://swiderski.com/rental-service/schema/pageable"
            elementFormDefault="qualified"
            targetNamespace="http://swiderski.com/rental-service/schema/rental">
 
     <xs:import namespace="http://swiderski.com/rental-service/schema/car" schemaLocation="car.xsd"/>
     <xs:import namespace="http://swiderski.com/rental-service/schema/client" schemaLocation="client.xsd"/>
+    <xs:import namespace="http://swiderski.com/rental-service/schema/pageable" schemaLocation="pageable.xsd"/>
 
     <xs:element name="Rental">
         <xs:complexType>
@@ -28,7 +30,7 @@
     <xs:element name="RentalList">
         <xs:complexType>
             <xs:sequence>
-                <xs:element type="tns:RentalData" name="rental" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element type="page:Pageable" name="page"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

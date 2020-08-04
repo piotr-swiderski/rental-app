@@ -1,0 +1,33 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://swiderski.com/rental-service/schema/pageable"
+           elementFormDefault="qualified"
+           targetNamespace="http://swiderski.com/rental-service/schema/pageable">
+
+        <xs:complexType name="Pageable">
+            <xs:sequence>
+                <xs:element type="tns:anyType" name="content" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element type="xs:long" name="totalPages"/>
+                <xs:element type="xs:long" name="totalElements"/>
+                <xs:element type="xs:long" name="numberOfElements"/>
+                <xs:element type="xs:long" name="size"/>
+                <xs:element type="xs:long" name="number"/>
+                <xs:element type="xs:boolean" name="empty"/>
+                <xs:element type="xs:boolean" name="first"/>
+            </xs:sequence>
+        </xs:complexType>
+
+
+    <xs:complexType name="anyType">
+        <xs:complexContent mixed="true">
+            <xs:restriction base="xs:anyType">
+                <xs:sequence>
+                    <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute ref="xml:lang"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+<!--    anyType-->
+
+</xs:schema>
+

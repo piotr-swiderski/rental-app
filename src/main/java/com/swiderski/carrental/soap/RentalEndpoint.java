@@ -3,6 +3,7 @@ package com.swiderski.carrental.soap;
 import com.swiderski.carrental.crud.rental.RentService;
 import com.swiderski.carrental.crud.rental.RentalDto;
 import com.swiderski.carrental.crud.rental.RentalParam;
+import com.swiderski.rental_service.schema.pageable.Pageable;
 import com.swiderski.rental_service.schema.rental.ListPageRequest;
 import com.swiderski.rental_service.schema.rental.ObjectFactory;
 import com.swiderski.rental_service.schema.rental.Rental;
@@ -10,14 +11,13 @@ import com.swiderski.rental_service.schema.rental.RentalData;
 import com.swiderski.rental_service.schema.rental.RentalDeleteRequest;
 import com.swiderski.rental_service.schema.rental.RentalList;
 import com.swiderski.rental_service.schema.rental.RentalRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-
-import java.util.List;
 
 @Endpoint
 public class RentalEndpoint {
@@ -80,7 +80,7 @@ public class RentalEndpoint {
         return rental;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PageRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ListPageRequest")
     @ResponsePayload
     public RentalList getRentalList(@RequestPayload ListPageRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
@@ -90,11 +90,11 @@ public class RentalEndpoint {
         String sortBy = request.getSortBy();
         PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        List<RentalDto> allWithoutSpec = rentService.getAll(new RentalParam(), pageable).getContent();
-        List<RentalData> rentalDataList = rentalWebMapper.toRentalDataList(allWithoutSpec);
+        Page<RentalDto> page = rentService.getAll(new RentalParam(), pageable);
+        Pageable webPageable = rentalWebMapper.toWebPageable(page);
 
         RentalList rentalList = objectFactory.createRentalList();
-        rentalList.getRental().addAll(rentalDataList);
+        rentalList.setPage(webPageable);
 
         return rentalList;
     }
