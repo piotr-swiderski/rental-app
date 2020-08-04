@@ -1,8 +1,5 @@
-package com.swiderski.carrental.dto;
+package com.swiderski.carrental.crud.client;
 
-import com.swiderski.carrental.crud.client.Client;
-import com.swiderski.carrental.crud.client.ClientDto;
-import com.swiderski.carrental.crud.client.ClientMapper;
 import org.junit.jupiter.api.Test;
 
 import static com.swiderski.carrental.utils.Utils.getClient;

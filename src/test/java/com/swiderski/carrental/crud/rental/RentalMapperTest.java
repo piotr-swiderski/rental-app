@@ -1,11 +1,7 @@
-package com.swiderski.carrental.dto;
+package com.swiderski.carrental.crud.rental;
 
 import com.swiderski.carrental.crud.car.CarMapper;
 import com.swiderski.carrental.crud.client.ClientMapper;
-import com.swiderski.carrental.crud.rental.Rental;
-import com.swiderski.carrental.crud.rental.RentalDto;
-import com.swiderski.carrental.crud.rental.RentalMapper;
-import com.swiderski.carrental.crud.rental.RentalMapperImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

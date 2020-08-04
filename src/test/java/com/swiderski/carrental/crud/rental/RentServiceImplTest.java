@@ -1,4 +1,4 @@
-package com.swiderski.carrental.services.impl;
+package com.swiderski.carrental.crud.rental;
 
 import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.car.CarDto;
@@ -8,12 +8,6 @@ import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientMapper;
 import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.NotFoundException;
-import com.swiderski.carrental.crud.rental.RentServiceImpl;
-import com.swiderski.carrental.crud.rental.Rental;
-import com.swiderski.carrental.crud.rental.RentalDto;
-import com.swiderski.carrental.crud.rental.RentalMapper;
-import com.swiderski.carrental.crud.rental.RentalParam;
-import com.swiderski.carrental.crud.rental.RentalRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -149,7 +144,7 @@ public class RentServiceImplTest {
         //given
         List<Rental> rentals = getRentals();
         List<RentalDto> rentalsDto = getRentalsDto();
-        when(rentalRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
+        when(rentalRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
         //when
         Page<RentalDto> all = rentService.getAll(new RentalParam(), pageRequest);
         //then

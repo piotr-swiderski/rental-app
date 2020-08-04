@@ -7,6 +7,10 @@ import com.swiderski.carrental.crud.client.Client;
 import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.rental.Rental;
 import com.swiderski.carrental.crud.rental.RentalDto;
+import com.swiderski.carrental.crud.rental.RentalParam;
+import com.swiderski.carrental.crud.specification.SpecificationBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
@@ -62,6 +66,10 @@ public class Utils {
     public static final int pageSize = 10;
     public static final String sortBy = "id";
     public static final PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+    public static final RentalParam rentalParam = new RentalParam();
+    public static final SpecificationBuilder<Rental> rentalSpec = new SpecificationBuilder<>();
+    private static long pageTotalElements = 10L;
 
     public static Client getClient() {
         return Client.ClientBuilder.aClient()
@@ -194,4 +202,15 @@ public class Utils {
         return Arrays.asList(getRentalDto(), getSecondRentalDto());
     }
 
+    public static Page<RentalDto> getRentalPage() {
+        return new PageImpl(getRentalsDto(), pageRequest, pageTotalElements);
+    }
+
+    public static Page<CarDto> getCarPage() {
+        return new PageImpl(getCarsDto(), pageRequest, pageTotalElements);
+    }
+
+    public static Page<ClientDto> getClientPage() {
+        return new PageImpl(getClientsDto(), pageRequest, pageTotalElements);
+    }
 }
