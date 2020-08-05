@@ -1,9 +1,9 @@
 package com.swiderski.carrental.soap;
 
 import com.swiderski.carrental.crud.rental.RentalDto;
-import com.swiderski.rental_service.schema.pageable.AnyType;
 import com.swiderski.rental_service.schema.pageable.Pageable;
 import com.swiderski.rental_service.schema.rental.RentalData;
+import com.swiderski.rental_service.schema.rental.RentalPageable;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
@@ -18,10 +18,8 @@ public interface RentalWebMapper {
 
     List<RentalData> toRentalDataList(List<RentalDto> rentalDtoList);
 
-    List<AnyType> toAnyTypeList(List<RentalDto> rentalDtoList);
-
-    default Pageable toWebPageable(Page<RentalDto> page) {
-        Pageable wsPage = new Pageable();
+    default RentalPageable toWebPageable(Page<RentalDto> page) {
+        RentalPageable wsPage = new RentalPageable();
 
         wsPage.setEmpty(page.isEmpty());
         wsPage.setFirst(page.isFirst());
@@ -30,7 +28,7 @@ public interface RentalWebMapper {
         wsPage.setNumberOfElements(page.getNumberOfElements());
         wsPage.setSize(page.getSize());
         wsPage.setNumber(page.getNumber());
-        wsPage.getContent().addAll(toAnyTypeList(page.getContent()));
+        wsPage.getContent().addAll(toRentalDataList(page.getContent()));
 
         return wsPage;
     }

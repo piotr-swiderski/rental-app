@@ -7,17 +7,17 @@ import com.swiderski.rental_service.schema.car.Car;
 import com.swiderski.rental_service.schema.car.CarData;
 import com.swiderski.rental_service.schema.car.CarDeleteRequest;
 import com.swiderski.rental_service.schema.car.CarList;
+import com.swiderski.rental_service.schema.car.CarListRequest;
+import com.swiderski.rental_service.schema.car.CarPageable;
 import com.swiderski.rental_service.schema.car.CarRequest;
-import com.swiderski.rental_service.schema.car.ListPageRequest;
 import com.swiderski.rental_service.schema.car.ObjectFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-
-import java.util.List;
 
 @Endpoint
 public class CarEndpoint {
@@ -80,21 +80,22 @@ public class CarEndpoint {
         return car;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PageRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "CarListRequest")
     @ResponsePayload
-    public CarList getCarList(@RequestPayload ListPageRequest request) {
+    public CarList getCarList(@RequestPayload CarListRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
-
         int pageNo = request.getPageNo();
         int pageSize = request.getPageSize();
         String sortBy = request.getSortBy();
-        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        List<CarDto> cars = carService.getAll(new CarParam(), pageable).getContent();
-        List<CarData> carDataList = carWebMapper.toCarDataList(cars);
+        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        CarParam carParam = carWebMapper.toCarParam(request.getCarFilter());
+
+        Page<CarDto> page = carService.getAll(carParam, pageable);
+        CarPageable webPage = carWebMapper.toWebPageable(page);
 
         CarList carList = objectFactory.createCarList();
-        carList.getCar().addAll(carDataList);
+        carList.setPage(webPage);
 
         return carList;
     }

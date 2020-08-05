@@ -14,20 +14,22 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="ListPageRequest">
+    <xs:element name="ClientListRequest">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element type="xs:int" name="pageNo"/>
-                <xs:element type="xs:int" name="pageSize"/>
-                <xs:element type="xs:string" name="sortBy"/>
-            </xs:sequence>
+            <xs:complexContent>
+                <xs:extension base="page:PageRequest">
+                    <xs:sequence>
+                        <xs:element name="clientFilter" type="tns:ClientFilter"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="ClientList">
         <xs:complexType>
             <xs:sequence>
-                <xs:element type="page:Pageable" name="page"/>
+                <xs:element type="tns:ClientPageable" name="page"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -58,6 +60,28 @@
             <xs:element type="xs:string" name="street"/>
             <xs:element type="xs:string" name="zipCode"/>
             <xs:element type="xs:string" name="phone"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ClientPageable">
+        <xs:complexContent>
+            <xs:extension base="page:Pageable">
+                <xs:sequence>
+                    <xs:element name="content" type="tns:ClientData" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ClientFilter">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="surname" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="city" type="xs:string"/>
+            <xs:element name="street" type="xs:string"/>
+            <xs:element name="zipCode" type="xs:string"/>
+            <xs:element name="phone" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 

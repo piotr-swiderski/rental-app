@@ -7,11 +7,10 @@ import com.swiderski.rental_service.schema.client.Client;
 import com.swiderski.rental_service.schema.client.ClientData;
 import com.swiderski.rental_service.schema.client.ClientDeleteRequest;
 import com.swiderski.rental_service.schema.client.ClientList;
+import com.swiderski.rental_service.schema.client.ClientListRequest;
+import com.swiderski.rental_service.schema.client.ClientPageable;
 import com.swiderski.rental_service.schema.client.ClientRequest;
-import com.swiderski.rental_service.schema.client.ListPageRequest;
 import com.swiderski.rental_service.schema.client.ObjectFactory;
-import com.swiderski.rental_service.schema.pageable.AnyType;
-import com.swiderski.rental_service.schema.pageable.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,8 +18,6 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-
-import java.util.List;
 
 @Endpoint
 public class ClientEndpoint {
@@ -83,22 +80,24 @@ public class ClientEndpoint {
         return client;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ListPageRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ClientListRequest")
     @ResponsePayload
-    public ClientList getClientList(@RequestPayload ListPageRequest request) {
+    public ClientList getClientList(@RequestPayload ClientListRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
 
         int pageNo = request.getPageNo();
         int pageSize = request.getPageSize();
         String sortBy = request.getSortBy();
-        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        Page<ClientDto> page = clientService.getAll(new ClientParam(), pageable);
-        Pageable webPageable = clientWebMapper.toWebPageable(page);
-        List<AnyType> anyTypes = clientWebMapper.toAnyTypeList(page.getContent());
+        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        ClientParam clientParam = clientWebMapper.toClientParam(request.getClientFilter());
+
+        Page<ClientDto> page = clientService.getAll(clientParam, pageable);
+        ClientPageable clientPageable = clientWebMapper.toWebPageable(page);
+
 
         ClientList clientList = objectFactory.createClientList();
-        clientList.setPage(webPageable);
+        clientList.setPage(clientPageable);
 
         return clientList;
     }

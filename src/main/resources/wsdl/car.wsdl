@@ -17,7 +17,7 @@
         <wsdl:part name="in" element="tns:CarRequest"/>
     </wsdl:message>
     <wsdl:message name="getCars">
-        <wsdl:part name="in" element="tns:ListPageRequest"/>
+        <wsdl:part name="in" element="tns:CarListRequest"/>
     </wsdl:message>
     <wsdl:message name="addCar">
         <wsdl:part name="in" element="tns:Car"/>

@@ -20,7 +20,7 @@
         <wsdl:part name="in" element="tns:RentalRequest"/>
     </wsdl:message>
     <wsdl:message name="getRentals">
-        <wsdl:part name="in" element="tns:ListPageRequest"/>
+        <wsdl:part name="in" element="tns:RentalListRequest"/>
     </wsdl:message>
     <wsdl:message name="addRental">
         <wsdl:part name="in" element="tns:Rental"/>

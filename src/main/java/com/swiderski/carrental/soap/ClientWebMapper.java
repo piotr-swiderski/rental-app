@@ -1,9 +1,10 @@
 package com.swiderski.carrental.soap;
 
 import com.swiderski.carrental.crud.client.ClientDto;
+import com.swiderski.carrental.crud.client.ClientParam;
 import com.swiderski.rental_service.schema.client.ClientData;
-import com.swiderski.rental_service.schema.pageable.AnyType;
-import com.swiderski.rental_service.schema.pageable.Pageable;
+import com.swiderski.rental_service.schema.client.ClientFilter;
+import com.swiderski.rental_service.schema.client.ClientPageable;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
@@ -18,10 +19,10 @@ public interface ClientWebMapper {
 
     List<ClientData> toClientDataList(List<ClientDto> clientDtos);
 
-    List<AnyType> toAnyTypeList(List<ClientDto> rentalDtoList);
+    ClientParam toClientParam(ClientFilter clientFilter);
 
-    default Pageable toWebPageable(Page<ClientDto> page) {
-        Pageable wsPage = new Pageable();
+    default ClientPageable toWebPageable(Page<ClientDto> page) {
+        ClientPageable wsPage = new ClientPageable();
 
         wsPage.setEmpty(page.isEmpty());
         wsPage.setFirst(page.isFirst());
@@ -30,7 +31,7 @@ public interface ClientWebMapper {
         wsPage.setNumberOfElements(page.getNumberOfElements());
         wsPage.setSize(page.getSize());
         wsPage.setNumber(page.getNumber());
-        wsPage.getContent().addAll(toAnyTypeList(page.getContent()));
+        wsPage.getContent().addAll(toClientDataList(page.getContent()));
 
         return wsPage;
     }

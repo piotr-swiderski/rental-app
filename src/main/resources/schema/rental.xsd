@@ -17,20 +17,22 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="ListPageRequest">
+    <xs:element name="RentalListRequest">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element type="xs:int" name="pageNo"/>
-                <xs:element type="xs:int" name="pageSize"/>
-                <xs:element type="xs:string" name="sortBy"/>
-            </xs:sequence>
+            <xs:complexContent>
+                <xs:extension base="page:PageRequest">
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="RentalList">
         <xs:complexType>
             <xs:sequence>
-                <xs:element type="page:Pageable" name="page"/>
+                <xs:element type="tns:RentalPageable" name="page"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -59,6 +61,16 @@
             <xs:element type="car:CarData" name="car"/>
             <xs:element type="client:ClientData" name="client"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RentalPageable">
+        <xs:complexContent>
+            <xs:extension base="page:Pageable">
+                <xs:sequence>
+                    <xs:element name="content" type="tns:RentalData" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
 

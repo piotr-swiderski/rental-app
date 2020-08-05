@@ -17,7 +17,7 @@
         <wsdl:part name="in" element="tns:ClientRequest"/>
     </wsdl:message>
     <wsdl:message name="getClients">
-        <wsdl:part name="in" element="tns:ListPageRequest"/>
+        <wsdl:part name="in" element="tns:ClientListRequest"/>
     </wsdl:message>
     <wsdl:message name="addClient">
         <wsdl:part name="in" element="tns:Client"/>

@@ -3,13 +3,13 @@ package com.swiderski.carrental.soap;
 import com.swiderski.carrental.crud.rental.RentService;
 import com.swiderski.carrental.crud.rental.RentalDto;
 import com.swiderski.carrental.crud.rental.RentalParam;
-import com.swiderski.rental_service.schema.pageable.Pageable;
-import com.swiderski.rental_service.schema.rental.ListPageRequest;
 import com.swiderski.rental_service.schema.rental.ObjectFactory;
 import com.swiderski.rental_service.schema.rental.Rental;
 import com.swiderski.rental_service.schema.rental.RentalData;
 import com.swiderski.rental_service.schema.rental.RentalDeleteRequest;
 import com.swiderski.rental_service.schema.rental.RentalList;
+import com.swiderski.rental_service.schema.rental.RentalListRequest;
+import com.swiderski.rental_service.schema.rental.RentalPageable;
 import com.swiderski.rental_service.schema.rental.RentalRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -80,9 +80,9 @@ public class RentalEndpoint {
         return rental;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ListPageRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RentalListRequest")
     @ResponsePayload
-    public RentalList getRentalList(@RequestPayload ListPageRequest request) {
+    public RentalList getRentalList(@RequestPayload RentalListRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
 
         int pageNo = request.getPageNo();
@@ -91,10 +91,10 @@ public class RentalEndpoint {
         PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
         Page<RentalDto> page = rentService.getAll(new RentalParam(), pageable);
-        Pageable webPageable = rentalWebMapper.toWebPageable(page);
+        RentalPageable rentalPageable = rentalWebMapper.toWebPageable(page);
 
         RentalList rentalList = objectFactory.createRentalList();
-        rentalList.setPage(webPageable);
+        rentalList.setPage(rentalPageable);
 
         return rentalList;
     }

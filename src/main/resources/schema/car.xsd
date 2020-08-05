@@ -1,6 +1,10 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://swiderski.com/rental-service/schema/car"
            elementFormDefault="qualified"
+           xmlns:page="http://swiderski.com/rental-service/schema/pageable"
            targetNamespace="http://swiderski.com/rental-service/schema/car">
+
+    <xs:import namespace="http://swiderski.com/rental-service/schema/pageable" schemaLocation="pageable.xsd"/>
+
 
     <xs:element name="Car">
         <xs:complexType>
@@ -10,20 +14,22 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="ListPageRequest">
+    <xs:element name="CarListRequest">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element type="xs:int" name="pageNo"/>
-                <xs:element type="xs:int" name="pageSize"/>
-                <xs:element type="xs:string" name="sortBy"/>
-            </xs:sequence>
+            <xs:complexContent>
+                <xs:extension base="page:PageRequest">
+                    <xs:sequence>
+                        <xs:element name="carFilter" type="tns:CarFilter"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="CarList">
         <xs:complexType>
             <xs:sequence>
-                <xs:element type="tns:CarData" name="car" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element type="tns:CarPageable" name="page"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -58,6 +64,35 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="CarPageable">
+        <xs:complexContent>
+            <xs:extension base="page:Pageable">
+                <xs:sequence>
+                    <xs:element name="content" type="tns:CarData" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="CarFilter">
+        <xs:sequence>
+            <xs:element name="brand" type="xs:string"/>
+            <xs:element name="model" type="xs:string"/>
+            <xs:element name="colour" type="xs:string"/>
+            <xs:element name="yearFrom" type="xs:integer"/>
+            <xs:element name="yearTo" type="xs:integer"/>
+            <xs:element name="engineType" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="EngineType" final="restriction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DIESEL"/>
+            <xs:enumeration value="BENZINE"/>
+            <xs:enumeration value="HYBRID"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>
 
