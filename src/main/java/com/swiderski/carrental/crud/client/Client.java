@@ -94,8 +94,7 @@ public class Client extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return id == client.id &&
-                Objects.equals(name, client.name) &&
+        return Objects.equals(name, client.name) &&
                 Objects.equals(surname, client.surname) &&
                 Objects.equals(email, client.email) &&
                 Objects.equals(city, client.city) &&
@@ -106,7 +105,7 @@ public class Client extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, city, street, zipCode, phone);
+        return Objects.hash(name, surname, email, city, street, zipCode, phone);
     }
 
     public static final class ClientBuilder {

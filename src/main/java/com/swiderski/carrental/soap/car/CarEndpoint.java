@@ -1,4 +1,4 @@
-package com.swiderski.carrental.soap;
+package com.swiderski.carrental.soap.car;
 
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.car.CarParam;
@@ -8,9 +8,11 @@ import com.swiderski.rental_service.schema.car.CarData;
 import com.swiderski.rental_service.schema.car.CarDeleteRequest;
 import com.swiderski.rental_service.schema.car.CarList;
 import com.swiderski.rental_service.schema.car.CarListRequest;
-import com.swiderski.rental_service.schema.car.CarPageable;
 import com.swiderski.rental_service.schema.car.CarRequest;
 import com.swiderski.rental_service.schema.car.ObjectFactory;
+import com.swiderski.rental_service.schema.pageable.PageableXml;
+import com.swiderski.rental_service.schema.rental.CarRentRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -27,6 +29,7 @@ public class CarEndpoint {
 
     private static final String NAMESPACE_URI = "http://swiderski.com/rental-service/schema/car";
 
+    @Autowired
     public CarEndpoint(CarService carService, CarWebMapper carWebMapper) {
         this.carService = carService;
         this.carWebMapper = carWebMapper;
@@ -42,7 +45,7 @@ public class CarEndpoint {
         CarDto car = carService.getById(carId);
 
         Car carResponse = objectFactory.createCar();
-        CarData carData = carWebMapper.toCarData(car);
+        CarData carData = carWebMapper.toWebData(car);
         carResponse.setCar(carData);
 
         return carResponse;
@@ -55,7 +58,7 @@ public class CarEndpoint {
         long carId = getCarRequest.getId();
 
         CarDto deletedCar = carService.delete(carId);
-        CarData carData = carWebMapper.toCarData(deletedCar);
+        CarData carData = carWebMapper.toWebData(deletedCar);
 
         Car car = objectFactory.createCar();
         car.setCar(carData);
@@ -74,7 +77,7 @@ public class CarEndpoint {
         CarDto savedCar = carService.save(carDto);
 
         Car car = objectFactory.createCar();
-        CarData carDataResponse = carWebMapper.toCarData(savedCar);
+        CarData carDataResponse = carWebMapper.toWebData(savedCar);
         car.setCar(carDataResponse);
 
         return car;
@@ -92,7 +95,7 @@ public class CarEndpoint {
         CarParam carParam = carWebMapper.toCarParam(request.getCarFilter());
 
         Page<CarDto> page = carService.getAll(carParam, pageable);
-        CarPageable webPage = carWebMapper.toWebPageable(page);
+        PageableXml webPage = carWebMapper.toWebPageable(page);
 
         CarList carList = objectFactory.createCarList();
         carList.setPage(webPage);

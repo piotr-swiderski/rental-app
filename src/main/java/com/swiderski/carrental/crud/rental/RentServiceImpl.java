@@ -4,8 +4,7 @@ import com.swiderski.carrental.crud.abstraction.AbstractService;
 import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.car.CarMapper;
-import com.swiderski.carrental.crud.car.Car_;
-import com.swiderski.carrental.crud.client.ClientDto;
+import com.swiderski.carrental.crud.car.CarService;
 import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.CarRentedException;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
@@ -15,14 +14,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,13 +30,15 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     private final ClientService clientService;
     private final CarMapper carMapper;
     private final RentalMapper rentalMapper;
+    private CarService carService;
 
-    public RentServiceImpl(RentalMapper rentalMapper, RentalRepository rentalRepository, ClientService clientService, CarMapper carMapper) {
+    public RentServiceImpl(RentalMapper rentalMapper, RentalRepository rentalRepository, ClientService clientService, CarMapper carMapper, CarService carService) {
         super(rentalMapper, rentalRepository);
         this.rentalRepository = rentalRepository;
         this.clientService = clientService;
         this.carMapper = carMapper;
         this.rentalMapper = rentalMapper;
+        this.carService = carService;
     }
 
     @Override
@@ -52,14 +48,14 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
                 .add(new SearchCriteria(Rental_.RENTAL_BEGIN, rentalParam.getRentedFrom(), GREATER_THAN_EQUAL))
                 .add(new SearchCriteria(Rental_.RENTAL_END, rentalParam.getRentedTo(), LESS_THAN_EQUAL));
 
-        Specification<Rental> specification = new Specification<>() {
-            @Override
-            public Predicate toPredicate(Root<Rental> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-                return cb.like(root.join(Rental_.CAR).get(Car_.BRAND), "%" + rentalParam.getHasBrand() + "%");
-            }
-        };
+//        Specification<Rental> specification = new Specification<>() {
+//            @Override
+//            public Predicate toPredicate(Root<Rental> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+//                return cb.like(root.join(Rental_.CAR).get(Car_.BRAND), "%" + rentalParam.getHasBrand() + "%");
+//            }
+//        };
 
-        Page<Rental> rentalPage = commonRepository.findAll(specification, pageable);
+        Page<Rental> rentalPage = commonRepository.findAll(specificationBuilder, pageable);
         List<RentalDto> rentalDtos = commonMapper.toListDto(rentalPage.getContent());
         return new PageImpl<>(rentalDtos, pageable, rentalPage.getTotalElements());
     }
@@ -67,15 +63,12 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     @Override
     @Transactional
     public RentalDto rentCar(long carId, long clientId) {
-        ClientDto clientDto = clientService.getById(clientId);
-        Car car = getCarToRent(carId);
-        CarDto carDto = carMapper.toDto(car);
+        Rental rental = new Rental();
+        rental.setClient(clientService.getEntity(clientId));
+        rental.setCar(carService.getEntity(carId));
 
-        RentalDto rentalDto = new RentalDto();
-        rentalDto.setCar(carDto);
-        rentalDto.setClient(clientDto);
-
-        return save(rentalDto);
+        Rental saved = commonRepository.save(rental);
+        return commonMapper.toDto(saved);
     }
 
     private Car getCarToRent(long carId) {

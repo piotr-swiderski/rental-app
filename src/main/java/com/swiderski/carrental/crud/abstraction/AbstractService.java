@@ -2,13 +2,7 @@ package com.swiderski.carrental.crud.abstraction;
 
 
 import com.swiderski.carrental.crud.exception.NotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 public abstract class AbstractService<E extends AbstractEntity, D extends AbstractDto> implements CommonService<D> {
@@ -55,5 +49,10 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
         E entity = getEntityById(id);
         commonRepository.delete(entity);
         return commonMapper.toDto(entity);
+    }
+
+    @Transactional
+    public E getEntity(long id) {
+        return getEntityById(id);
     }
 }

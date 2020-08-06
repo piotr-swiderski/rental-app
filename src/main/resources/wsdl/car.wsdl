@@ -33,115 +33,78 @@
     </wsdl:message>
 
     <!--Define port definition -->
-    <wsdl:portType name="carEndpoint">
-        <wsdl:operation name="Car">
-            <wsdl:input message="tns:getCar"/>
-            <wsdl:output message="tns:getResponse"/>
+    <wsdl:portType name="CarSOAP">
+        <wsdl:operation name="getCar">
+            <wsdl:input name="carId" message="tns:getCar"/>
+            <wsdl:output name="carResponse" message="tns:getResponse"/>
         </wsdl:operation>
-    </wsdl:portType>
 
-    <wsdl:portType name="carsEndpoint">
-        <wsdl:operation name="Cars">
-            <wsdl:input message="tns:getCars"/>
-            <wsdl:output message="tns:listResponse"/>
+        <wsdl:operation name="getAllCars">
+            <wsdl:input name="pageable" message="tns:getCars"/>
+            <wsdl:output name="pageResponse" message="tns:listResponse"/>
         </wsdl:operation>
-    </wsdl:portType>
 
-    <wsdl:portType name="addCarEndpoint">
         <wsdl:operation name="addCar">
             <wsdl:input message="tns:addCar"/>
             <wsdl:output message="tns:getResponse"/>
         </wsdl:operation>
-    </wsdl:portType>
 
-    <wsdl:portType name="deleteCarEndpoint">
         <wsdl:operation name="deleteCar">
             <wsdl:input message="tns:deleteCar"/>
             <wsdl:output message="tns:getResponse"/>
         </wsdl:operation>
+
     </wsdl:portType>
 
     <!--Bind Soap operation and service -->
-    <wsdl:binding name="carBinding" type="tns:carEndpoint">
-        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="Car">
-            <soap:operation soapAction="http://swiderski.com/rental-service"
-                            style="document"/>
+    <wsdl:binding name="Car_SOAPBinding" type="tns:CarSOAP">
+        <soap:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
+        <wsdl:operation name="getCar">
+            <soap:operation soapAction="" style="document"/>
             <wsdl:input>
-                <soap:body parts="in" use="literal"/>
+                <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="out" use="literal"/>
+                <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-    </wsdl:binding>
 
-    <wsdl:binding name="deleteCarBinding" type="tns:deleteCarEndpoint">
-        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="deleteCar">
-            <soap:operation soapAction="http://swiderski.com/rental-service"
-                            style="document"/>
+            <soap:operation soapAction="" style="document"/>
             <wsdl:input>
-                <soap:body parts="in" use="literal"/>
+                <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="out" use="literal"/>
+                <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-    </wsdl:binding>
 
-    <wsdl:binding name="addCarBinding" type="tns:addCarEndpoint">
-        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="addCar">
-            <soap:operation soapAction="http://swiderski.com/rental-service"
-                            style="document"/>
+            <soap:operation soapAction="" style="document"/>
             <wsdl:input>
-                <soap:body parts="in" use="literal"/>
+                <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="out" use="literal"/>
+                <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-    </wsdl:binding>
 
-
-    <wsdl:binding name="getCarsBinding" type="tns:carsEndpoint">
-        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="Cars">
-            <soap:operation soapAction="http://swiderski.com/rental-service"
-                            style="document"/>
+        <wsdl:operation name="getAllCars">
+            <soap:operation soapAction="" style="document"/>
             <wsdl:input>
-                <soap:body parts="in" use="literal"/>
+                <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="out" use="literal"/>
+                <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
 
 
     <!--Define service -->
-    <wsdl:service name="CarEndpointService">
-        <wsdl:port name="carEndpoint" binding="tns:carBinding">
-            <soap:address location="http://localhost:9090/javainuse/ws/getCar"/>
-        </wsdl:port>
-    </wsdl:service>
-
-    <wsdl:service name="AddCarEndpointService">
-        <wsdl:port name="addCarEndpoint" binding="tns:addCarBinding">
-            <soap:address location="http://localhost:9090/javainuse/ws/addCar"/>
-        </wsdl:port>
-    </wsdl:service>
-
-    <wsdl:service name="DeleteCarEndpointService">
-        <wsdl:port name="deleteCarEndpoint" binding="tns:deleteCarBinding">
-            <soap:address location="http://localhost:9090/javainuse/ws/deleteCar"/>
-        </wsdl:port>
-    </wsdl:service>
-
-    <wsdl:service name="GetCarsEndpointService">
-        <wsdl:port name="getCarsEndpoint" binding="tns:getCarsBinding">
-            <soap:address location="http://localhost:9090/javainuse/ws/getCars"/>
+    <wsdl:service name="CarSoapService">
+        <wsdl:port name="CarPort" binding="tns:Car_SOAPBinding">
+            <soap:address location="http://localhost:9090/soap-api/car"/>
         </wsdl:port>
     </wsdl:service>
 

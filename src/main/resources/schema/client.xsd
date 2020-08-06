@@ -29,7 +29,7 @@
     <xs:element name="ClientList">
         <xs:complexType>
             <xs:sequence>
-                <xs:element type="tns:ClientPageable" name="page"/>
+                <xs:element type="page:PageableXml" name="page"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -51,23 +51,17 @@
     </xs:element>
 
     <xs:complexType name="ClientData">
-        <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="name"/>
-            <xs:element type="xs:string" name="surname"/>
-            <xs:element type="xs:string" name="email"/>
-            <xs:element type="xs:string" name="city"/>
-            <xs:element type="xs:string" name="street"/>
-            <xs:element type="xs:string" name="zipCode"/>
-            <xs:element type="xs:string" name="phone"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="ClientPageable">
         <xs:complexContent>
-            <xs:extension base="page:Pageable">
+            <xs:extension base="page:anyTypeXml">
                 <xs:sequence>
-                    <xs:element name="content" type="tns:ClientData" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element type="xs:long" name="id"/>
+                    <xs:element type="xs:string" name="name"/>
+                    <xs:element type="xs:string" name="surname"/>
+                    <xs:element type="xs:string" name="email"/>
+                    <xs:element type="xs:string" name="city"/>
+                    <xs:element type="xs:string" name="street"/>
+                    <xs:element type="xs:string" name="zipCode"/>
+                    <xs:element type="xs:string" name="phone"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

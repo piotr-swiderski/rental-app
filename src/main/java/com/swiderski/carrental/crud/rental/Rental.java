@@ -5,6 +5,7 @@ import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.client.Client;
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -16,11 +17,11 @@ import java.util.Objects;
 public class Rental extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "car_id", nullable = false, updatable = false, insertable = false)
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "client_id", nullable = false, updatable = false, insertable = false)
     private Client client;
 
     @Column(name = "date_rented_begin")
@@ -78,8 +79,7 @@ public class Rental extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rental rental = (Rental) o;
-        return id == rental.id &&
-                Objects.equals(car, rental.car) &&
+        return Objects.equals(car, rental.car) &&
                 Objects.equals(client, rental.client) &&
                 Objects.equals(rentalBegin, rental.rentalBegin) &&
                 Objects.equals(rentalEnd, rental.rentalEnd);
@@ -87,9 +87,8 @@ public class Rental extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, car, client, rentalBegin, rentalEnd);
+        return Objects.hash(car, client, rentalBegin, rentalEnd);
     }
-
 
     public static final class RentalBuilder {
         private long id;

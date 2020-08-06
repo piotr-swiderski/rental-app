@@ -5,7 +5,6 @@
 
     <xs:import namespace="http://swiderski.com/rental-service/schema/pageable" schemaLocation="pageable.xsd"/>
 
-
     <xs:element name="Car">
         <xs:complexType>
             <xs:sequence>
@@ -19,7 +18,7 @@
             <xs:complexContent>
                 <xs:extension base="page:PageRequest">
                     <xs:sequence>
-                        <xs:element name="carFilter" type="tns:CarFilter"/>
+                        <xs:element name="carFilter" type="tns:CarFilter" nillable="false"/>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -29,7 +28,7 @@
     <xs:element name="CarList">
         <xs:complexType>
             <xs:sequence>
-                <xs:element type="tns:CarPageable" name="page"/>
+                <xs:element type="page:PageableXml" name="page"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -52,28 +51,21 @@
 
 
     <xs:complexType name="CarData">
-        <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="brand"/>
-            <xs:element type="xs:string" name="model"/>
-            <xs:element type="xs:string" name="modelVersion"/>
-            <xs:element type="xs:string" name="colour"/>
-            <xs:element type="xs:string" name="engineType"/>
-            <xs:element type="xs:int" name="productionYear"/>
-            <xs:element type="xs:double" name="cost"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CarPageable">
         <xs:complexContent>
-            <xs:extension base="page:Pageable">
+            <xs:extension base="page:anyTypeXml">
                 <xs:sequence>
-                    <xs:element name="content" type="tns:CarData" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element type="xs:long" name="id"/>
+                    <xs:element type="xs:string" name="brand"/>
+                    <xs:element type="xs:string" name="model"/>
+                    <xs:element type="xs:string" name="modelVersion"/>
+                    <xs:element type="xs:string" name="colour"/>
+                    <xs:element type="xs:string" name="engineType"/>
+                    <xs:element type="xs:int" name="productionYear"/>
+                    <xs:element type="xs:double" name="cost"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-
 
     <xs:complexType name="CarFilter">
         <xs:sequence>

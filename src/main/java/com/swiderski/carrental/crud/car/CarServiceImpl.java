@@ -38,9 +38,4 @@ public class CarServiceImpl extends AbstractService<Car, CarDto> implements CarS
         List<CarDto> pageList = commonMapper.toListDto(carPage.getContent());
         return new PageImpl<>(pageList, pageable, carPage.getTotalElements());
     }
-
-    @Override
-    public List<CarDto> getAllWithoutSpec(int pageNo, int pageSize, String sortBy) {
-        return commonMapper.toListDto(commonRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent());
-    }
 }

@@ -1,4 +1,4 @@
-package com.swiderski.carrental.soap;
+package com.swiderski.carrental.soap.client;
 
 import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientParam;
@@ -8,9 +8,10 @@ import com.swiderski.rental_service.schema.client.ClientData;
 import com.swiderski.rental_service.schema.client.ClientDeleteRequest;
 import com.swiderski.rental_service.schema.client.ClientList;
 import com.swiderski.rental_service.schema.client.ClientListRequest;
-import com.swiderski.rental_service.schema.client.ClientPageable;
 import com.swiderski.rental_service.schema.client.ClientRequest;
 import com.swiderski.rental_service.schema.client.ObjectFactory;
+import com.swiderski.rental_service.schema.pageable.PageableXml;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -27,6 +28,7 @@ public class ClientEndpoint {
 
     private static final String NAMESPACE_URI = "http://swiderski.com/rental-service/schema/client";
 
+    @Autowired
     public ClientEndpoint(ClientService clientService, ClientWebMapper clientWebMapper) {
         this.clientService = clientService;
         this.clientWebMapper = clientWebMapper;
@@ -42,7 +44,7 @@ public class ClientEndpoint {
         ClientDto clientDto = clientService.getById(carId);
 
         Client clientResponse = objectFactory.createClient();
-        ClientData clientData = clientWebMapper.toClientData(clientDto);
+        ClientData clientData = clientWebMapper.toWebData(clientDto);
         clientResponse.setClient(clientData);
 
         return clientResponse;
@@ -55,7 +57,7 @@ public class ClientEndpoint {
         long clientId = request.getId();
 
         ClientDto clientDto = clientService.delete(clientId);
-        ClientData clientData = clientWebMapper.toClientData(clientDto);
+        ClientData clientData = clientWebMapper.toWebData(clientDto);
 
         Client client = objectFactory.createClient();
         client.setClient(clientData);
@@ -70,11 +72,11 @@ public class ClientEndpoint {
         ObjectFactory objectFactory = new ObjectFactory();
         ClientData clientData = clientRequest.getClient();
 
-        ClientDto clientDto = clientWebMapper.toClientDto(clientData);
+        ClientDto clientDto = clientWebMapper.toDto(clientData);
         ClientDto savedClient = clientService.save(clientDto);
 
         Client client = objectFactory.createClient();
-        ClientData clientDataResponse = clientWebMapper.toClientData(savedClient);
+        ClientData clientDataResponse = clientWebMapper.toWebData(savedClient);
         client.setClient(clientDataResponse);
 
         return client;
@@ -93,7 +95,7 @@ public class ClientEndpoint {
         ClientParam clientParam = clientWebMapper.toClientParam(request.getClientFilter());
 
         Page<ClientDto> page = clientService.getAll(clientParam, pageable);
-        ClientPageable clientPageable = clientWebMapper.toWebPageable(page);
+        PageableXml clientPageable = clientWebMapper.toWebPageable(page);
 
 
         ClientList clientList = objectFactory.createClientList();

@@ -96,8 +96,7 @@ public class Car extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return id == car.id &&
-                productionYear == car.productionYear &&
+        return productionYear == car.productionYear &&
                 Double.compare(car.cost, cost) == 0 &&
                 Objects.equals(brand, car.brand) &&
                 Objects.equals(model, car.model) &&
@@ -108,9 +107,8 @@ public class Car extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, brand, model, modelVersion, colour, engineType, productionYear, cost);
+        return Objects.hash(brand, model, modelVersion, colour, engineType, productionYear, cost);
     }
-
 
     public static final class CarBuilder {
         private long id;

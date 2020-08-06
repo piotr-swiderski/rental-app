@@ -8,4 +8,6 @@ public interface ClientService extends CommonService<ClientDto> {
 
     Page<ClientDto> getAll(ClientParam clientParam, Pageable pageable);
 
+    Client getEntity(long id);
+
 }
