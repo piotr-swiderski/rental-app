@@ -7,6 +7,4 @@ import org.springframework.data.domain.Pageable;
 public interface CarService extends CommonService<CarDto> {
 
     Page<CarDto> getAll(CarParam carParam, Pageable pageable);
-
-    Car getEntity(long id);
 }

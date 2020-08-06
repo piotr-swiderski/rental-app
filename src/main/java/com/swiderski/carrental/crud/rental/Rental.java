@@ -5,7 +5,6 @@ import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.client.Client;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -17,11 +16,11 @@ import java.util.Objects;
 public class Rental extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "car_id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
     @Column(name = "date_rented_begin")

@@ -5,6 +5,8 @@ import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.car.CarMapper;
 import com.swiderski.carrental.crud.car.CarService;
+import com.swiderski.carrental.crud.car.Car_;
+import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.CarRentedException;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
@@ -17,6 +19,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,7 +37,8 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     private final RentalMapper rentalMapper;
     private CarService carService;
 
-    public RentServiceImpl(RentalMapper rentalMapper, RentalRepository rentalRepository, ClientService clientService, CarMapper carMapper, CarService carService) {
+    public RentServiceImpl(RentalMapper rentalMapper, RentalRepository rentalRepository,
+                           ClientService clientService, CarMapper carMapper, CarService carService) {
         super(rentalMapper, rentalRepository);
         this.rentalRepository = rentalRepository;
         this.clientService = clientService;
@@ -48,12 +54,8 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
                 .add(new SearchCriteria(Rental_.RENTAL_BEGIN, rentalParam.getRentedFrom(), GREATER_THAN_EQUAL))
                 .add(new SearchCriteria(Rental_.RENTAL_END, rentalParam.getRentedTo(), LESS_THAN_EQUAL));
 
-//        Specification<Rental> specification = new Specification<>() {
-//            @Override
-//            public Predicate toPredicate(Root<Rental> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-//                return cb.like(root.join(Rental_.CAR).get(Car_.BRAND), "%" + rentalParam.getHasBrand() + "%");
-//            }
-//        };
+        specificationBuilder.and((Root<Rental> root, CriteriaQuery<?> cq, CriteriaBuilder cb) ->
+                cb.like(root.join(Rental_.CAR).get(Car_.BRAND), "%" + rentalParam.getHasBrand() + "%"));
 
         Page<Rental> rentalPage = commonRepository.findAll(specificationBuilder, pageable);
         List<RentalDto> rentalDtos = commonMapper.toListDto(rentalPage.getContent());
@@ -63,12 +65,15 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     @Override
     @Transactional
     public RentalDto rentCar(long carId, long clientId) {
-        Rental rental = new Rental();
-        rental.setClient(clientService.getEntity(clientId));
-        rental.setCar(carService.getEntity(carId));
+        ClientDto clientDto = clientService.getById(clientId);
+        Car car = getCarToRent(carId);
+        CarDto carDto = carMapper.toDto(car);
 
-        Rental saved = commonRepository.save(rental);
-        return commonMapper.toDto(saved);
+        RentalDto rentalDto = new RentalDto();
+        rentalDto.setClient(clientDto);
+        rentalDto.setCar(carDto);
+
+        return save(rentalDto);
     }
 
     private Car getCarToRent(long carId) {

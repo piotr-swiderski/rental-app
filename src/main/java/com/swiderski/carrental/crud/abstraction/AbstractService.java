@@ -50,9 +50,4 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
         commonRepository.delete(entity);
         return commonMapper.toDto(entity);
     }
-
-    @Transactional
-    public E getEntity(long id) {
-        return getEntityById(id);
-    }
 }

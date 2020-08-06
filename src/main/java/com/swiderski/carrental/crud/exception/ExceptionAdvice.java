@@ -42,7 +42,7 @@ public class ExceptionAdvice {
     @ResponseBody
     @ExceptionHandler(value = ResourceAccessException.class)
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
-    public String badRequestHandler(ResourceAccessException e) {
+    public String resourceExceptionHandler(ResourceAccessException e) {
         return e.getMessage();
     }
 }
