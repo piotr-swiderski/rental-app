@@ -6,14 +6,7 @@ import com.swiderski.carrental.crud.rental.RentalParam;
 import com.swiderski.carrental.soap.SoapEndpoint;
 import com.swiderski.carrental.soap.SoapService;
 import com.swiderski.rental_service.schema.pageable.PageableXml;
-import com.swiderski.rental_service.schema.rental.ObjectFactory;
-import com.swiderski.rental_service.schema.rental.Rental;
-import com.swiderski.rental_service.schema.rental.RentalData;
-import com.swiderski.rental_service.schema.rental.RentalDeleteRequest;
-import com.swiderski.rental_service.schema.rental.RentalList;
-import com.swiderski.rental_service.schema.rental.RentalListRequest;
-import com.swiderski.rental_service.schema.rental.RentalRequest;
-import com.swiderski.rental_service.schema.rental.RentalSOAP;
+import com.swiderski.rental_service.schema.rental.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
+import java.time.LocalDate;
 
 @Service
 @SoapEndpoint(publish = "/rental")
@@ -67,7 +61,6 @@ public class RentalSoapService implements RentalSOAP, SoapService {
 
         return rental;
     }
-
     @Override
     public Rental addRental(Rental rentalRequest) {
         RentalData rentalData = rentalRequest.getRental();
@@ -95,5 +88,30 @@ public class RentalSoapService implements RentalSOAP, SoapService {
         return rentalResponse;
     }
 
+    @Override
+    public Rental rentCar(CarRentRequest carRentRequest) {
+        RentalDto rentalDto = rentService.rentCar(carRentRequest.getCarId(), carRentRequest.getClientId());
+        RentalData rentalData = rentalWebMapper.toWebData(rentalDto);
+
+        Rental rental = objectFactory.createRental();
+        rental.setRental(rentalData);
+
+        return rental;
+    }
+
+    @Override
+    public Rental returnCar(CarReturnRequest carReturnRequest) {
+
+        long rentalId = carReturnRequest.getRentalId();
+        LocalDate returnDate = LocalDate.parse(carReturnRequest.getRentalEnd().toString());
+
+        RentalDto rentalDto = rentService.returnCar(rentalId, returnDate);
+        RentalData rentalData = rentalWebMapper.toWebData(rentalDto);
+
+        Rental rental = objectFactory.createRental();
+        rental.setRental(rentalData);
+
+        return rental;
+    }
 
 }

@@ -32,6 +32,12 @@
     <wsdl:message name="listResponse">
         <wsdl:part name="rentalPageResponse" element="tns:RentalList"/>
     </wsdl:message>
+    <wsdl:message name="carRentRequest">
+        <wsdl:part name="carRentRequest" element="tns:CarRentRequest"/>
+    </wsdl:message>
+    <wsdl:message name="carReturnRequest">
+        <wsdl:part name="carReturnRequest" element="tns:CarReturnRequest"/>
+    </wsdl:message>
 
     <!--Define port definition -->
     <wsdl:portType name="RentalSOAP">
@@ -54,14 +60,23 @@
             <wsdl:input message="tns:deleteRental"/>
             <wsdl:output message="tns:getResponse"/>
         </wsdl:operation>
+
+        <wsdl:operation name="rentCar">
+            <wsdl:input message="tns:carRentRequest"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="returnCar">
+            <wsdl:input message="tns:carReturnRequest"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
     </wsdl:portType>
 
     <!--Bind Soap operation and service -->
     <wsdl:binding name="Rental_SOAPBinding" type="tns:RentalSOAP">
         <soap:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
         <wsdl:operation name="Rental">
-            <soap:operation soapAction="http://swiderski.com/rental-service"
-                            style="document"/>
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
             <wsdl:input>
                 <soap:body parts="request" use="literal"/>
             </wsdl:input>
@@ -71,8 +86,7 @@
         </wsdl:operation>
 
         <wsdl:operation name="deleteRental">
-            <soap:operation soapAction="http://swiderski.com/rental-service"
-                            style="document"/>
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
             <wsdl:input>
                 <soap:body parts="deleteRequest" use="literal"/>
             </wsdl:input>
@@ -82,8 +96,7 @@
         </wsdl:operation>
 
         <wsdl:operation name="addRental">
-            <soap:operation soapAction="http://swiderski.com/rental-service"
-                            style="document"/>
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
             <wsdl:input>
                 <soap:body parts="rentalRequest" use="literal"/>
             </wsdl:input>
@@ -92,15 +105,33 @@
             </wsdl:output>
         </wsdl:operation>
 
-
         <wsdl:operation name="Rentals">
-            <soap:operation soapAction="http://swiderski.com/rental-service"
-                            style="document"/>
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
             <wsdl:input>
                 <soap:body parts="pageableRequest" use="literal"/>
             </wsdl:input>
             <wsdl:output>
                 <soap:body parts="rentalPageResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="rentCar">
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
+            <wsdl:input>
+                <soap:body parts="carRentRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="rentalResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="returnCar">
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
+            <wsdl:input>
+                <soap:body parts="carReturnRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="rentalResponse" use="literal"/>
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
