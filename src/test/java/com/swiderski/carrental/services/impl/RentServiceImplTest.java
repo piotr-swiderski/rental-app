@@ -25,6 +25,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -149,7 +150,7 @@ public class RentServiceImplTest {
         //given
         List<Rental> rentals = getRentals();
         List<RentalDto> rentalsDto = getRentalsDto();
-        when(rentalRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
+        when(rentalRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
         //when
         Page<RentalDto> all = rentService.getAll(new RentalParam(), pageRequest);
         //then

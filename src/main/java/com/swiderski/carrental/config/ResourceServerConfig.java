@@ -11,6 +11,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/soap-api/**").hasRole("USER")
+                //.antMatchers("/soap-api/rental").hasRole("USER")
+                .antMatchers("/ws/**").hasRole("USER")
                 .antMatchers(
                         "/v1/api-docs",
                         "/swagger-resources",

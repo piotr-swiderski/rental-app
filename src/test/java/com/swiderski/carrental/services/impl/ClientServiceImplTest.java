@@ -18,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +65,7 @@ public class ClientServiceImplTest {
         //given
         List<ClientDto> clientsDto = getClientsDto();
         List<Client> clients = getClients();
-        when(clientRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(clients));
+        when(clientRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(clients));
         //when
         Page<ClientDto> returnedClients = clientService.getAll(new ClientParam(),pageRequest);
         //then

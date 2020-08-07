@@ -62,7 +62,7 @@ class CarServiceImplTest {
     void getAllCars_shouldReturnedAllCars() {
         //given
         List<Car> cars = getCars();
-        when(carRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
+        when(carRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
         Page<CarDto> allCars = carService.getAll(new CarParam(),pageRequest);
         //then
