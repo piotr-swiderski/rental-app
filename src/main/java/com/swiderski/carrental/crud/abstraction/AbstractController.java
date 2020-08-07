@@ -30,16 +30,19 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('read_profile')")
     public E save(@RequestBody E dto) {
         return service.save(dto);
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('delete_profile')")
     public E delete(@PathVariable long id) {
         return service.delete(id);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('update_profile')")
     public E update(@PathVariable long id, @RequestBody E dto) {
         return service.update(id, dto);
     }

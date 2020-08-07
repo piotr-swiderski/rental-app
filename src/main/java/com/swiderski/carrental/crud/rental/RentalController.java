@@ -32,6 +32,7 @@ public class RentalController extends AbstractController<RentService, RentalDto>
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public Page<RentalDto> getAll(@ModelAttribute RentalParam rentalParam,
                                   @PageableDefault Pageable pageable) {
         return rentService.getAll(rentalParam, pageable);
