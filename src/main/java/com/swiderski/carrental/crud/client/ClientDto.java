@@ -1,9 +1,15 @@
 package com.swiderski.carrental.crud.client;
 
 import com.swiderski.carrental.crud.abstraction.AbstractDto;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
+@NoArgsConstructor
+@Getter
+@Setter
 public class ClientDto extends AbstractDto {
 
     private String name;
@@ -13,65 +19,6 @@ public class ClientDto extends AbstractDto {
     private String street;
     private String zipCode;
     private String phone;
-
-    public ClientDto() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     @Override
     public boolean equals(Object o) {

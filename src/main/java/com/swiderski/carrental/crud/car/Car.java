@@ -1,6 +1,10 @@
 package com.swiderski.carrental.crud.car;
 
 import com.swiderski.carrental.crud.abstraction.AbstractEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +12,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.Objects;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity(name = "car_table")
 public class Car extends AbstractEntity {
 
@@ -31,65 +39,6 @@ public class Car extends AbstractEntity {
 
     @Column(name = "cost")
     private double cost;
-
-    public Car() {
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getModelVersion() {
-        return modelVersion;
-    }
-
-    public void setModelVersion(String modelVersion) {
-        this.modelVersion = modelVersion;
-    }
-
-    public String getColour() {
-        return colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public EngineType getEngineType() {
-        return engineType;
-    }
-
-    public void setEngineType(EngineType engineType) {
-        this.engineType = engineType;
-    }
-
-    public int getProductionYear() {
-        return productionYear;
-    }
-
-    public void setProductionYear(int productionYear) {
-        this.productionYear = productionYear;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
 
     @Override
     public boolean equals(Object o) {

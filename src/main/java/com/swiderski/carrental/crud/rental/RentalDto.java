@@ -3,59 +3,24 @@ package com.swiderski.carrental.crud.rental;
 import com.swiderski.carrental.crud.abstraction.AbstractDto;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.client.ClientDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class RentalDto extends AbstractDto {
 
     private CarDto car;
     private ClientDto client;
     private LocalDate rentalBegin;
     private LocalDate rentalEnd;
-
-    public RentalDto(long id, CarDto car, ClientDto client, LocalDate rentalBegin, LocalDate rentalEnd) {
-        this.car = car;
-        this.client = client;
-        this.rentalBegin = rentalBegin;
-        this.rentalEnd = rentalEnd;
-        this.id = id;
-    }
-
-    public RentalDto() {
-    }
-
-    public CarDto getCar() {
-        return car;
-    }
-
-    public void setCar(CarDto car) {
-        this.car = car;
-    }
-
-    public ClientDto getClient() {
-        return client;
-    }
-
-    public void setClient(ClientDto client) {
-        this.client = client;
-    }
-
-    public LocalDate getRentalBegin() {
-        return rentalBegin;
-    }
-
-    public void setRentalBegin(LocalDate rentalBegin) {
-        this.rentalBegin = rentalBegin;
-    }
-
-    public LocalDate getRentalEnd() {
-        return rentalEnd;
-    }
-
-    public void setRentalEnd(LocalDate rentalEnd) {
-        this.rentalEnd = rentalEnd;
-    }
 
     @Override
     public boolean equals(Object o) {
