@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +37,14 @@ public class Rental extends AbstractEntity {
 
     @Column(name = "date_rented_end")
     private LocalDate rentalEnd;
+
+    public Rental(Long id, Car car, Client client, LocalDate rentalBegin, LocalDate rentalEnd) {
+        this.id = id;
+        this.car = car;
+        this.client = client;
+        this.rentalBegin = rentalBegin;
+        this.rentalEnd = rentalEnd;
+    }
 
     @Override
     public boolean equals(Object o) {

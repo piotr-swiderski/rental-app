@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://jakub.slowikowski.pl/soap-example/abstract"
+           xmlns:page="http://jakub.slowikowski.pl/soap-example/pageable"
+           targetNamespace="http://jakub.slowikowski.pl/soap-example/abstract">
+
+    <xs:import namespace="http://jakub.slowikowski.pl/soap-example/pageable" schemaLocation="pageable.xsd"/>
+
+    <xs:complexType name="abstractXmlType">
+    </xs:complexType>
+
+    <xs:complexType name="abstractXmlElement">
+    </xs:complexType>
+
+    <xs:complexType name="abstractGetAllRequest">
+        <xs:sequence>
+            <xs:element name="pageable" type="page:pageableXml"/>
+            <xs:element name="search" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="GetAllResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="content" type="tns:abstractXmlType" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="totalPages" type="xs:long"/>
+                <xs:element name="totalElements" type="xs:long"/>
+                <xs:element name="number" type="xs:int"/>
+                <xs:element name="size" type="xs:int"/>
+                <xs:element name="sorted" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

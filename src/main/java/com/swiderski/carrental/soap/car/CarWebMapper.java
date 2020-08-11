@@ -12,4 +12,5 @@ public interface CarWebMapper extends CommonWebMapper<CarDto, CarData> {
 
     CarParam toCarParam(CarFilter carFilter);
 
+    CarFilter toCarFiler(CarParam carParam);
 }

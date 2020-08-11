@@ -153,6 +153,13 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>2.2.4.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -202,9 +209,11 @@
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/car.wsdl</wsdl>
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/rental.wsdl</wsdl>
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/client.wsdl</wsdl>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/ProductGroup.wsdl</wsdl>
+                                    <wsdlLocation>classpath:wsdl/client.wsdl</wsdlLocation>
                                     <wsdlLocation>classpath:wsdl/client.wsdl</wsdlLocation>
                                     <wsdlLocation>classpath:wsdl/car.wsdl</wsdlLocation>
-                                    <wsdlLocation>classpath:wsdl/rental.wsdl</wsdlLocation>
+                                    <wsdlLocation>classpath:wsdl/ProductGroup.wsdl</wsdlLocation>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

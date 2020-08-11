@@ -34,6 +34,15 @@ public class RentalDto extends AbstractDto {
                 Objects.equals(rentalEnd, rentalDto.rentalEnd);
     }
 
+    public RentalDto(Long id, CarDto car, ClientDto client, LocalDate rentalBegin, LocalDate rentalEnd) {
+        this.id = id;
+        this.car = car;
+        this.client = client;
+        this.rentalBegin = rentalBegin;
+        this.rentalEnd = rentalEnd;
+    }
+
+
     @Override
     public int hashCode() {
         return Objects.hash(id, car, client, rentalBegin, rentalEnd);

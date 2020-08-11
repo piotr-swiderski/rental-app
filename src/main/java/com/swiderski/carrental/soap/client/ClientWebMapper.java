@@ -12,5 +12,6 @@ public interface ClientWebMapper extends CommonWebMapper<ClientDto, ClientData> 
 
     ClientParam toClientParam(ClientFilter clientFilter);
 
+    ClientFilter toClientFiler(ClientParam clientParam);
 }
 

@@ -1,6 +1,6 @@
-package com.swiderski.carrental.feignClient;
+package com.swiderski.carrental.soapClient;
 
-import feign.FeignException;
+import org.apache.cxf.binding.soap.SoapFault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class FeignExceptionAdvice {
+public class SoapClientControllerAdvice {
 
     @ResponseBody
-    @ExceptionHandler(FeignException.Unauthorized.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String feignException(feign.FeignException e) {
-        return "Unauthorized";
+    @ExceptionHandler(SoapFault.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String notFoundHandler(SoapFault e) {
+        return e.getMessage();
     }
-
 }

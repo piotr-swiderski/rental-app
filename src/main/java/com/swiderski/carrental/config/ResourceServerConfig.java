@@ -11,7 +11,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/soap-api/**").hasRole("USER")
+                .antMatchers("/soap-api/**").permitAll()
+                .antMatchers("/v1/soap/**").permitAll()
                 //.antMatchers("/soap-api/rental").hasRole("USER")
                 .antMatchers("/ws/**").hasRole("USER")
                 .antMatchers(

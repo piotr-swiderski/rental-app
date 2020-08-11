@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://jakub.slowikowski.pl/soap-example/product-group"
+           xmlns:product="http://jakub.slowikowski.pl/soap-example/product"
+           xmlns:abstract="http://jakub.slowikowski.pl/soap-example/abstract"
+           targetNamespace="http://jakub.slowikowski.pl/soap-example/product-group">
+
+    <xs:import namespace="http://jakub.slowikowski.pl/soap-example/product" schemaLocation="product.xsd"/>
+    <xs:import namespace="http://jakub.slowikowski.pl/soap-example/abstract" schemaLocation="abstract.xsd"/>
+
+    <xs:complexType name="productGroupXml">
+        <xs:complexContent>
+            <xs:extension base="abstract:abstractXmlType">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="description" type="xs:string"/>
+                    <xs:element name="products" type="product:productXml" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="ProductGroupXmlObject">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="abstract:abstractXmlElement">
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="description" type="xs:string"/>
+                        <xs:element name="products" type="product:productXml" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllProductGroupsRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="abstract:abstractGetAllRequest">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="FindProductGroupRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SaveProductGroupRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="description" type="xs:string"/>
+                <xs:element name="products" type="product:productXml" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteProductGroupRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ProductGroupRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
