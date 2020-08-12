@@ -3,6 +3,10 @@ package com.swiderski.carrental.crud.rental;
 import com.swiderski.carrental.crud.abstraction.AbstractEntity;
 import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.client.Client;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
@@ -12,15 +16,19 @@ import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity(name = "rental_table")
 public class Rental extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
     @Column(name = "date_rented_begin")
@@ -30,46 +38,11 @@ public class Rental extends AbstractEntity {
     @Column(name = "date_rented_end")
     private LocalDate rentalEnd;
 
-    public Rental() {
-    }
-
-    public Rental(long id, Car car, Client client, LocalDate rentalBegin, LocalDate rentalEnd) {
+    public Rental(Long id, Car car, Client client, LocalDate rentalBegin, LocalDate rentalEnd) {
         this.id = id;
         this.car = car;
         this.client = client;
         this.rentalBegin = rentalBegin;
-        this.rentalEnd = rentalEnd;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public LocalDate getRentalBegin() {
-        return rentalBegin;
-    }
-
-    public void setRentalBegin(LocalDate rentalBegin) {
-        this.rentalBegin = rentalBegin;
-    }
-
-    public LocalDate getRentalEnd() {
-        return rentalEnd;
-    }
-
-    public void setRentalEnd(LocalDate rentalEnd) {
         this.rentalEnd = rentalEnd;
     }
 
@@ -78,8 +51,7 @@ public class Rental extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rental rental = (Rental) o;
-        return id == rental.id &&
-                Objects.equals(car, rental.car) &&
+        return Objects.equals(car, rental.car) &&
                 Objects.equals(client, rental.client) &&
                 Objects.equals(rentalBegin, rental.rentalBegin) &&
                 Objects.equals(rentalEnd, rental.rentalEnd);
@@ -87,9 +59,8 @@ public class Rental extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, car, client, rentalBegin, rentalEnd);
+        return Objects.hash(car, client, rentalBegin, rentalEnd);
     }
-
 
     public static final class RentalBuilder {
         private long id;

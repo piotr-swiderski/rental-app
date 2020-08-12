@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://swiderski.com/rental-service/schema/car" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://swiderski.com/rental-service/schema/car">
+
+    <wsdl:types>
+        <xs:schema targetNamespace="http://swiderski.com/rental-service/schema/car" elementFormDefault="qualified">
+            <xs:include schemaLocation="../schema/car.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+
+
+    <!--Define input and output parameters -->
+    <wsdl:message name="getCar">
+        <wsdl:part name="in" element="tns:CarRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getCars">
+        <wsdl:part name="in" element="tns:CarListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addCar">
+        <wsdl:part name="in" element="tns:Car"/>
+    </wsdl:message>
+    <wsdl:message name="deleteCar">
+        <wsdl:part name="in" element="tns:CarDeleteRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getResponse">
+        <wsdl:part name="out" element="tns:Car"/>
+    </wsdl:message>
+    <wsdl:message name="listResponse">
+        <wsdl:part name="out" element="tns:CarList"/>
+    </wsdl:message>
+
+    <!--Define port definition -->
+    <wsdl:portType name="CarSOAP">
+        <wsdl:operation name="getCar">
+            <wsdl:input name="carId" message="tns:getCar"/>
+            <wsdl:output name="carResponse" message="tns:getResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getAllCars">
+            <wsdl:input name="pageable" message="tns:getCars"/>
+            <wsdl:output name="pageResponse" message="tns:listResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="addCar">
+            <wsdl:input message="tns:addCar"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteCar">
+            <wsdl:input message="tns:deleteCar"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <!--Bind Soap operation and service -->
+    <wsdl:binding name="Car_SOAPBinding" type="tns:CarSOAP">
+        <soap:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
+        <wsdl:operation name="getCar">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteCar">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="addCar">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="getAllCars">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+
+    <!--Define service -->
+    <wsdl:service name="CarSoapService">
+        <wsdl:port name="CarPort" binding="tns:Car_SOAPBinding">
+            <soap:address location="http://localhost:9090/soap-api/car"/>
+        </wsdl:port>
+    </wsdl:service>
+
+
+</wsdl:definitions>

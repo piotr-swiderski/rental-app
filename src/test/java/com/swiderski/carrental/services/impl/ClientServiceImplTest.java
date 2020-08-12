@@ -3,6 +3,7 @@ package com.swiderski.carrental.services.impl;
 import com.swiderski.carrental.crud.client.Client;
 import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientMapper;
+import com.swiderski.carrental.crud.client.ClientParam;
 import com.swiderski.carrental.crud.client.ClientRepository;
 import com.swiderski.carrental.crud.client.ClientServiceImpl;
 import com.swiderski.carrental.crud.exception.NotFoundException;
@@ -17,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
@@ -63,9 +65,9 @@ public class ClientServiceImplTest {
         //given
         List<ClientDto> clientsDto = getClientsDto();
         List<Client> clients = getClients();
-        when(clientRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(clients));
+        when(clientRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(clients));
         //when
-        Page<ClientDto> returnedClients = clientService.getAll(null, pageNo, pageSize, sortBy);
+        Page<ClientDto> returnedClients = clientService.getAll(new ClientParam(),pageRequest);
         //then
         assertEquals(2, returnedClients.getTotalElements());
     }

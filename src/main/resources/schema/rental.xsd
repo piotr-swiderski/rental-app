@@ -1,0 +1,92 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://swiderski.com/rental-service/schema/rental"
+           xmlns:car="http://swiderski.com/rental-service/schema/car"
+           xmlns:client="http://swiderski.com/rental-service/schema/client"
+           xmlns:page="http://swiderski.com/rental-service/schema/pageable"
+           elementFormDefault="qualified"
+           targetNamespace="http://swiderski.com/rental-service/schema/rental">
+
+    <xs:import namespace="http://swiderski.com/rental-service/schema/car" schemaLocation="car.xsd"/>
+    <xs:import namespace="http://swiderski.com/rental-service/schema/client" schemaLocation="client.xsd"/>
+    <xs:import namespace="http://swiderski.com/rental-service/schema/pageable" schemaLocation="pageable.xsd"/>
+
+    <xs:element name="Rental">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="tns:RentalData" name="rental"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="RentalListRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="page:PageRequest">
+<!--                    <xs:sequence>-->
+<!--                        <xs:element name="name" type="xs:string"/>-->
+<!--                    </xs:sequence>-->
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="RentalList">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="page:PageableXml" name="page"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="RentalRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:long" name="id"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="RentalDeleteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:long" name="id"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CarRentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:long" name="carId"/>
+                <xs:element type="xs:long" name="clientId"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CarReturnRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:long" name="rentalId"/>
+                <xs:element type="xs:date" name="rentalEnd"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:complexType name="RentalData">
+        <xs:complexContent>
+            <xs:extension base="page:anyTypeXml">
+                <xs:sequence>
+                    <xs:element type="xs:long" name="id"/>
+                    <xs:element type="xs:date" name="rentalBegin"/>
+                    <xs:element type="xs:date" name="rentalEnd"/>
+                    <xs:element type="car:CarData" name="car"/>
+                    <xs:element type="client:ClientData" name="client"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+
+</xs:schema>
+

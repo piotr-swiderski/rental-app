@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://swiderski.com/rental-service/schema/client"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://swiderski.com/rental-service/schema/client">
+
+    <wsdl:types>
+        <xs:schema targetNamespace="http://swiderski.com/rental-service/schema/client" elementFormDefault="qualified">
+            <xs:include schemaLocation="../schema/client.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+
+
+    <!--Define input and output parameters -->
+    <wsdl:message name="getClient">
+        <wsdl:part name="clientId" element="tns:ClientRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getClients">
+        <wsdl:part name="pageable" element="tns:ClientListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addClient">
+        <wsdl:part name="clientToAdd" element="tns:Client"/>
+    </wsdl:message>
+    <wsdl:message name="deleteClient">
+        <wsdl:part name="deleteRequest" element="tns:ClientDeleteRequest"/>
+    </wsdl:message>
+    <wsdl:message name="clientResponse">
+        <wsdl:part name="client" element="tns:Client"/>
+    </wsdl:message>
+    <wsdl:message name="listResponse">
+        <wsdl:part name="clientPage" element="tns:ClientList"/>
+    </wsdl:message>
+
+    <!--Define port definition -->
+    <wsdl:portType name="ClientSOAP">
+        <wsdl:operation name="getClient">
+            <wsdl:input message="tns:getClient"/>
+            <wsdl:output message="tns:clientResponse"/>
+        </wsdl:operation>
+
+
+        <wsdl:operation name="getAllClients">
+            <wsdl:input message="tns:getClients"/>
+            <wsdl:output message="tns:listResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="addClient">
+            <wsdl:input message="tns:addClient"/>
+            <wsdl:output message="tns:clientResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteClient">
+            <wsdl:input message="tns:deleteClient"/>
+            <wsdl:output message="tns:clientResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!--Bind Soap operation and service -->
+    <wsdl:binding name="Client_SOAPBinding" type="tns:ClientSOAP">
+        <soap:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
+        <wsdl:operation name="getClient">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body parts="clientId" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="client" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteClient">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body parts="deleteRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="client" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="addClient">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body parts="clientToAdd" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="client" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+
+        <wsdl:operation name="getAllClients">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body parts="pageable" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="clientPage" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+
+    <!--Define service -->
+    <wsdl:service name="ClientSoapService">
+        <wsdl:port name="ClientPort" binding="tns:Client_SOAPBinding">
+            <soap:address location="http://localhost:9090/soap-api/client"/>
+        </wsdl:port>
+    </wsdl:service>
+
+
+</wsdl:definitions>

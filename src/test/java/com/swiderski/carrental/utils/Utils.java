@@ -7,6 +7,8 @@ import com.swiderski.carrental.crud.client.Client;
 import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.rental.Rental;
 import com.swiderski.carrental.crud.rental.RentalDto;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -59,6 +61,7 @@ public class Utils {
     public static final int pageNo = 0;
     public static final int pageSize = 10;
     public static final String sortBy = "id";
+    public static final PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
     public static Client getClient() {
         return Client.ClientBuilder.aClient()

@@ -3,59 +3,33 @@ package com.swiderski.carrental.crud.rental;
 import com.swiderski.carrental.crud.abstraction.AbstractDto;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.client.ClientDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import static com.swiderski.carrental.crud.rental.RentalMessageUtils.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class RentalDto extends AbstractDto {
 
+    @NotBlank(message = CAR_VALID_MESSAGE)
     private CarDto car;
+
+    @NotBlank(message = CLIENT_VALID_MESSAGE)
     private ClientDto client;
+
+    @NotBlank(message = RENTAL_BEGIN_VALID_MESSAGE)
     private LocalDate rentalBegin;
+
     private LocalDate rentalEnd;
-
-    public RentalDto(long id, CarDto car, ClientDto client, LocalDate rentalBegin, LocalDate rentalEnd) {
-        this.car = car;
-        this.client = client;
-        this.rentalBegin = rentalBegin;
-        this.rentalEnd = rentalEnd;
-        this.id = id;
-    }
-
-    public RentalDto() {
-    }
-
-    public CarDto getCar() {
-        return car;
-    }
-
-    public void setCar(CarDto car) {
-        this.car = car;
-    }
-
-    public ClientDto getClient() {
-        return client;
-    }
-
-    public void setClient(ClientDto client) {
-        this.client = client;
-    }
-
-    public LocalDate getRentalBegin() {
-        return rentalBegin;
-    }
-
-    public void setRentalBegin(LocalDate rentalBegin) {
-        this.rentalBegin = rentalBegin;
-    }
-
-    public LocalDate getRentalEnd() {
-        return rentalEnd;
-    }
-
-    public void setRentalEnd(LocalDate rentalEnd) {
-        this.rentalEnd = rentalEnd;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -68,6 +42,15 @@ public class RentalDto extends AbstractDto {
                 Objects.equals(rentalBegin, rentalDto.rentalBegin) &&
                 Objects.equals(rentalEnd, rentalDto.rentalEnd);
     }
+
+    public RentalDto(Long id, CarDto car, ClientDto client, LocalDate rentalBegin, LocalDate rentalEnd) {
+        this.id = id;
+        this.car = car;
+        this.client = client;
+        this.rentalBegin = rentalBegin;
+        this.rentalEnd = rentalEnd;
+    }
+
 
     @Override
     public int hashCode() {

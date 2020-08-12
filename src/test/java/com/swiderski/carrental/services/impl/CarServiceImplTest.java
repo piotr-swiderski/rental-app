@@ -3,6 +3,7 @@ package com.swiderski.carrental.services.impl;
 import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.car.CarMapper;
+import com.swiderski.carrental.crud.car.CarParam;
 import com.swiderski.carrental.crud.car.CarRepository;
 import com.swiderski.carrental.crud.car.CarServiceImpl;
 import com.swiderski.carrental.crud.exception.NotFoundException;
@@ -61,9 +62,9 @@ class CarServiceImplTest {
     void getAllCars_shouldReturnedAllCars() {
         //given
         List<Car> cars = getCars();
-        when(carRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
+        when(carRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Page<CarDto> allCars = carService.getAll(null,0, 10, "id");
+        Page<CarDto> allCars = carService.getAll(new CarParam(),pageRequest);
         //then
         assertEquals(2, allCars.getTotalElements());
     }

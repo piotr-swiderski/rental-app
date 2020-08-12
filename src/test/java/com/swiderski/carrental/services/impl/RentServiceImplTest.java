@@ -12,6 +12,7 @@ import com.swiderski.carrental.crud.rental.RentServiceImpl;
 import com.swiderski.carrental.crud.rental.Rental;
 import com.swiderski.carrental.crud.rental.RentalDto;
 import com.swiderski.carrental.crud.rental.RentalMapper;
+import com.swiderski.carrental.crud.rental.RentalParam;
 import com.swiderski.carrental.crud.rental.RentalRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -126,7 +128,7 @@ public class RentServiceImplTest {
         List<CarDto> carsDto = getCarsDto();
         when(rentalRepository.findAllAvailableCar(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Page<CarDto> availableCars = rentService.getAvailableCars(pageNo, pageSize, sortBy);
+        Page<CarDto> availableCars = rentService.getAvailableCars(pageRequest);
         //then
         assertEquals(2, availableCars.getTotalElements());
     }
@@ -138,7 +140,7 @@ public class RentServiceImplTest {
         List<CarDto> carsDto = getCarsDto();
         when(rentalRepository.findAllRentedCars(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Page<CarDto> rentedCars = rentService.getRentedCars(pageNo, pageSize, sortBy);
+        Page<CarDto> rentedCars = rentService.getRentedCars(pageRequest);
         //then
         assertEquals(2, rentedCars.getTotalElements());
     }
@@ -148,9 +150,9 @@ public class RentServiceImplTest {
         //given
         List<Rental> rentals = getRentals();
         List<RentalDto> rentalsDto = getRentalsDto();
-        when(rentalRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
+        when(rentalRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(rentals));
         //when
-        Page<RentalDto> all = rentService.getAll(null, pageNo, pageSize, sortBy);
+        Page<RentalDto> all = rentService.getAll(new RentalParam(), pageRequest);
         //then
         assertEquals(rentalsDto, all.getContent());
     }

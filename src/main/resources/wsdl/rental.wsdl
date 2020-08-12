@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://swiderski.com/rental-service/schema/rental"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://swiderski.com/rental-service/schema/rental">
+
+    <wsdl:types>
+        <xs:schema targetNamespace="http://swiderski.com/rental-service/schema/rental" elementFormDefault="qualified">
+            <xs:include schemaLocation="../schema/rental.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+
+
+    <!--Define input and output parameters -->
+    <wsdl:message name="getRental">
+        <wsdl:part name="request" element="tns:RentalRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getAllRentals">
+        <wsdl:part name="pageableRequest" element="tns:RentalListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addRental">
+        <wsdl:part name="rentalRequest" element="tns:Rental"/>
+    </wsdl:message>
+    <wsdl:message name="deleteRental">
+        <wsdl:part name="deleteRequest" element="tns:RentalDeleteRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getResponse">
+        <wsdl:part name="rentalResponse" element="tns:Rental"/>
+    </wsdl:message>
+    <wsdl:message name="listResponse">
+        <wsdl:part name="rentalPageResponse" element="tns:RentalList"/>
+    </wsdl:message>
+    <wsdl:message name="carRentRequest">
+        <wsdl:part name="carRentRequest" element="tns:CarRentRequest"/>
+    </wsdl:message>
+    <wsdl:message name="carReturnRequest">
+        <wsdl:part name="carReturnRequest" element="tns:CarReturnRequest"/>
+    </wsdl:message>
+
+    <!--Define port definition -->
+    <wsdl:portType name="RentalSOAP">
+        <wsdl:operation name="Rental">
+            <wsdl:input message="tns:getRental"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="Rentals">
+            <wsdl:input message="tns:getAllRentals"/>
+            <wsdl:output message="tns:listResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="addRental">
+            <wsdl:input message="tns:addRental"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteRental">
+            <wsdl:input message="tns:deleteRental"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="rentCar">
+            <wsdl:input message="tns:carRentRequest"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="returnCar">
+            <wsdl:input message="tns:carReturnRequest"/>
+            <wsdl:output message="tns:getResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!--Bind Soap operation and service -->
+    <wsdl:binding name="Rental_SOAPBinding" type="tns:RentalSOAP">
+        <soap:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
+        <wsdl:operation name="Rental">
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
+            <wsdl:input>
+                <soap:body parts="request" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="rentalResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteRental">
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
+            <wsdl:input>
+                <soap:body parts="deleteRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="rentalResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="addRental">
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
+            <wsdl:input>
+                <soap:body parts="rentalRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="rentalResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="Rentals">
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
+            <wsdl:input>
+                <soap:body parts="pageableRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="rentalPageResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="rentCar">
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
+            <wsdl:input>
+                <soap:body parts="carRentRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="rentalResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="returnCar">
+            <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>
+            <wsdl:input>
+                <soap:body parts="carReturnRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="rentalResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+
+    <!--Define service -->
+    <wsdl:service name="RentalSoapService">
+        <wsdl:port name="RentalPort" binding="tns:Rental_SOAPBinding">
+            <soap:address location="http://localhost:9090/soap-api/rental"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

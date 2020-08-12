@@ -1,0 +1,83 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://swiderski.com/rental-service/schema/client"
+           elementFormDefault="qualified"
+           xmlns:page="http://swiderski.com/rental-service/schema/pageable"
+           targetNamespace="http://swiderski.com/rental-service/schema/client">
+
+    <xs:import namespace="http://swiderski.com/rental-service/schema/pageable" schemaLocation="pageable.xsd"/>
+
+
+    <xs:element name="Client">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="tns:ClientData" name="client"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ClientListRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="page:PageRequest">
+                    <xs:sequence>
+                        <xs:element name="clientFilter" type="tns:ClientFilter"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ClientList">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="page:PageableXml" name="page"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ClientRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:long" name="id"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ClientDeleteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:long" name="id"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="ClientData">
+        <xs:complexContent>
+            <xs:extension base="page:anyTypeXml">
+                <xs:sequence>
+                    <xs:element type="xs:long" name="id"/>
+                    <xs:element type="xs:string" name="name"/>
+                    <xs:element type="xs:string" name="surname"/>
+                    <xs:element type="xs:string" name="email"/>
+                    <xs:element type="xs:string" name="city"/>
+                    <xs:element type="xs:string" name="street"/>
+                    <xs:element type="xs:string" name="zipCode"/>
+                    <xs:element type="xs:string" name="phone"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ClientFilter">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="surname" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="city" type="xs:string"/>
+            <xs:element name="street" type="xs:string"/>
+            <xs:element name="zipCode" type="xs:string"/>
+            <xs:element name="phone" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
+

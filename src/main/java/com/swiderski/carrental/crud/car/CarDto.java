@@ -1,78 +1,43 @@
 package com.swiderski.carrental.crud.car;
 
 import com.swiderski.carrental.crud.abstraction.AbstractDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.Objects;
 
+import static com.swiderski.carrental.crud.car.CarMessageUtils.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class CarDto extends AbstractDto {
 
+    @NotBlank(message = BRAND_VALID_MESSAGE)
     private String brand;
+
+    @NotBlank(message = COLOUR_VALID_MESSAGE)
     private String colour;
+
+    @NotBlank(message = MODEL_VALID_MESSAGE)
     private String model;
+
     private String modelVersion;
+
+    @NotNull(message = ENGINE_TYPE_VALID_MESSAGE)
     private EngineType engineType;
+
+    @Positive(message = PRODUCTION_YEAR_VALID_MESSAGE)
     private int productionYear;
+
+    @Positive(message = COST_VALID_MESSAGE)
     private double cost;
-
-    public CarDto() {
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getColour() {
-        return colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public EngineType getEngineType() {
-        return engineType;
-    }
-
-    public void setEngineType(EngineType engineType) {
-        this.engineType = engineType;
-    }
-
-    public int getProductionYear() {
-        return productionYear;
-    }
-
-    public void setProductionYear(int productionYear) {
-        this.productionYear = productionYear;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getModelVersion() {
-        return modelVersion;
-    }
-
-    public void setModelVersion(String modelVersion) {
-        this.modelVersion = modelVersion;
-    }
 
     @Override
     public boolean equals(Object o) {
