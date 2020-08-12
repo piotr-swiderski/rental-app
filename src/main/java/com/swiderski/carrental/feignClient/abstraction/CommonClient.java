@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
@@ -19,18 +18,17 @@ public interface CommonClient<E extends AbstractDto> {
 
     @GetMapping
     CustomPageImpl<E> findAll(@PageableDefault Pageable page,
-                              @RequestParam(value = "search", required = false) String search,
-                              @RequestHeader("Authorization") String authHeader);
+                              @RequestParam(value = "search", required = false) String search);
 
     @GetMapping(path = "/{id}")
-    E findById(@PathVariable("id") Long id, @RequestHeader("Authorization") String authHeader);
+    E findById(@PathVariable("id") Long id);
 
     @PostMapping
-    E save(@Valid @RequestBody E dto, @RequestHeader("Authorization") String authHeader);
+    E save(@Valid @RequestBody E dto);
 
     @PutMapping(path = "/{id}")
-    E update(@PathVariable("id") Long id, @Valid @RequestBody E dto, @RequestHeader("Authorization") String authHeader);
+    E update(@PathVariable("id") Long id, @Valid @RequestBody E dto);
 
     @DeleteMapping(path = "/{id}")
-    E delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String authHeader);
+    E delete(@PathVariable("id") Long id);
 }

@@ -17,7 +17,6 @@ public class FeignExceptionAdvice {
         return "Unauthorized";
     }
 
-
     @ResponseBody
     @ExceptionHandler(feign.FeignException.Forbidden.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
