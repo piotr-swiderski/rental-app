@@ -1,15 +1,19 @@
 package com.swiderski.carrental.crud.client;
 
+import com.swiderski.carrental.crud.ApiPageable;
 import com.swiderski.carrental.crud.abstraction.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 
 @RestController
 @PropertySource("classpath:/application.properties")
@@ -25,8 +29,9 @@ public class ClientController extends AbstractController<ClientService, ClientDt
     }
 
     @GetMapping()
-    public Page<ClientDto> getAll(@ModelAttribute ClientParam clientParam,
-                                  @PageableDefault Pageable pageable) {
+    @ApiPageable
+    public Page<ClientDto> getAll(@Valid @ModelAttribute ClientParam clientParam,
+                                  @ApiIgnore @NonNull Pageable pageable) {
         return clientService.getAll(clientParam, pageable);
     }
 

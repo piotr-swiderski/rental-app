@@ -8,8 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import static com.swiderski.carrental.crud.rental.RentalMessageUtils.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,9 +20,15 @@ import java.util.Objects;
 @Setter
 public class RentalDto extends AbstractDto {
 
+    @NotBlank(message = CAR_VALID_MESSAGE)
     private CarDto car;
+
+    @NotBlank(message = CLIENT_VALID_MESSAGE)
     private ClientDto client;
+
+    @NotBlank(message = RENTAL_BEGIN_VALID_MESSAGE)
     private LocalDate rentalBegin;
+
     private LocalDate rentalEnd;
 
     @Override

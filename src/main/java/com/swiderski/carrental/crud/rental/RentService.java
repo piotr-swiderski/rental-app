@@ -15,8 +15,8 @@ public interface RentService extends CommonService<RentalDto> {
 
     RentalDto returnCar(long id, LocalDate returnDate);
 
-    Page<CarDto> getAvailableCars(int pageNo, int pageSize, String sortBy);
+    Page<CarDto> getAvailableCars(Pageable pageable);
 
-    Page<CarDto> getRentedCars(int pageNo, int pageSize, String sortBy);
+    Page<CarDto> getRentedCars(Pageable pageable);
 
 }

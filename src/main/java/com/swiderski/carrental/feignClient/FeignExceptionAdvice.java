@@ -12,9 +12,17 @@ public class FeignExceptionAdvice {
 
     @ResponseBody
     @ExceptionHandler(FeignException.Unauthorized.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String feignException(feign.FeignException e) {
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String feignUnauthorizedException(feign.FeignException e) {
         return "Unauthorized";
+    }
+
+
+    @ResponseBody
+    @ExceptionHandler(feign.FeignException.Forbidden.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String feignForbiddenException(feign.FeignException e) {
+        return "Forbidden";
     }
 
 }

@@ -5,19 +5,35 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
+
+import static com.swiderski.carrental.crud.client.ClientMessageUtils.*;
 
 @NoArgsConstructor
 @Getter
 @Setter
 public class ClientDto extends AbstractDto {
 
+    @NotBlank(message = NAME_VALID_MESSAGE)
     private String name;
+
+    @NotBlank(message = SURNAME_VALID_MESSAGE)
     private String surname;
+
+    @NotBlank(message = EMAIL_VALID_MESSAGE)
+    @Email
     private String email;
+
+    @NotBlank(message = CITY_VALID_MESSAGE)
     private String city;
+
     private String street;
+
     private String zipCode;
+
+    @NotBlank(message = PHONE_VALID_MESSAGE)
     private String phone;
 
     @Override

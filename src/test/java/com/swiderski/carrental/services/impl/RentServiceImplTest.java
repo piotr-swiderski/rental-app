@@ -128,7 +128,7 @@ public class RentServiceImplTest {
         List<CarDto> carsDto = getCarsDto();
         when(rentalRepository.findAllAvailableCar(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Page<CarDto> availableCars = rentService.getAvailableCars(pageNo, pageSize, sortBy);
+        Page<CarDto> availableCars = rentService.getAvailableCars(pageRequest);
         //then
         assertEquals(2, availableCars.getTotalElements());
     }
@@ -140,7 +140,7 @@ public class RentServiceImplTest {
         List<CarDto> carsDto = getCarsDto();
         when(rentalRepository.findAllRentedCars(any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Page<CarDto> rentedCars = rentService.getRentedCars(pageNo, pageSize, sortBy);
+        Page<CarDto> rentedCars = rentService.getRentedCars(pageRequest);
         //then
         assertEquals(2, rentedCars.getTotalElements());
     }

@@ -6,7 +6,6 @@ import com.swiderski.rental_service.schema.rental.RentalData;
 import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
 
-import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDate;

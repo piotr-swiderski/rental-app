@@ -9,13 +9,12 @@ import com.swiderski.carrental.crud.car.Car_;
 import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.CarRentedException;
+import com.swiderski.carrental.crud.exception.NotFoundException;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,6 +76,7 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     }
 
     private Car getCarToRent(long carId) {
+        rentalRepository.findById(carId).orElseThrow(() -> new NotFoundException(carId, ""));
         return rentalRepository.getCarToRent(carId).orElseThrow(() -> new CarRentedException(carId));
     }
 
@@ -91,19 +91,17 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
 
     @Override
     @Transactional
-    public Page<CarDto> getAvailableCars(int pageNo, int pageSize, String sortBy) {
-        PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        Page<Car> allAvailableCarPage = rentalRepository.findAllAvailableCar(paging);
+    public Page<CarDto> getAvailableCars(Pageable pageable) {
+        Page<Car> allAvailableCarPage = rentalRepository.findAllAvailableCar(pageable);
         List<CarDto> pageResult = carMapper.toListDto(allAvailableCarPage.getContent());
-        return new PageImpl<>(pageResult, paging, allAvailableCarPage.getTotalElements());
+        return new PageImpl<>(pageResult, pageable, allAvailableCarPage.getTotalElements());
     }
 
     @Override
     @Transactional
-    public Page<CarDto> getRentedCars(int pageNo, int pageSize, String sortBy) {
-        PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        Page<Car> allRentedCars = rentalRepository.findAllRentedCars(paging);
+    public Page<CarDto> getRentedCars(Pageable pageable) {
+        Page<Car> allRentedCars = rentalRepository.findAllRentedCars(pageable);
         List<CarDto> pageList = carMapper.toListDto(allRentedCars.getContent());
-        return new PageImpl<>(pageList, paging, allRentedCars.getTotalElements());
+        return new PageImpl<>(pageList, pageable, allRentedCars.getTotalElements());
     }
 }

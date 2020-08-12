@@ -11,7 +11,6 @@ import com.swiderski.rental_service.schema.car.CarListRequest;
 import com.swiderski.rental_service.schema.car.CarRequest;
 import com.swiderski.rental_service.schema.car.ObjectFactory;
 import com.swiderski.rental_service.schema.pageable.PageableXml;
-import com.swiderski.rental_service.schema.rental.CarRentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

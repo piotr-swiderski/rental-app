@@ -6,7 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.Objects;
+
+import static com.swiderski.carrental.crud.car.CarMessageUtils.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,12 +19,24 @@ import java.util.Objects;
 @Setter
 public class CarDto extends AbstractDto {
 
+    @NotBlank(message = BRAND_VALID_MESSAGE)
     private String brand;
+
+    @NotBlank(message = COLOUR_VALID_MESSAGE)
     private String colour;
+
+    @NotBlank(message = MODEL_VALID_MESSAGE)
     private String model;
+
     private String modelVersion;
+
+    @NotNull(message = ENGINE_TYPE_VALID_MESSAGE)
     private EngineType engineType;
+
+    @Positive(message = PRODUCTION_YEAR_VALID_MESSAGE)
     private int productionYear;
+
+    @Positive(message = COST_VALID_MESSAGE)
     private double cost;
 
     @Override
