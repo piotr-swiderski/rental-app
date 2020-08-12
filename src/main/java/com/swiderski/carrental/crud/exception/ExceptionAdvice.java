@@ -4,6 +4,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -73,6 +74,13 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public String bindExceptionHandler(BindException e) {
         return MIN_YEAR_VALID_MESSAGE;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String bindExceptionHandler(HttpRequestMethodNotSupportedException e) {
+        return e.getMessage();
     }
 
 }

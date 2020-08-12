@@ -1,7 +1,7 @@
 security:
   oauth2:
     resource:
-      token-info-uri: http://localhost:9081/oauth/check_token
+      token-info-uri: http://localhost:9091/oauth/check_token
     client:
       client-id: client
       client-secret: client
