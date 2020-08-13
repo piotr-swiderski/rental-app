@@ -166,6 +166,12 @@
             <version>2.8.6</version>
             <scope>test</scope>
         </dependency>
+
+        <!--        aop-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -215,11 +221,13 @@
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/car.wsdl</wsdl>
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/rental.wsdl</wsdl>
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/client.wsdl</wsdl>
-                                    <wsdl>${project.basedir}/src/main/resources/wsdl/ProductGroup.wsdl</wsdl>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/product.wsdl</wsdl>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/group.wsdl</wsdl>
                                     <wsdlLocation>classpath:wsdl/client.wsdl</wsdlLocation>
                                     <wsdlLocation>classpath:wsdl/client.wsdl</wsdlLocation>
                                     <wsdlLocation>classpath:wsdl/car.wsdl</wsdlLocation>
-                                    <wsdlLocation>classpath:wsdl/ProductGroup.wsdl</wsdlLocation>
+                                    <wsdlLocation>classpath:wsdl/product.wsdl</wsdlLocation>
+                                    <wsdlLocation>classpath:wsdl/group.wsdl</wsdlLocation>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

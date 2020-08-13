@@ -1,0 +1,335 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://jakub.slowikowski.pl/soap-example/product" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/abstract" name="ProductPortService" targetNamespace="http://jakub.slowikowski.pl/soap-example/product">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://jakub.slowikowski.pl/soap-example/product" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/abstract" xmlns="http://jakub.slowikowski.pl/soap-example/product-group" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/product-group" version="1.0">
+            <xs:import namespace="http://jakub.slowikowski.pl/soap-example/abstract"/>
+            <xs:import namespace="http://jakub.slowikowski.pl/soap-example/product"/>
+            <xs:element name="DeleteProductGroupRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetAllProductGroupsRequest">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="ns1:abstractGetAllRequest">
+                            <xs:sequence/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ProductGroupRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ProductGroupXmlObject">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="ns1:abstractXmlElement">
+                            <xs:sequence>
+                                <xs:element name="id" type="xs:long"/>
+                                <xs:element name="name" type="xs:string"/>
+                                <xs:element name="description" type="xs:string"/>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="products" nillable="true" type="ns2:productXml"/>
+                            </xs:sequence>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SaveProductGroupRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="description" type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="products" nillable="true" type="ns2:productXml"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="productGroupXml">
+                <xs:complexContent>
+                    <xs:extension base="ns1:abstractXmlType">
+                        <xs:sequence>
+                            <xs:element name="id" type="xs:long"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="description" type="xs:string"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="products" nillable="true" type="ns2:productXml"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://jakub.slowikowski.pl/soap-example/product" xmlns:ns2="http://jakub.slowikowski.pl/soap-example/pageable" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/abstract" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/product" version="1.0">
+            <xs:import namespace="http://jakub.slowikowski.pl/soap-example/abstract"/>
+            <xs:import namespace="http://jakub.slowikowski.pl/soap-example/pageable"/>
+            <xs:element name="BuyProductRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="DeleteProductRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FindProductRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetAllProductsRequest">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="ns1:abstractGetAllRequest">
+                            <xs:sequence/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ProductXmlList">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="products" nillable="true" type="tns:productXml"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ProductXmlObject">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="ns1:abstractXmlElement">
+                            <xs:sequence>
+                                <xs:element name="id" type="xs:long"/>
+                                <xs:element name="name" type="xs:string"/>
+                                <xs:element name="description" type="xs:string"/>
+                                <xs:element name="price" type="xs:int"/>
+                                <xs:element name="sold" type="xs:boolean"/>
+                                <xs:element name="groupId" type="xs:long"/>
+                            </xs:sequence>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ProductsInGroupRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                        <xs:element name="pageable" type="ns2:pageableXml"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SaveProductRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="description" type="xs:string"/>
+                        <xs:element name="price" type="xs:int"/>
+                        <xs:element name="groupId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="productXml">
+                <xs:complexContent>
+                    <xs:extension base="ns1:abstractXmlType">
+                        <xs:sequence>
+                            <xs:element name="id" type="xs:long"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="description" type="xs:string"/>
+                            <xs:element name="price" type="xs:int"/>
+                            <xs:element name="sold" type="xs:boolean"/>
+                            <xs:element name="groupId" type="xs:long"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/pageable" version="1.0">
+            <xs:complexType name="pageableXml">
+                <xs:sequence>
+                    <xs:element name="size" type="xs:int"/>
+                    <xs:element name="page" type="xs:int"/>
+                    <xs:element name="sort" type="xs:string"/>
+                    <xs:element name="dir" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://jakub.slowikowski.pl/soap-example/abstract" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/pageable" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/abstract" version="1.0">
+            <xs:import namespace="http://jakub.slowikowski.pl/soap-example/pageable"/>
+            <xs:element name="GetAllResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="content" nillable="true" type="tns:abstractXmlType"/>
+                        <xs:element name="totalPages" type="xs:long"/>
+                        <xs:element name="totalElements" type="xs:long"/>
+                        <xs:element name="number" type="xs:int"/>
+                        <xs:element name="size" type="xs:int"/>
+                        <xs:element name="sorted" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="abstractGetAllRequest">
+                <xs:sequence>
+                    <xs:element name="pageable" type="ns1:pageableXml"/>
+                    <xs:element name="search" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="abstractXmlType">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="abstractXmlElement">
+                <xs:sequence/>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="FindProductResponse">
+        <wsdl:part element="tns:ProductXmlObject" name="response"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ProductsInGroupResponse">
+        <wsdl:part element="ns1:GetAllResponse" name="response"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="DeleteProduct">
+        <wsdl:part element="tns:DeleteProductRequest" name="request"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="DeleteProductResponse">
+        <wsdl:part element="tns:ProductXmlObject" name="response"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="FindProduct">
+        <wsdl:part element="tns:FindProductRequest" name="request"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UpdateProductResponse">
+        <wsdl:part element="tns:ProductXmlObject" name="response"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="SaveProduct">
+        <wsdl:part element="tns:SaveProductRequest" name="request"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="BuyProductResponse">
+        <wsdl:part element="tns:ProductXmlObject" name="response"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="SaveProductResponse">
+        <wsdl:part element="tns:ProductXmlObject" name="response"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetAllProductsResponse">
+        <wsdl:part element="ns1:GetAllResponse" name="response"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetAllProducts">
+        <wsdl:part element="tns:GetAllProductsRequest" name="request"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ProductsInGroup">
+        <wsdl:part element="tns:ProductsInGroupRequest" name="request"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="BuyProduct">
+        <wsdl:part element="tns:BuyProductRequest" name="request"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UpdateProduct">
+        <wsdl:part element="tns:ProductXmlObject" name="request"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ProductPort">
+        <wsdl:operation name="GetAllProducts">
+            <wsdl:input message="tns:GetAllProducts" name="GetAllProducts"> </wsdl:input>
+            <wsdl:output message="tns:GetAllProductsResponse" name="GetAllProductsResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteProduct">
+            <wsdl:input message="tns:DeleteProduct" name="DeleteProduct"> </wsdl:input>
+            <wsdl:output message="tns:DeleteProductResponse" name="DeleteProductResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="FindProduct">
+            <wsdl:input message="tns:FindProduct" name="FindProduct"> </wsdl:input>
+            <wsdl:output message="tns:FindProductResponse" name="FindProductResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ProductsInGroup">
+            <wsdl:input message="tns:ProductsInGroup" name="ProductsInGroup"> </wsdl:input>
+            <wsdl:output message="tns:ProductsInGroupResponse" name="ProductsInGroupResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SaveProduct">
+            <wsdl:input message="tns:SaveProduct" name="SaveProduct"> </wsdl:input>
+            <wsdl:output message="tns:SaveProductResponse" name="SaveProductResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="BuyProduct">
+            <wsdl:input message="tns:BuyProduct" name="BuyProduct"> </wsdl:input>
+            <wsdl:output message="tns:BuyProductResponse" name="BuyProductResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateProduct">
+            <wsdl:input message="tns:UpdateProduct" name="UpdateProduct"> </wsdl:input>
+            <wsdl:output message="tns:UpdateProductResponse" name="UpdateProductResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ProductPortServiceSoapBinding" type="tns:ProductPort">
+        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetAllProducts">
+            <soap12:operation soapAction="" style="document"/>
+            <wsdl:input name="GetAllProducts">
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetAllProductsResponse">
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteProduct">
+            <soap12:operation soapAction="" style="document"/>
+            <wsdl:input name="DeleteProduct">
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="DeleteProductResponse">
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="FindProduct">
+            <soap12:operation soapAction="" style="document"/>
+            <wsdl:input name="FindProduct">
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="FindProductResponse">
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ProductsInGroup">
+            <soap12:operation soapAction="" style="document"/>
+            <wsdl:input name="ProductsInGroup">
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ProductsInGroupResponse">
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SaveProduct">
+            <soap12:operation soapAction="" style="document"/>
+            <wsdl:input name="SaveProduct">
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="SaveProductResponse">
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="BuyProduct">
+            <soap12:operation soapAction="" style="document"/>
+            <wsdl:input name="BuyProduct">
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="BuyProductResponse">
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateProduct">
+            <soap12:operation soapAction="" style="document"/>
+            <wsdl:input name="UpdateProduct">
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="UpdateProductResponse">
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ProductPortService">
+        <wsdl:port binding="tns:ProductPortServiceSoapBinding" name="ProductPort">
+            <soap12:address location="http://s0291:8081/soap-api/product"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
