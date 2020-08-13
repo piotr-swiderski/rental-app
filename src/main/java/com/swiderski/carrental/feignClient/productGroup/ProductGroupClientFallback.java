@@ -1,6 +1,6 @@
 package com.swiderski.carrental.feignClient.productGroup;
 
-import com.swiderski.carrental.feignClient.CustomPageImpl;
+import com.swiderski.carrental.feignClient.utils.CustomPageImpl;
 import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
