@@ -1,4 +1,4 @@
-package com.swiderski.carrental.services.impl;
+package com.swiderski.carrental.crud.rental;
 
 import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.car.CarDto;
@@ -8,12 +8,6 @@ import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientMapper;
 import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.NotFoundException;
-import com.swiderski.carrental.crud.rental.RentServiceImpl;
-import com.swiderski.carrental.crud.rental.Rental;
-import com.swiderski.carrental.crud.rental.RentalDto;
-import com.swiderski.carrental.crud.rental.RentalMapper;
-import com.swiderski.carrental.crud.rental.RentalParam;
-import com.swiderski.carrental.crud.rental.RentalRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

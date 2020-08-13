@@ -1,8 +1,5 @@
-package com.swiderski.carrental.dto;
+package com.swiderski.carrental.crud.car;
 
-import com.swiderski.carrental.crud.car.Car;
-import com.swiderski.carrental.crud.car.CarDto;
-import com.swiderski.carrental.crud.car.CarMapper;
 import org.junit.jupiter.api.Test;
 
 import static com.swiderski.carrental.utils.Utils.getCar;

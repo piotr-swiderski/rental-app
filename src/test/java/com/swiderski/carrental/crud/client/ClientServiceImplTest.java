@@ -1,11 +1,5 @@
-package com.swiderski.carrental.services.impl;
+package com.swiderski.carrental.crud.client;
 
-import com.swiderski.carrental.crud.client.Client;
-import com.swiderski.carrental.crud.client.ClientDto;
-import com.swiderski.carrental.crud.client.ClientMapper;
-import com.swiderski.carrental.crud.client.ClientParam;
-import com.swiderski.carrental.crud.client.ClientRepository;
-import com.swiderski.carrental.crud.client.ClientServiceImpl;
 import com.swiderski.carrental.crud.exception.NotFoundException;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,7 +61,7 @@ public class ClientServiceImplTest {
         List<Client> clients = getClients();
         when(clientRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(clients));
         //when
-        Page<ClientDto> returnedClients = clientService.getAll(new ClientParam(),pageRequest);
+        Page<ClientDto> returnedClients = clientService.getAll(new ClientParam(), pageRequest);
         //then
         assertEquals(2, returnedClients.getTotalElements());
     }

@@ -1,11 +1,5 @@
-package com.swiderski.carrental.services.impl;
+package com.swiderski.carrental.crud.car;
 
-import com.swiderski.carrental.crud.car.Car;
-import com.swiderski.carrental.crud.car.CarDto;
-import com.swiderski.carrental.crud.car.CarMapper;
-import com.swiderski.carrental.crud.car.CarParam;
-import com.swiderski.carrental.crud.car.CarRepository;
-import com.swiderski.carrental.crud.car.CarServiceImpl;
 import com.swiderski.carrental.crud.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,7 +58,7 @@ class CarServiceImplTest {
         List<Car> cars = getCars();
         when(carRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(cars));
         //when
-        Page<CarDto> allCars = carService.getAll(new CarParam(),pageRequest);
+        Page<CarDto> allCars = carService.getAll(new CarParam(), pageRequest);
         //then
         assertEquals(2, allCars.getTotalElements());
     }
