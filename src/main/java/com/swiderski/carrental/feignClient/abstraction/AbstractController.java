@@ -1,7 +1,7 @@
 package com.swiderski.carrental.feignClient.abstraction;
 
 import com.swiderski.carrental.crud.ApiPageable;
-import com.swiderski.carrental.feignClient.CustomPageImpl;
+import com.swiderski.carrental.feignClient.utils.CustomPageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
-import static com.swiderski.carrental.feignClient.MessageUtils.ID_VALID_MESSAGE;
+import static com.swiderski.carrental.feignClient.utils.MessageUtils.ID_VALID_MESSAGE;
 
 @Validated
 public class AbstractController<E extends AbstractDto, T extends CommonClient<E>> {

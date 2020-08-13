@@ -1,4 +1,4 @@
-package com.swiderski.carrental.feignClient;
+package com.swiderski.carrental.feignClient.utils;
 
 public class MessageUtils {
 

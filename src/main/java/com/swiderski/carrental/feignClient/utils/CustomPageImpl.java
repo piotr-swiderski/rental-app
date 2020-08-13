@@ -1,4 +1,4 @@
-package com.swiderski.carrental.feignClient;
+package com.swiderski.carrental.feignClient.utils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

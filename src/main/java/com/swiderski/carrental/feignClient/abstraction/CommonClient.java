@@ -1,7 +1,7 @@
 package com.swiderski.carrental.feignClient.abstraction;
 
 
-import com.swiderski.carrental.feignClient.CustomPageImpl;
+import com.swiderski.carrental.feignClient.utils.CustomPageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
