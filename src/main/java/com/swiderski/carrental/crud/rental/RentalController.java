@@ -20,6 +20,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 
 import static com.swiderski.carrental.crud.abstraction.MessageUtils.ID_POSITIVE_MESSAGE;
@@ -68,7 +69,7 @@ public class RentalController extends AbstractController<RentService, RentalDto>
 
     @PostMapping("/return")
     @PreAuthorize("hasRole('USER')")
-    public RentalDto returnCar(@RequestParam @Positive(message = ID_POSITIVE_MESSAGE) long rentalId,
+    public RentalDto returnCar(@RequestParam @PositiveOrZero(message = ID_POSITIVE_MESSAGE) long rentalId,
                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate returnedDate) {
         return rentService.returnCar(rentalId, returnedDate);
     }

@@ -9,7 +9,6 @@ import com.swiderski.carrental.crud.car.Car_;
 import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.CarRentedException;
-import com.swiderski.carrental.crud.exception.NotFoundException;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
 import org.springframework.data.domain.Page;
@@ -76,7 +75,7 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto> implemen
     }
 
     private Car getCarToRent(long carId) {
-        rentalRepository.findById(carId).orElseThrow(() -> new NotFoundException(carId, ""));
+        carService.getById(carId);
         return rentalRepository.getCarToRent(carId).orElseThrow(() -> new CarRentedException(carId));
     }
 

@@ -80,7 +80,7 @@ class CarControllerTest {
 
         mockMvc.perform(post("/v1/cars")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(getRentalDto())))
+                .content(objectMapper.writeValueAsString(getCarDto())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(carId))
                 .andExpect(jsonPath("$.brand").value(carBrand))
@@ -111,7 +111,7 @@ class CarControllerTest {
 
         mockMvc.perform(put("/v1/cars/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(getClientDto())))
+                .content(objectMapper.writeValueAsString(getCarDto())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(carId))
                 .andExpect(jsonPath("$.brand").value(carBrand))

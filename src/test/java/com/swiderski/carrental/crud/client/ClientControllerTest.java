@@ -80,7 +80,7 @@ class ClientControllerTest {
 
         mockMvc.perform(post("/v1/clients")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(getRentalDto())))
+                .content(objectMapper.writeValueAsString(getClientDto())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(clientId))
                 .andExpect(jsonPath("$.name").value(clientName))

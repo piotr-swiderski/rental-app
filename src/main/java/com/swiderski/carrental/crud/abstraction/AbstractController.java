@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import static com.swiderski.carrental.crud.abstraction.MessageUtils.ID_POSITIVE_MESSAGE;
 
@@ -33,26 +33,26 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasAuthority('create_profile')")
     @Validated
-    public E getById(@Valid @Positive(message = ID_POSITIVE_MESSAGE) @PathVariable long id) {
+    public E getById(@Valid @PositiveOrZero(message = ID_POSITIVE_MESSAGE) @PathVariable long id) {
         return service.getById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('read_profile')")
-    public E save(@RequestBody @Validated E dto) {
+    public E save(@RequestBody @Valid E dto) {
         return service.save(dto);
     }
 
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAuthority('delete_profile')")
-    public E delete(@PathVariable @Validated @Positive(message = ID_POSITIVE_MESSAGE) long id) {
+    public E delete(@PathVariable @Validated @PositiveOrZero(message = ID_POSITIVE_MESSAGE) long id) {
         return service.delete(id);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('update_profile')")
-    public E update(@PathVariable @Validated @Positive(message = ID_POSITIVE_MESSAGE) long id,
-                    @RequestBody @Validated E dto) {
+    public E update(@PathVariable @Validated @PositiveOrZero(message = ID_POSITIVE_MESSAGE) long id,
+                    @RequestBody @Valid E dto) {
         return service.update(id, dto);
     }
 

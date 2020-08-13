@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -33,7 +34,7 @@ public class CarDto extends AbstractDto {
     @NotNull(message = ENGINE_TYPE_VALID_MESSAGE)
     private EngineType engineType;
 
-    @Positive(message = PRODUCTION_YEAR_VALID_MESSAGE)
+    @Min(value= 1850, message = PRODUCTION_YEAR_VALID_MESSAGE)
     private int productionYear;
 
     @Positive(message = COST_VALID_MESSAGE)

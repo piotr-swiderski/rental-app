@@ -1,5 +1,6 @@
 package com.swiderski.carrental.crud.rental;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swiderski.carrental.crud.abstraction.AbstractDto;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.client.ClientDto;
@@ -8,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -20,15 +21,17 @@ import static com.swiderski.carrental.crud.rental.RentalMessageUtils.*;
 @Setter
 public class RentalDto extends AbstractDto {
 
-    @NotBlank(message = CAR_VALID_MESSAGE)
+    @NotNull(message = CAR_VALID_MESSAGE)
     private CarDto car;
 
-    @NotBlank(message = CLIENT_VALID_MESSAGE)
+    @NotNull(message = CLIENT_VALID_MESSAGE)
     private ClientDto client;
 
-    @NotBlank(message = RENTAL_BEGIN_VALID_MESSAGE)
+    @NotNull(message = RENTAL_BEGIN_VALID_MESSAGE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate rentalBegin;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate rentalEnd;
 
     @Override

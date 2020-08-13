@@ -29,6 +29,7 @@ import static com.swiderski.carrental.utils.Utils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -93,6 +94,7 @@ public class RentServiceImplTest {
         when(clientService.getById(clientId)).thenReturn(clientDto);
         when(rentalRepository.getCarToRent(carId)).thenReturn(Optional.of(car));
         when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
+        when(carService.getById(anyLong())).thenReturn(carDto);
         //when
         RentalDto rentalSaved = rentService.rentCar(carId, clientId);
         //then
