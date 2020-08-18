@@ -129,15 +129,7 @@ public class ClientDto extends AbstractDto {
 
     @Override
     public String toString() {
-        return "ClientDto{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", phone='" + phone + '\'' +
-                ", id=" + id +
-                '}';
+        return   "id=" + id + " " + name +
+                " " + surname;
     }
 }

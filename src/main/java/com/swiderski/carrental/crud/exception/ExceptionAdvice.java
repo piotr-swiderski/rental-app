@@ -15,6 +15,8 @@ import org.springframework.web.client.ResourceAccessException;
 import javax.validation.ConstraintViolationException;
 
 import static com.swiderski.carrental.crud.car.CarMessageUtils.MIN_YEAR_VALID_MESSAGE;
+import static com.swiderski.carrental.crud.exception.Utils.BAD_REQUEST_MESSAGE;
+import static com.swiderski.carrental.crud.exception.Utils.INTEGRITY_EXCEPTION_MESSAGE;
 
 @ControllerAdvice
 @Validated
@@ -38,14 +40,14 @@ public class ExceptionAdvice {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public String dataIntegrityViolationExceptionHandler() {
-        return "Integrity exception";
+        return INTEGRITY_EXCEPTION_MESSAGE;
     }
 
     @ResponseBody
     @ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String badRequestExceptionHandler(RuntimeException e) {
-        return "bad request";
+        return BAD_REQUEST_MESSAGE;
     }
 
     @ResponseBody

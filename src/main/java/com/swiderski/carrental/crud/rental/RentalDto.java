@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swiderski.carrental.crud.abstraction.AbstractDto;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.client.ClientDto;
+import com.swiderski.carrental.pdfGenerator.annotation.PdfTableName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import static com.swiderski.carrental.crud.rental.RentalMessageUtils.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@PdfTableName("Rental report")
 public class RentalDto extends AbstractDto {
 
     @NotNull(message = CAR_VALID_MESSAGE)

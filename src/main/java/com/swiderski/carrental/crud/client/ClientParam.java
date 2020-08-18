@@ -1,5 +1,6 @@
 package com.swiderski.carrental.crud.client;
 
+import com.swiderski.carrental.crud.abstraction.CommonParam;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.validation.constraints.Email;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientParam {
+public class ClientParam implements CommonParam {
 
     private String name;
     private String surname;

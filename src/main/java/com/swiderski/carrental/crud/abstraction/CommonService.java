@@ -1,6 +1,10 @@
 package com.swiderski.carrental.crud.abstraction;
 
-public interface CommonService<D> {
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+public interface CommonService<D, E> {
 
     D save(D dto);
 
@@ -9,4 +13,8 @@ public interface CommonService<D> {
     D update(long id, D dto);
 
     D delete(long id);
+
+    Page<D> getAll(E param, Pageable pageable);
+
+    byte[] getPdfReport(E param);
 }

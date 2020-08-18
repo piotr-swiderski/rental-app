@@ -5,7 +5,7 @@ import com.swiderski.carrental.crud.exception.NotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 
-public abstract class AbstractService<E extends AbstractEntity, D extends AbstractDto> implements CommonService<D> {
+public abstract class AbstractService<E extends AbstractEntity, D  extends AbstractDto, V extends CommonParam> implements CommonService<D, V> {
 
     protected final CommonMapper<E, D> commonMapper;
     protected final CommonRepository<E> commonRepository;

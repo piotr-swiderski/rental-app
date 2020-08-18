@@ -1,5 +1,6 @@
 package com.swiderski.carrental.crud.rental;
 
+import com.swiderski.carrental.crud.abstraction.CommonParam;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RentalParam {
+public class RentalParam implements CommonParam {
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate rentedFrom;

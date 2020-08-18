@@ -1,6 +1,9 @@
 package com.swiderski.carrental.crud.car;
 
 import com.swiderski.carrental.crud.abstraction.AbstractDto;
+import com.swiderski.carrental.pdfGenerator.annotation.ColumnRow;
+import com.swiderski.carrental.pdfGenerator.annotation.PdfIgnoreFiled;
+import com.swiderski.carrental.pdfGenerator.annotation.PdfTableName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +21,7 @@ import static com.swiderski.carrental.crud.car.CarMessageUtils.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@PdfTableName("Car report")
 public class CarDto extends AbstractDto {
 
     @NotBlank(message = BRAND_VALID_MESSAGE)
@@ -32,6 +36,7 @@ public class CarDto extends AbstractDto {
     private String modelVersion;
 
     @NotNull(message = ENGINE_TYPE_VALID_MESSAGE)
+    @PdfIgnoreFiled
     private EngineType engineType;
 
     @Min(value= 1850, message = PRODUCTION_YEAR_VALID_MESSAGE)
@@ -130,5 +135,11 @@ public class CarDto extends AbstractDto {
             carDto.setCost(cost);
             return carDto;
         }
+    }
+
+    @Override
+    public String toString() {
+        return  "id=" + id + " " + brand +
+                " " + model   ;
     }
 }

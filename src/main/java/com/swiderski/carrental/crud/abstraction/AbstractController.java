@@ -1,20 +1,30 @@
 package com.swiderski.carrental.crud.abstraction;
 
 
+import com.swiderski.carrental.crud.ApiPageable;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 
 import static com.swiderski.carrental.crud.abstraction.MessageUtils.ID_POSITIVE_MESSAGE;
 
@@ -22,7 +32,7 @@ import static com.swiderski.carrental.crud.abstraction.MessageUtils.ID_POSITIVE_
 @PropertySource("classpath:/application.properties")
 @RequestMapping(value = {"${rest.api.version}"})
 @Validated
-public abstract class AbstractController<T extends CommonService<E>, E extends AbstractDto> {
+public abstract class AbstractController<T extends CommonService<E, V>, E extends AbstractDto, V extends CommonParam> {
 
     private final T service;
 
@@ -56,4 +66,18 @@ public abstract class AbstractController<T extends CommonService<E>, E extends A
         return service.update(id, dto);
     }
 
+    @GetMapping()
+    @ApiPageable
+    public Page<E> getAll(@Valid @ModelAttribute V param,
+                          @ApiIgnore @NonNull Pageable pageable) {
+        return service.getAll(param, pageable);
+    }
+
+    @GetMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> getPdf(@ModelAttribute V param) {
+        byte[] pdfReport = service.getPdfReport(param);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"cars" + LocalDateTime.now() + ".pdf\"")
+                .body(pdfReport);
+    }
 }

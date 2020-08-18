@@ -5,6 +5,7 @@ import com.swiderski.carrental.crud.abstraction.CommonMapper;
 import com.swiderski.carrental.crud.abstraction.CommonRepository;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
+import com.swiderski.carrental.pdfGenerator.PdfGeneratorImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ import static com.swiderski.carrental.crud.specification.SearchOperation.EQUAL;
 import static com.swiderski.carrental.crud.specification.SearchOperation.MATCH;
 
 @Service
-public class ClientServiceImpl extends AbstractService<Client, ClientDto> implements ClientService {
+public class ClientServiceImpl extends AbstractService<Client, ClientDto, ClientParam> implements ClientService {
 
     public ClientServiceImpl(CommonMapper<Client, ClientDto> commonMapper, CommonRepository<Client> commonRepository) {
         super(commonMapper, commonRepository);
@@ -38,6 +39,12 @@ public class ClientServiceImpl extends AbstractService<Client, ClientDto> implem
         Page<Client> clientPage = commonRepository.findAll(specificationBuilder, pageable);
         List<ClientDto> clientDtos = commonMapper.toListDto(clientPage.getContent());
         return new PageImpl<>(clientDtos, pageable, clientPage.getTotalElements());
+    }
+
+    @Override
+    public byte[] getPdfReport(ClientParam clientParam) {
+        Page<ClientDto> all = getAll(clientParam, Pageable.unpaged());
+        return PdfGeneratorImpl.build(all.getContent());
     }
 
 }

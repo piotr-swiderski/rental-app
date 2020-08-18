@@ -1,5 +1,6 @@
 package com.swiderski.carrental.crud.car;
 
+import com.swiderski.carrental.crud.abstraction.CommonParam;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import static com.swiderski.carrental.crud.car.CarMessageUtils.MIN_YEAR_VALID_ME
 @NoArgsConstructor
 @Getter
 @Setter
-public class CarParam {
+public class CarParam implements CommonParam {
 
     private String brand;
     private String model;

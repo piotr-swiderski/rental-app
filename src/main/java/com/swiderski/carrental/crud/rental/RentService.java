@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 
-public interface RentService extends CommonService<RentalDto> {
+public interface RentService extends CommonService<RentalDto, RentalParam> {
 
     Page<RentalDto> getAll(RentalParam rentalParam, Pageable pageable);
 
@@ -19,4 +19,5 @@ public interface RentService extends CommonService<RentalDto> {
 
     Page<CarDto> getRentedCars(Pageable pageable);
 
+    byte[] getPdfReport(RentalParam rentalParam);
 }
