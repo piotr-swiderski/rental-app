@@ -4,7 +4,7 @@ package com.swiderski.carrental.crud.car;
 import com.swiderski.carrental.crud.abstraction.AbstractService;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
-import com.swiderski.carrental.pdfGenerator.PdfGeneratorImpl;
+import com.swiderski.carrental.pdfGenerator.PdfGenerator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +41,6 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
     @Override
     public byte[] getPdfReport(CarParam carParam) {
         Page<CarDto> all = getAll(carParam, Pageable.unpaged());
-        return PdfGeneratorImpl.build(all.getContent());
+        return PdfGenerator.build(all.getContent());
     }
 }
