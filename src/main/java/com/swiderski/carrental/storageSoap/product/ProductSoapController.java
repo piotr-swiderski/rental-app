@@ -59,7 +59,7 @@ public class ProductSoapController {
     @GetMapping("productsInGroup/{id}")
     @ApiPageable
     public GetAllResponse getProductsInGroup(@NotNull @ApiIgnore Pageable pageable,
-                                     @PathVariable @PositiveOrZero(message = ID_VALID_MESSAGE) long id) {
+                                             @PathVariable @PositiveOrZero(message = ID_VALID_MESSAGE) long id) {
         return productSoapService.productsInGroup(pageable, id);
     }
 

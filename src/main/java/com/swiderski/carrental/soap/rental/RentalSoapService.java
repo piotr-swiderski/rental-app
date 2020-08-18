@@ -10,7 +10,6 @@ import com.swiderski.rental_service.schema.rental.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.jws.WebService;
@@ -34,13 +33,10 @@ public class RentalSoapService implements RentalSOAP, SoapService {
 
     @Override
     public RentalList rentals(RentalListRequest pageableRequest) {
+        PageRequest pageable = rentalWebMapper.toPageRequest(pageableRequest.getPageRequest());
+        RentalParam rentalParam = rentalWebMapper.toCarParam(pageableRequest.getRentalFilter());
 
-        int pageNo = pageableRequest.getPageNo();
-        int pageSize = pageableRequest.getPageSize();
-        String sortBy = pageableRequest.getSortBy();
-        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-
-        Page<RentalDto> page = rentService.getAll(new RentalParam(), pageable);
+        Page<RentalDto> page = rentService.getAll(rentalParam, pageable);
         PageableXml rentalPageable = rentalWebMapper.toWebPageable(page);
 
         RentalList rentalList = objectFactory.createRentalList();
@@ -61,6 +57,7 @@ public class RentalSoapService implements RentalSOAP, SoapService {
 
         return rental;
     }
+
     @Override
     public Rental addRental(Rental rentalRequest) {
         RentalData rentalData = rentalRequest.getRental();

@@ -16,15 +16,25 @@
 
     <xs:element name="ClientListRequest">
         <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="page:PageRequest">
-                    <xs:sequence>
-                        <xs:element name="clientFilter" type="tns:ClientFilter"/>
-                    </xs:sequence>
-                </xs:extension>
-            </xs:complexContent>
+            <xs:sequence>
+                <xs:element name="clientFilter" type="tns:ClientFilter"/>
+                <xs:element name="pageRequest" type="page:PageRequestXml"/>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+
+<!--    <xs:element name="ClientListRequest">-->
+<!--        <xs:complexType>-->
+<!--            <xs:complexContent>-->
+<!--                <xs:extension base="page:PageRequest">-->
+<!--                    <xs:sequence>-->
+<!--                        <xs:element name="clientFilter" type="tns:ClientFilter"/>-->
+<!--                    </xs:sequence>-->
+<!--                </xs:extension>-->
+<!--            </xs:complexContent>-->
+<!--        </xs:complexType>-->
+<!--    </xs:element>-->
 
     <xs:element name="ClientList">
         <xs:complexType>

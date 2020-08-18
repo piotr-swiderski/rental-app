@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.constraints.Positive;
+import javax.validation.Valid;
+import javax.validation.constraints.PositiveOrZero;
 
 import static com.swiderski.carrental.soapClient.MessageUtils.ID_VALID_MESSAGE;
 
@@ -23,23 +24,23 @@ public abstract class AbstractSoapClientController<E extends AbstractDto, T exte
     }
 
     @GetMapping("/{id}")
-    public E getById(@Positive(message = ID_VALID_MESSAGE) @PathVariable long id) {
+    public E getById(@PositiveOrZero(message = ID_VALID_MESSAGE) @PathVariable long id) {
         return clientServiceProxy.getById(id);
     }
 
     @PostMapping
-    public E add(@RequestBody E dto) {
+    public E add(@Valid @RequestBody E dto) {
         return clientServiceProxy.add(dto);
     }
 
     @DeleteMapping("/{id}")
-    public E delete(@Positive(message = ID_VALID_MESSAGE) @PathVariable long id) {
+    public E delete(@PositiveOrZero(message = ID_VALID_MESSAGE) @PathVariable long id) {
         return clientServiceProxy.delete(id);
     }
 
     @PutMapping("/{id}")
-    public E update(@RequestBody E dto,
-                    @Positive(message = ID_VALID_MESSAGE) @PathVariable long id) {
+    public E update(@Valid @RequestBody E dto,
+                    @PositiveOrZero(message = ID_VALID_MESSAGE) @PathVariable long id) {
         return clientServiceProxy.update(dto, id);
     }
 

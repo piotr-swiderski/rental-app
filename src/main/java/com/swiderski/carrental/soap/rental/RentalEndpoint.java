@@ -15,7 +15,6 @@ import com.swiderski.rental_service.schema.rental.RentalListRequest;
 import com.swiderski.rental_service.schema.rental.RentalRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -85,10 +84,7 @@ public class RentalEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RentalListRequest")
     @ResponsePayload
     public RentalList getRentalList(@RequestPayload RentalListRequest request) {
-        int pageNo = request.getPageNo();
-        int pageSize = request.getPageSize();
-        String sortBy = request.getSortBy();
-        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        PageRequest pageable = rentalWebMapper.toPageRequest(request.getPageRequest());
 
         Page<RentalDto> page = rentService.getAll(new RentalParam(), pageable);
         PageableXml rentalPageable = rentalWebMapper.toWebPageable(page);

@@ -14,7 +14,6 @@ import com.swiderski.rental_service.schema.pageable.PageableXml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -86,11 +85,8 @@ public class CarEndpoint {
     @ResponsePayload
     public CarList getCarList(@RequestPayload CarListRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
-        int pageNo = request.getPageNo();
-        int pageSize = request.getPageSize();
-        String sortBy = request.getSortBy();
+        PageRequest pageable = carWebMapper.toPageRequest(request.getPageRequest());
 
-        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         CarParam carParam = carWebMapper.toCarParam(request.getCarFilter());
 
         Page<CarDto> page = carService.getAll(carParam, pageable);

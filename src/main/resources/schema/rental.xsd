@@ -19,15 +19,24 @@
 
     <xs:element name="RentalListRequest">
         <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="page:PageRequest">
-<!--                    <xs:sequence>-->
-<!--                        <xs:element name="name" type="xs:string"/>-->
-<!--                    </xs:sequence>-->
-                </xs:extension>
-            </xs:complexContent>
+            <xs:sequence>
+                <xs:element type="tns:RentalFilter" name="rentalFilter"/>
+                <xs:element type="page:PageRequestXml" name="pageRequest"/>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+<!--    <xs:element name="RentalListRequest">-->
+<!--        <xs:complexType>-->
+<!--            <xs:complexContent>-->
+<!--                <xs:extension base="page:PageRequestXml">-->
+<!--                    &lt;!&ndash;                    <xs:sequence>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <xs:element name="name" type="xs:string"/>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </xs:sequence>&ndash;&gt;-->
+<!--                </xs:extension>-->
+<!--            </xs:complexContent>-->
+<!--        </xs:complexType>-->
+<!--    </xs:element>-->
 
     <xs:element name="RentalList">
         <xs:complexType>
@@ -84,6 +93,14 @@
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RentalFilter">
+        <xs:sequence>
+            <xs:element name="carBrand" type="xs:string"/>
+            <xs:element name="dateFrom" type="xs:string"/>
+            <xs:element name="dateTo" type="xs:string"/>
+        </xs:sequence>
     </xs:complexType>
 
 

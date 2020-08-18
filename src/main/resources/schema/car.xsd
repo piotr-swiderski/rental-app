@@ -15,15 +15,24 @@
 
     <xs:element name="CarListRequest">
         <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="page:PageRequest">
-                    <xs:sequence>
-                        <xs:element name="carFilter" type="tns:CarFilter" nillable="false"/>
-                    </xs:sequence>
-                </xs:extension>
-            </xs:complexContent>
+            <xs:sequence>
+                <xs:element name="carFilter" type="tns:CarFilter" nillable="false"/>
+                <xs:element name="pageRequest" type="page:PageRequestXml" nillable="false"/>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <!--    <xs:element name="CarListRequest">-->
+    <!--        <xs:complexType>-->
+    <!--            <xs:complexContent>-->
+    <!--                <xs:extension base="page:PageRequestXml">-->
+    <!--                    <xs:sequence>-->
+    <!--                        <xs:element name="carFilter" type="tns:CarFilter" nillable="false"/>-->
+    <!--                    </xs:sequence>-->
+    <!--                </xs:extension>-->
+    <!--            </xs:complexContent>-->
+    <!--        </xs:complexType>-->
+    <!--    </xs:element>-->
 
     <xs:element name="CarList">
         <xs:complexType>

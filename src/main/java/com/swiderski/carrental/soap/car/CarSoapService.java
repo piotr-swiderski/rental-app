@@ -41,12 +41,7 @@ public class CarSoapService implements CarSOAP, SoapService {
 
     @Override
     public CarList getAllCars(CarListRequest request) {
-
-        int pageNo = request.getPageNo();
-        int pageSize = request.getPageSize();
-        String sortBy = request.getSortBy();
-
-        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        PageRequest pageable = carWebMapper.toPageRequest(request.getPageRequest());
         CarParam carParam = carWebMapper.toCarParam(request.getCarFilter());
 
         Page<CarDto> page = carService.getAll(carParam, pageable);
@@ -60,7 +55,6 @@ public class CarSoapService implements CarSOAP, SoapService {
 
     @Override
     public Car deleteCar(CarDeleteRequest getCarRequest) {
-
         long carId = getCarRequest.getId();
 
         CarDto deletedCar = carService.delete(carId);
@@ -74,7 +68,6 @@ public class CarSoapService implements CarSOAP, SoapService {
 
     @Override
     public Car getCar(CarRequest getCarRequest) {
-
         long carId = getCarRequest.getId();
 
         CarDto car = carService.getById(carId);
@@ -88,7 +81,6 @@ public class CarSoapService implements CarSOAP, SoapService {
 
     @Override
     public Car addCar(Car addCarRequest) {
-
         CarData carData = addCarRequest.getCar();
 
         CarDto carDto = carWebMapper.toDto(carData);

@@ -68,7 +68,6 @@ public class ClientSoapService implements ClientSOAP, SoapService {
 
     @Override
     public Client getClient(ClientRequest request) {
-
         long carId = request.getId();
 
         ClientDto clientDto = clientService.getById(carId);
@@ -82,12 +81,7 @@ public class ClientSoapService implements ClientSOAP, SoapService {
 
     @Override
     public ClientList getAllClients(ClientListRequest pageableRequest) {
-
-        int pageNo = pageableRequest.getPageNo();
-        int pageSize = pageableRequest.getPageSize();
-        String sortBy = pageableRequest.getSortBy();
-
-        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        PageRequest pageable = clientWebMapper.toPageRequest(pageableRequest.getPageRequest());
         ClientParam clientParam = clientWebMapper.toClientParam(pageableRequest.getClientFilter());
 
         Page<ClientDto> page = clientService.getAll(clientParam, pageable);

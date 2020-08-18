@@ -13,6 +13,7 @@ import com.swiderski.rental_service.schema.car.CarListRequest;
 import com.swiderski.rental_service.schema.car.CarRequest;
 import com.swiderski.rental_service.schema.car.CarSOAP;
 import com.swiderski.rental_service.schema.car.ObjectFactory;
+import com.swiderski.rental_service.schema.pageable.PageRequestXml;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -39,10 +40,10 @@ public class CarSoapClient implements CommonSoapClient<CarDto> {
         CarListRequest carListRequest = carObjectFactory.createCarListRequest();
 
         CarFilter carFilter = carWebMapper.toCarFiler(carParam);
+        PageRequestXml pageableXml = carWebMapper.toPageRequestXml(pageable);
         carListRequest.setCarFilter(carFilter);
-        carListRequest.setPageNo(pageable.getPageNumber());
-        carListRequest.setPageSize(pageable.getPageSize());
-        carListRequest.setSortBy("id");
+        carListRequest.setPageRequest(pageableXml);
+
         CarList allCars = carSoapProxy.getAllCars(carListRequest);
 
         List<CarData> carDataList = carWebMapper.toDataList(allCars.getPage().getContent());

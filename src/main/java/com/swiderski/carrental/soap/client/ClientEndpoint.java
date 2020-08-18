@@ -87,11 +87,7 @@ public class ClientEndpoint {
     public ClientList getClientList(@RequestPayload ClientListRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
 
-        int pageNo = request.getPageNo();
-        int pageSize = request.getPageSize();
-        String sortBy = request.getSortBy();
-
-        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        PageRequest pageable = clientWebMapper.toPageRequest(request.getPageRequest());
         ClientParam clientParam = clientWebMapper.toClientParam(request.getClientFilter());
 
         Page<ClientDto> page = clientService.getAll(clientParam, pageable);

@@ -19,7 +19,7 @@
     <xs:complexType name="anyTypeXml">
     </xs:complexType>
 
-    <xs:complexType name="PageRequest">
+    <xs:complexType name="PageRequestXml">
         <xs:sequence>
             <xs:element name="pageNo" type="xs:int" default="0"/>
             <xs:element name="pageSize" type="xs:int" default="10"/>

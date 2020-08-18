@@ -13,6 +13,7 @@ import com.swiderski.rental_service.schema.client.ClientListRequest;
 import com.swiderski.rental_service.schema.client.ClientRequest;
 import com.swiderski.rental_service.schema.client.ClientSOAP;
 import com.swiderski.rental_service.schema.client.ObjectFactory;
+import com.swiderski.rental_service.schema.pageable.PageRequestXml;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,10 +39,9 @@ public class ClientSoapClient implements CommonSoapClient<ClientDto> {
         ClientListRequest clientListRequest = clientObjectFactory.createClientListRequest();
 
         ClientFilter clientFilter = clientWebMapper.toClientFiler(clientParam);
+        PageRequestXml pageableXml = clientWebMapper.toPageRequestXml(pageable);
         clientListRequest.setClientFilter(clientFilter);
-        clientListRequest.setPageNo(pageable.getPageNumber());
-        clientListRequest.setPageSize(pageable.getPageSize());
-        clientListRequest.setSortBy("id");
+        clientListRequest.setPageRequest(pageableXml);
 
         ClientList clients = clientSoapProxy.getAllClients(clientListRequest);
 

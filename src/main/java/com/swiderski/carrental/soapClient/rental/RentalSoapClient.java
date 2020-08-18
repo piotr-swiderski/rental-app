@@ -4,6 +4,7 @@ import com.swiderski.carrental.crud.rental.RentalDto;
 import com.swiderski.carrental.crud.rental.RentalParam;
 import com.swiderski.carrental.soap.rental.RentalWebMapper;
 import com.swiderski.carrental.soapClient.abstraction.CommonSoapClient;
+import com.swiderski.rental_service.schema.pageable.PageRequestXml;
 import com.swiderski.rental_service.schema.rental.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -31,9 +32,11 @@ public class RentalSoapClient implements CommonSoapClient<RentalDto> {
 
     public Page<RentalDto> getAll(RentalParam rentalParam, Pageable pageable) {
         RentalListRequest rentalListRequest = rentalObjectFactory.createRentalListRequest();
-        rentalListRequest.setPageNo(pageable.getPageNumber());
-        rentalListRequest.setPageSize(pageable.getPageSize());
-        rentalListRequest.setSortBy("id");
+
+        PageRequestXml pageableXml = rentalWebMapper.toPageRequestXml(pageable);
+        RentalFilter rentalFilter = rentalWebMapper.toRentalFilter(rentalParam);
+        rentalListRequest.setPageRequest(pageableXml);
+        rentalListRequest.setRentalFilter(rentalFilter);
 
         RentalList rentals = rentalSoapProxy.rentals(rentalListRequest);
 

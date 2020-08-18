@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 
 import static com.swiderski.carrental.soapClient.MessageUtils.ID_VALID_MESSAGE;
@@ -40,14 +41,14 @@ public class RentalSoapController extends AbstractSoapClientController<RentalDto
     }
 
     @PostMapping("/return")
-    public RentalDto returnCar(@Positive(message = ID_VALID_MESSAGE) long rentalId,
+    public RentalDto returnCar(@PositiveOrZero(message = ID_VALID_MESSAGE) long rentalId,
                                @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate rentalEnd) {
         return rentalClientProxy.returnCar(rentalId, rentalEnd);
     }
 
     @PostMapping("/rent")
-    public RentalDto rentCar(@Positive(message = ID_VALID_MESSAGE) long carId,
-                             @Positive(message = ID_VALID_MESSAGE) long clientId) {
+    public RentalDto rentCar(@PositiveOrZero(message = ID_VALID_MESSAGE) long carId,
+                             @PositiveOrZero(message = ID_VALID_MESSAGE) long clientId) {
         return rentalClientProxy.rentCar(carId, clientId);
     }
 }
