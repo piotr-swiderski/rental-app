@@ -9,8 +9,6 @@ import java.time.LocalDate;
 
 public interface RentService extends CommonService<RentalDto, RentalParam> {
 
-    Page<RentalDto> getAll(RentalParam rentalParam, Pageable pageable);
-
     RentalDto rentCar(long carId, long clientId);
 
     RentalDto returnCar(long id, LocalDate returnDate);
@@ -18,6 +16,4 @@ public interface RentService extends CommonService<RentalDto, RentalParam> {
     Page<CarDto> getAvailableCars(Pageable pageable);
 
     Page<CarDto> getRentedCars(Pageable pageable);
-
-    byte[] getPdfReport(RentalParam rentalParam);
 }
