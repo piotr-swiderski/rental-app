@@ -1,7 +1,6 @@
 package com.swiderski.carrental.pdfGenerator;
 
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -49,8 +48,15 @@ public class PdfGenerator {
 
     @NotNull
     private static List<ColumnBuilder> getColumnBuilder(Class<?> clazz) {
+        Class<?> superclass = clazz.getSuperclass();
         Field[] fields = clazz.getDeclaredFields();
+        Field[] superClassFiled = superclass.getDeclaredFields();
         List<ColumnBuilder> columns = new ArrayList<>();
+        for (Field field : superClassFiled) {
+            if (!field.isAnnotationPresent(PdfIgnoreFiled.class)) {
+                columns.add(new ColumnBuilder(field));
+            }
+        }
         for (Field field : fields) {
             if (!field.isAnnotationPresent(PdfIgnoreFiled.class)) {
                 columns.add(new ColumnBuilder(field));

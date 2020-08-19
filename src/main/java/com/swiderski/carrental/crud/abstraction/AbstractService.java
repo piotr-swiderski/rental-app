@@ -2,10 +2,14 @@ package com.swiderski.carrental.crud.abstraction;
 
 
 import com.swiderski.carrental.crud.exception.NotFoundException;
+import com.swiderski.carrental.pdfGenerator.PdfGenerator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 
-public abstract class AbstractService<E extends AbstractEntity, D  extends AbstractDto, V extends CommonParam> implements CommonService<D, V> {
+public abstract class AbstractService<E extends AbstractEntity, D extends AbstractDto, V extends CommonParam> implements CommonService<D, V> {
 
     protected final CommonMapper<E, D> commonMapper;
     protected final CommonRepository<E> commonRepository;
@@ -49,5 +53,11 @@ public abstract class AbstractService<E extends AbstractEntity, D  extends Abstr
         E entity = getEntityById(id);
         commonRepository.delete(entity);
         return commonMapper.toDto(entity);
+    }
+
+    @Override
+    public byte[] getPdfReport(V param) {
+        Page<D> all = getAll(param, PageRequest.of(0, 50, Sort.by("id")));
+        return PdfGenerator.build(all.getContent());
     }
 }

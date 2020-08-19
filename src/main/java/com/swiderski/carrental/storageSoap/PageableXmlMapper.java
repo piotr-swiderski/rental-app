@@ -10,7 +10,12 @@ public interface PageableXmlMapper {
         PageableXml pageableXml = new PageableXml();
         pageableXml.setPage(pageable.getPageNumber());
         pageableXml.setSize(pageable.getPageSize());
-        pageableXml.setSort(pageable.getSort().toString());
+        if (pageable.getSort().isSorted()) {
+            pageableXml.setSort(pageable.getSort().iterator().next().getProperty());
+        } else {
+            pageableXml.setSort("");
+            pageableXml.setDir("ASC");
+        }
 
         return pageableXml;
     }

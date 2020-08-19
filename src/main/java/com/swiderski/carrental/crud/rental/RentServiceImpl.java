@@ -11,7 +11,6 @@ import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.CarRentedException;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
-import com.swiderski.carrental.pdfGenerator.PdfGenerator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -105,9 +104,4 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto, RentalPa
         return new PageImpl<>(pageList, pageable, allRentedCars.getTotalElements());
     }
 
-    @Override
-    public byte[] getPdfReport(RentalParam rentalParam) {
-        Page<RentalDto> all = getAll(rentalParam, Pageable.unpaged());
-        return PdfGenerator.build(all.getContent());
-    }
 }

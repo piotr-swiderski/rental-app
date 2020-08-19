@@ -1,7 +1,11 @@
 package com.swiderski.carrental.storageSoap.product;
 
 import com.swiderski.carrental.crud.ApiPageable;
+import com.swiderski.carrental.xlsxGenerator.XlsxGenerator;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +22,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 
 import static com.swiderski.carrental.soapClient.MessageUtils.ID_VALID_MESSAGE;
 
@@ -65,8 +70,18 @@ public class ProductSoapController {
 
     @GetMapping
     @ApiPageable
-    public GetAllResponse allProducts(@NotNull @ApiIgnore Pageable pageable, @RequestParam String search) {
+    public GetAllResponse allProducts(@NotNull @ApiIgnore Pageable pageable, @RequestParam(required = false, defaultValue = "") String search) {
         return productSoapService.getAllProducts(pageable, search);
+    }
+
+    @GetMapping(value = "/excel", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ApiPageable
+    public ResponseEntity<byte[]> getExcel(@ApiIgnore Pageable pageable, @RequestParam(required = false) String search) {
+        byte[] excel = XlsxGenerator.customersToExcel(productSoapService.getAllProducts(pageable, search).getContent());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report" + LocalDateTime.now() + ".xlsx\"")
+                .body(excel);
     }
 
 }

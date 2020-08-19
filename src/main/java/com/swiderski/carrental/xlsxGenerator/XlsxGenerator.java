@@ -26,7 +26,7 @@ public class XlsxGenerator {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         CreationHelper createHelper = workbook.getCreationHelper();
         Sheet sheet = workbook.createSheet("Report");
-
+        sheet.autoSizeColumn(40);
         Font headerFont = workbook.createFont();
         headerFont.setBoldweight((short) 4);
         headerFont.setColor(IndexedColors.BLUE.getIndex());
@@ -41,6 +41,7 @@ public class XlsxGenerator {
         Row headerRow = sheet.createRow(3);
         Class<?> clazz = rows.iterator().next().getClass();
         List<ColumnDefinition> columns = getColumnDefinitions(clazz);
+
         for (int col = 0; col < columns.size(); col++) {
             Cell cell = headerRow.createCell(col);
             cell.setCellValue(columns.get(col).getName());

@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ClientSoapClient implements CommonSoapClient<ClientDto> {
+public class ClientSoapClient implements CommonSoapClient<ClientDto, ClientParam> {
 
     private final ClientSOAP clientSoapProxy;
     private final ObjectFactory clientObjectFactory;

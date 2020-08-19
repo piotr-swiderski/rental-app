@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CarSoapClient implements CommonSoapClient<CarDto> {
+public class CarSoapClient implements CommonSoapClient<CarDto, CarParam> {
 
     private final CarSOAP carSoapProxy;
     private final ObjectFactory carObjectFactory;
@@ -36,6 +36,7 @@ public class CarSoapClient implements CommonSoapClient<CarDto> {
         this.carWebMapper = carWebMapper;
     }
 
+    @Override
     public Page<CarDto> getAll(CarParam carParam, Pageable pageable) {
         CarListRequest carListRequest = carObjectFactory.createCarListRequest();
 

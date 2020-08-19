@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class RentalSoapClient implements CommonSoapClient<RentalDto> {
+public class RentalSoapClient implements CommonSoapClient<RentalDto, RentalParam> {
 
     private final RentalSOAP rentalSoapProxy;
     private final ObjectFactory rentalObjectFactory;

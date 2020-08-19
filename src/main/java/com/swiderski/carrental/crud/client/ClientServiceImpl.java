@@ -5,7 +5,6 @@ import com.swiderski.carrental.crud.abstraction.CommonMapper;
 import com.swiderski.carrental.crud.abstraction.CommonRepository;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
-import com.swiderski.carrental.pdfGenerator.PdfGenerator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,12 +38,6 @@ public class ClientServiceImpl extends AbstractService<Client, ClientDto, Client
         Page<Client> clientPage = commonRepository.findAll(specificationBuilder, pageable);
         List<ClientDto> clientDtos = commonMapper.toListDto(clientPage.getContent());
         return new PageImpl<>(clientDtos, pageable, clientPage.getTotalElements());
-    }
-
-    @Override
-    public byte[] getPdfReport(ClientParam clientParam) {
-        Page<ClientDto> all = getAll(clientParam, Pageable.unpaged());
-        return PdfGenerator.build(all.getContent());
     }
 
 }
