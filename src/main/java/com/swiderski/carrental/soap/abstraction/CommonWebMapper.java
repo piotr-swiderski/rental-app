@@ -53,7 +53,11 @@ public interface CommonWebMapper<E extends AbstractDto, T extends AnyTypeXml> {
         PageRequestXml pageRequestXml = new PageRequestXml();
         pageRequestXml.setPageNo(pageable.getPageNumber());
         pageRequestXml.setPageSize(pageable.getPageSize());
-        pageRequestXml.setSortBy(pageable.getSort().toString());
+        if (pageable.getSort().isSorted()) {
+            pageRequestXml.setSortBy(pageable.getSort().iterator().next().getProperty());
+        } else {
+            pageRequestXml.setSortBy("");
+        }
         return pageRequestXml;
     }
 }
