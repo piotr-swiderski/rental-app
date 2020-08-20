@@ -1,8 +1,9 @@
-package com.swiderski.carrental.soap.car;
+package com.swiderski.carrental.soap.car.simple;
 
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.car.CarParam;
 import com.swiderski.carrental.crud.car.CarService;
+import com.swiderski.carrental.soap.car.CarWebMapper;
 import com.swiderski.rental_service.schema.car.Car;
 import com.swiderski.rental_service.schema.car.CarData;
 import com.swiderski.rental_service.schema.car.CarDeleteRequest;

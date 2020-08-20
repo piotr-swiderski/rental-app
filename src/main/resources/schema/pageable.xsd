@@ -24,6 +24,30 @@
             <xs:element name="pageNo" type="xs:int" default="0"/>
             <xs:element name="pageSize" type="xs:int" default="10"/>
             <xs:element name="sortBy" type="xs:string" default="id"/>
+            <xs:element name="orderBy" type="xs:string" default="ASC"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Sort">
+        <xs:sequence>
+            <xs:element name="orders" type="tns:Order"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Order">
+        <xs:sequence>
+            <xs:element name="direction" type="xs:string" default="ASC"/>
+            <xs:element name="property" type="xs:string" default=""/>
+            <xs:element name="ignoreCase" type="xs:boolean" default="true"/>
+            <xs:element name="nullHandling" type="xs:string" default="NATIVE"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PageRequestXmll">
+        <xs:sequence>
+            <xs:element name="pageNo" type="xs:int" default="0"/>
+            <xs:element name="pageSize" type="xs:int" default="10"/>
+            <xs:element name="sort" type="tns:Sort" minOccurs="0" maxOccurs="1" nillable="true"/>
         </xs:sequence>
     </xs:complexType>
 

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("v1/soap/cars")
-public class CarSoapController extends AbstractSoapClientController<CarDto, CarSoapClient, CarParam> {
+public class CarSoapClientController extends AbstractSoapClientController<CarDto, CarSoapClient, CarParam> {
 
-    public CarSoapController(CarSoapClient clientServiceProxy) {
+    public CarSoapClientController(CarSoapClient clientServiceProxy) {
         super(clientServiceProxy);
     }
 }

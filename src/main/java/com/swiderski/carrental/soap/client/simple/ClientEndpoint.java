@@ -1,8 +1,9 @@
-package com.swiderski.carrental.soap.client;
+package com.swiderski.carrental.soap.client.simple;
 
 import com.swiderski.carrental.crud.client.ClientDto;
 import com.swiderski.carrental.crud.client.ClientParam;
 import com.swiderski.carrental.crud.client.ClientService;
+import com.swiderski.carrental.soap.client.ClientWebMapper;
 import com.swiderski.rental_service.schema.client.Client;
 import com.swiderski.rental_service.schema.client.ClientData;
 import com.swiderski.rental_service.schema.client.ClientDeleteRequest;
@@ -14,7 +15,6 @@ import com.swiderski.rental_service.schema.pageable.PageableXml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -87,7 +87,7 @@ public class ClientEndpoint {
     public ClientList getClientList(@RequestPayload ClientListRequest request) {
         ObjectFactory objectFactory = new ObjectFactory();
 
-        PageRequest pageable = clientWebMapper.toPageRequest(request.getPageRequest());
+        PageRequest pageable = clientWebMapper.toPageRequest(request.getPageable());
         ClientParam clientParam = clientWebMapper.toClientParam(request.getClientFilter());
 
         Page<ClientDto> page = clientService.getAll(clientParam, pageable);

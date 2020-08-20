@@ -5,13 +5,13 @@ import com.swiderski.carrental.crud.client.ClientParam;
 import com.swiderski.carrental.soap.client.ClientWebMapper;
 import com.swiderski.carrental.soapClient.abstraction.CommonSoapClient;
 import com.swiderski.rental_service.schema.client.Client;
+import com.swiderski.rental_service.schema.client.ClientClient;
 import com.swiderski.rental_service.schema.client.ClientData;
 import com.swiderski.rental_service.schema.client.ClientDeleteRequest;
 import com.swiderski.rental_service.schema.client.ClientFilter;
 import com.swiderski.rental_service.schema.client.ClientList;
 import com.swiderski.rental_service.schema.client.ClientListRequest;
 import com.swiderski.rental_service.schema.client.ClientRequest;
-import com.swiderski.rental_service.schema.client.ClientSOAP;
 import com.swiderski.rental_service.schema.client.ObjectFactory;
 import com.swiderski.rental_service.schema.pageable.PageRequestXml;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,11 +25,11 @@ import java.util.List;
 @Component
 public class ClientSoapClient implements CommonSoapClient<ClientDto, ClientParam> {
 
-    private final ClientSOAP clientSoapProxy;
+    private final ClientClient clientSoapProxy;
     private final ObjectFactory clientObjectFactory;
     private final ClientWebMapper clientWebMapper;
 
-    public ClientSoapClient(@Qualifier("clientProxy") ClientSOAP carSoapProxy, ObjectFactory clientObjectFactory, ClientWebMapper clientWebMapper) {
+    public ClientSoapClient(@Qualifier("clientProxy") ClientClient carSoapProxy, ObjectFactory clientObjectFactory, ClientWebMapper clientWebMapper) {
         this.clientSoapProxy = carSoapProxy;
         this.clientObjectFactory = clientObjectFactory;
         this.clientWebMapper = clientWebMapper;
@@ -41,7 +41,7 @@ public class ClientSoapClient implements CommonSoapClient<ClientDto, ClientParam
         ClientFilter clientFilter = clientWebMapper.toClientFiler(clientParam);
         PageRequestXml pageableXml = clientWebMapper.toPageRequestXml(pageable);
         clientListRequest.setClientFilter(clientFilter);
-        clientListRequest.setPageRequest(pageableXml);
+        clientListRequest.setPageable(pageableXml);
 
         ClientList clients = clientSoapProxy.getAllClients(clientListRequest);
 

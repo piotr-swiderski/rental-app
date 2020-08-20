@@ -1,8 +1,9 @@
-package com.swiderski.carrental.soap.rental;
+package com.swiderski.carrental.soap.rental.simple;
 
 import com.swiderski.carrental.crud.rental.RentService;
 import com.swiderski.carrental.crud.rental.RentalDto;
 import com.swiderski.carrental.crud.rental.RentalParam;
+import com.swiderski.carrental.soap.rental.RentalWebMapper;
 import com.swiderski.rental_service.schema.pageable.PageableXml;
 import com.swiderski.rental_service.schema.rental.CarRentRequest;
 import com.swiderski.rental_service.schema.rental.CarReturnRequest;

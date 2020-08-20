@@ -18,11 +18,11 @@ import java.util.List;
 @Component
 public class RentalSoapClient implements CommonSoapClient<RentalDto, RentalParam> {
 
-    private final RentalSOAP rentalSoapProxy;
+    private final RentalClient rentalSoapProxy;
     private final ObjectFactory rentalObjectFactory;
     private final RentalWebMapper rentalWebMapper;
 
-    public RentalSoapClient(@Qualifier("rentalProxy") RentalSOAP rentalSoapProxy,
+    public RentalSoapClient(@Qualifier("rentalProxy") RentalClient rentalSoapProxy,
                             ObjectFactory rentalObjectFactory,
                             RentalWebMapper rentalWebMapper) {
         this.rentalSoapProxy = rentalSoapProxy;

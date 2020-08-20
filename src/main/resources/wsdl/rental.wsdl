@@ -40,7 +40,7 @@
     </wsdl:message>
 
     <!--Define port definition -->
-    <wsdl:portType name="RentalSOAP">
+    <wsdl:portType name="RentalClient">
         <wsdl:operation name="Rental">
             <wsdl:input message="tns:getRental"/>
             <wsdl:output message="tns:getResponse"/>
@@ -73,7 +73,7 @@
     </wsdl:portType>
 
     <!--Bind Soap operation and service -->
-    <wsdl:binding name="Rental_SOAPBinding" type="tns:RentalSOAP">
+    <wsdl:binding name="Rental_SOAPBinding" type="tns:RentalClient">
         <soap:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
         <wsdl:operation name="Rental">
             <soap:operation soapAction="http://swiderski.com/rental-service" style="document"/>

@@ -18,7 +18,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="clientFilter" type="tns:ClientFilter"/>
-                <xs:element name="pageRequest" type="page:PageRequestXml"/>
+                <xs:element name="pageable" type="page:PageRequestXml"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

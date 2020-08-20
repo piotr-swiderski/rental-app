@@ -5,13 +5,13 @@ import com.swiderski.carrental.crud.car.CarParam;
 import com.swiderski.carrental.soap.car.CarWebMapper;
 import com.swiderski.carrental.soapClient.abstraction.CommonSoapClient;
 import com.swiderski.rental_service.schema.car.Car;
+import com.swiderski.rental_service.schema.car.CarClient;
 import com.swiderski.rental_service.schema.car.CarData;
 import com.swiderski.rental_service.schema.car.CarDeleteRequest;
 import com.swiderski.rental_service.schema.car.CarFilter;
 import com.swiderski.rental_service.schema.car.CarList;
 import com.swiderski.rental_service.schema.car.CarListRequest;
 import com.swiderski.rental_service.schema.car.CarRequest;
-import com.swiderski.rental_service.schema.car.CarSOAP;
 import com.swiderski.rental_service.schema.car.ObjectFactory;
 import com.swiderski.rental_service.schema.pageable.PageRequestXml;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,12 +25,12 @@ import java.util.List;
 @Component
 public class CarSoapClient implements CommonSoapClient<CarDto, CarParam> {
 
-    private final CarSOAP carSoapProxy;
+    private final CarClient carSoapProxy;
     private final ObjectFactory carObjectFactory;
     private final CarWebMapper carWebMapper;
 
 
-    public CarSoapClient(@Qualifier("carProxy") CarSOAP carSoapProxy, ObjectFactory carObjectFactory, CarWebMapper carWebMapper) {
+    public CarSoapClient(@Qualifier("carProxy") CarClient carSoapProxy, ObjectFactory carObjectFactory, CarWebMapper carWebMapper) {
         this.carSoapProxy = carSoapProxy;
         this.carObjectFactory = carObjectFactory;
         this.carWebMapper = carWebMapper;

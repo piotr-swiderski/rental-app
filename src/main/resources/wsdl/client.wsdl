@@ -34,7 +34,7 @@
     </wsdl:message>
 
     <!--Define port definition -->
-    <wsdl:portType name="ClientSOAP">
+    <wsdl:portType name="ClientClient">
         <wsdl:operation name="getClient">
             <wsdl:input message="tns:getClient"/>
             <wsdl:output message="tns:clientResponse"/>
@@ -58,7 +58,7 @@
     </wsdl:portType>
 
     <!--Bind Soap operation and service -->
-    <wsdl:binding name="Client_SOAPBinding" type="tns:ClientSOAP">
+    <wsdl:binding name="Client_SOAPBinding" type="tns:ClientClient">
         <soap:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
         <wsdl:operation name="getClient">
             <soap:operation soapAction="" style="document"/>
@@ -105,7 +105,7 @@
 
 
     <!--Define service -->
-    <wsdl:service name="ClientSoapService">
+    <wsdl:service name="ClientClientService">
         <wsdl:port name="ClientPort" binding="tns:Client_SOAPBinding">
             <soap:address location="http://localhost:9090/soap-api/client"/>
         </wsdl:port>

@@ -33,7 +33,7 @@
     </wsdl:message>
 
     <!--Define port definition -->
-    <wsdl:portType name="CarSOAP">
+    <wsdl:portType name="CarClient">
         <wsdl:operation name="getCar">
             <wsdl:input name="carId" message="tns:getCar"/>
             <wsdl:output name="carResponse" message="tns:getResponse"/>
@@ -57,7 +57,7 @@
     </wsdl:portType>
 
     <!--Bind Soap operation and service -->
-    <wsdl:binding name="Car_SOAPBinding" type="tns:CarSOAP">
+    <wsdl:binding name="Car_SOAPBinding" type="tns:CarClient">
         <soap:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
         <wsdl:operation name="getCar">
             <soap:operation soapAction="" style="document"/>
@@ -102,7 +102,7 @@
 
 
     <!--Define service -->
-    <wsdl:service name="CarSoapService">
+    <wsdl:service name="CarClientService">
         <wsdl:port name="CarPort" binding="tns:Car_SOAPBinding">
             <soap:address location="http://localhost:9090/soap-api/car"/>
         </wsdl:port>

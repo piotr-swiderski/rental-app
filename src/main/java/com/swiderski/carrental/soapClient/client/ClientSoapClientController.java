@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("v1/soap/clients")
-public class ClientSoapController extends AbstractSoapClientController<ClientDto, ClientSoapClient, ClientParam> {
+public class ClientSoapClientController extends AbstractSoapClientController<ClientDto, ClientSoapClient, ClientParam> {
 
 
-    public ClientSoapController(ClientSoapClient clientSoapClient) {
+    public ClientSoapClientController(ClientSoapClient clientSoapClient) {
         super(clientSoapClient);
     }
 

@@ -19,6 +19,9 @@ public interface RentalWebMapper extends CommonWebMapper<RentalDto, RentalData> 
 
     @SneakyThrows
     default XMLGregorianCalendar toXmlCalander(LocalDate localDate) {
+        if (localDate == null) {
+            return null;
+        }
         return DatatypeFactory.newInstance().newXMLGregorianCalendar(localDate.toString());
     }
 

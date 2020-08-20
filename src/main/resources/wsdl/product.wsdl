@@ -1,6 +1,6 @@
 <wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://jakub.slowikowski.pl/soap-example/product" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/abstract" name="ProductPortService" targetNamespace="http://jakub.slowikowski.pl/soap-example/product">
     <wsdl:types>
-        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://jakub.slowikowski.pl/soap-example/product" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/abstract" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/product-group" version="1.0">
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://jakub.slowikowski.pl/soap-example/product" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/abstract" xmlns="http://jakub.slowikowski.pl/soap-example/product-group" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/product-group" version="1.0">
             <xs:import namespace="http://jakub.slowikowski.pl/soap-example/abstract"/>
             <xs:import namespace="http://jakub.slowikowski.pl/soap-example/product"/>
             <xs:element name="DeleteProductGroupRequest">
@@ -62,7 +62,7 @@
                 </xs:complexContent>
             </xs:complexType>
         </xs:schema>
-        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://jakub.slowikowski.pl/soap-example/product" xmlns:ns2="http://jakub.slowikowski.pl/soap-example/pageable" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/abstract" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/product" version="1.0">
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://jakub.slowikowski.pl/soap-example/product" xmlns:ns2="http://jakub.slowikowski.pl/soap-example/pageable" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/abstract" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/product" version="1.0">
             <xs:import namespace="http://jakub.slowikowski.pl/soap-example/abstract"/>
             <xs:import namespace="http://jakub.slowikowski.pl/soap-example/pageable"/>
             <xs:element name="BuyProductRequest">
@@ -161,7 +161,7 @@
                 </xs:sequence>
             </xs:complexType>
         </xs:schema>
-        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://jakub.slowikowski.pl/soap-example/abstract" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/pageable" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/abstract" version="1.0">
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://jakub.slowikowski.pl/soap-example/abstract" xmlns:ns1="http://jakub.slowikowski.pl/soap-example/pageable" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://jakub.slowikowski.pl/soap-example/abstract" version="1.0">
             <xs:import namespace="http://jakub.slowikowski.pl/soap-example/pageable"/>
             <xs:element name="GetAllResponse">
                 <xs:complexType>

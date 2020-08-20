@@ -15,12 +15,12 @@ import static com.swiderski.carrental.soapClient.MessageUtils.ID_VALID_MESSAGE;
 
 @RestController
 @RequestMapping("v1/soap/rentals")
-public class RentalSoapController extends AbstractSoapClientController<RentalDto, RentalSoapClient, RentalParam> {
+public class RentalSoapClientController extends AbstractSoapClientController<RentalDto, RentalSoapClient, RentalParam> {
 
 
     private final RentalSoapClient rentalClientProxy;
 
-    public RentalSoapController(RentalSoapClient rentalClientProxy) {
+    public RentalSoapClientController(RentalSoapClient rentalClientProxy) {
         super(rentalClientProxy);
         this.rentalClientProxy = rentalClientProxy;
     }

@@ -1,6 +1,6 @@
 package com.swiderski.carrental.soapClient.car;
 
-import com.swiderski.rental_service.schema.car.CarSOAP;
+import com.swiderski.rental_service.schema.car.CarClient;
 import com.swiderski.rental_service.schema.car.ObjectFactory;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,12 +15,12 @@ public class ClientSoapCarConfig {
     private String address;
 
     @Bean(name = "carProxy")
-    public CarSOAP carServiceProxy() {
+    public CarClient carServiceProxy() {
         JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
-        jaxWsProxyFactoryBean.setServiceClass(CarSOAP.class);
+        jaxWsProxyFactoryBean.setServiceClass(CarClient.class);
         jaxWsProxyFactoryBean.setAddress(this.address);
 
-        return (CarSOAP) jaxWsProxyFactoryBean.create();
+        return (CarClient) jaxWsProxyFactoryBean.create();
     }
 
     @Bean("CarObjectFactory")

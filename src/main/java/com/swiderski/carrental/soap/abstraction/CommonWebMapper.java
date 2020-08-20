@@ -46,7 +46,10 @@ public interface CommonWebMapper<E extends AbstractDto, T extends AnyTypeXml> {
     }
 
     default PageRequest toPageRequest(PageRequestXml pageRequestXml) {
-        return PageRequest.of(pageRequestXml.getPageNo(), pageRequestXml.getPageSize(), Sort.by(pageRequestXml.getSortBy()));
+        return PageRequest.of(
+                pageRequestXml.getPageNo(),
+                pageRequestXml.getPageSize(),
+                Sort.by(Sort.Direction.valueOf(pageRequestXml.getOrderBy()), pageRequestXml.getSortBy()));
     }
 
     default PageRequestXml toPageRequestXml(Pageable pageable) {
@@ -55,8 +58,10 @@ public interface CommonWebMapper<E extends AbstractDto, T extends AnyTypeXml> {
         pageRequestXml.setPageSize(pageable.getPageSize());
         if (pageable.getSort().isSorted()) {
             pageRequestXml.setSortBy(pageable.getSort().iterator().next().getProperty());
+            pageRequestXml.setOrderBy(pageable.getSort().iterator().next().getDirection().name());
         } else {
-            pageRequestXml.setSortBy("");
+            pageRequestXml.setSortBy("id");
+            pageRequestXml.setOrderBy("ASC");
         }
         return pageRequestXml;
     }
