@@ -3,6 +3,7 @@ package com.swiderski.carrental.crud.abstraction;
 
 import com.swiderski.carrental.crud.exception.NotFoundException;
 import com.swiderski.carrental.pdfGenerator.PdfGenerator;
+import com.swiderski.carrental.pdfGenerator.PdfGeneratorSimple;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
