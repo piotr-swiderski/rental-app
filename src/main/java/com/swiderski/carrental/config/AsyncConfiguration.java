@@ -8,15 +8,15 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 @Configuration
-@EnableAsync
+@EnableAsync(proxyTargetClass = true)
 public class AsyncConfiguration {
 
 
-    @Bean
+    @Bean(name = "asyncExecutor")
     Executor asyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(4);
-        executor.setMaxPoolSize(4);
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(5);
         executor.setQueueCapacity(500);
         executor.setThreadNamePrefix("EmailSender-");
         executor.initialize();

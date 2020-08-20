@@ -2,14 +2,12 @@ package com.swiderski.carrental.crud.car;
 
 import com.swiderski.carrental.crud.abstraction.AbstractController;
 import com.swiderski.carrental.mail.MailSenderConfigurer;
-import com.swiderski.carrental.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.async.WebAsyncTask;
 
 @RestController
 @PropertySource("classpath:/application.properties")

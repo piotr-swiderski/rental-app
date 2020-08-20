@@ -5,7 +5,7 @@ import com.swiderski.carrental.crud.abstraction.AbstractService;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
 import com.swiderski.carrental.mail.MailSenderConfigurer;
-import com.swiderski.carrental.mail.MailService;
+import com.swiderski.carrental.mail.MailServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -13,17 +13,15 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 import static com.swiderski.carrental.crud.specification.SearchOperation.*;
 
 @Service
 public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> implements CarService {
 
-    private final MailService mailService;
+    private final MailServiceImpl mailService;
 
-    public CarServiceImpl(CarMapper carMapper, CarRepository commonRepository, MailService mailService) {
+    public CarServiceImpl(CarMapper carMapper, CarRepository commonRepository, MailServiceImpl mailService) {
         super(carMapper, commonRepository);
         this.mailService = mailService;
     }
@@ -46,6 +44,7 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
     }
 
 
+    @Async("asyncExecutor")
     public void sendPdfEmail(MailSenderConfigurer mailSenderConfigurer, CarParam carParam) {
         byte[] pdfReport = getPdfReport(carParam);
         mailSenderConfigurer.setFile(pdfReport);
