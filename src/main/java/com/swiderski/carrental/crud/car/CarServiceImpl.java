@@ -26,11 +26,13 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
 
     private final MailServiceImpl mailService;
     private final EntityManager entityManager;
+    private final CarRepository carRepository;
 
     public CarServiceImpl(CarMapper carMapper, CarRepository commonRepository, MailServiceImpl mailService, EntityManager entityManager) {
         super(carMapper, commonRepository);
         this.mailService = mailService;
         this.entityManager = entityManager;
+        this.carRepository = commonRepository;
     }
 
     @Override
@@ -66,5 +68,7 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
         Page<CarDto> all = getAll(param, PageRequest.of(0, 50, Sort.by("id")));
         return PdfGenerator.build(all.getContent());
     }
+
+
 
 }
