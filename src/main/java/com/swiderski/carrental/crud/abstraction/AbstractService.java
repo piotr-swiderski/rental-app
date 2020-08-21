@@ -55,10 +55,4 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
         commonRepository.delete(entity);
         return commonMapper.toDto(entity);
     }
-
-    @Override
-    public byte[] getPdfReport(V param) {
-        Page<D> all = getAll(param, PageRequest.of(0, 50, Sort.by("id")));
-        return PdfGenerator.build(all.getContent());
-    }
 }

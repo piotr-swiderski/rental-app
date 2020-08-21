@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity(name = "rental_table")
+@Audited
 public class Rental extends AbstractEntity {
 
     @ManyToOne

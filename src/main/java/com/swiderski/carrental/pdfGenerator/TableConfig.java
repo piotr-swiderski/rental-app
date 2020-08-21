@@ -22,11 +22,11 @@ public class TableConfig {
     }
 
 
-    private static String getTitle(Class clazz) {
+    private static String getTitle(Class<?> clazz) {
         if (!clazz.isAnnotationPresent(PdfTableName.class)) {
             return "";
         } else {
-            PdfTableName pdfTableName = (PdfTableName) clazz.getAnnotation(PdfTableName.class);
+            PdfTableName pdfTableName = clazz.getAnnotation(PdfTableName.class);
             return pdfTableName.value();
         }
     }

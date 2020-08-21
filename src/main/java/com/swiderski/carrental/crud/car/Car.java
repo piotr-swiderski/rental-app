@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity(name = "car_table")
+@Audited
 public class Car extends AbstractEntity {
 
     @Column(name = "brand")

@@ -73,13 +73,4 @@ public abstract class AbstractController<T extends CommonService<E, V>, E extend
                           @ApiIgnore @NonNull Pageable pageable) {
         return service.getAll(param, pageable);
     }
-
-    @GetMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-    @PreAuthorize("hasAuthority('read_profile')")
-    public ResponseEntity<byte[]> getPdf(@ModelAttribute V param) {
-        byte[] pdfReport = service.getPdfReport(param);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report" + LocalDateTime.now() + ".pdf\"")
-                .body(pdfReport);
-    }
 }

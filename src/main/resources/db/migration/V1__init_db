@@ -1,3 +1,4 @@
+
 create table car_table (
     id  bigserial primary key,
     brand varchar(50) not null,

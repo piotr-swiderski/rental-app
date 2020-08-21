@@ -4,6 +4,7 @@ import com.swiderski.carrental.crud.abstraction.AbstractEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity(name = "client_table")
+@Audited
 public class Client extends AbstractEntity {
 
     @Column(name = "name", nullable = false)

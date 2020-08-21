@@ -6,13 +6,18 @@ import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
 import com.swiderski.carrental.mail.MailSenderConfigurer;
 import com.swiderski.carrental.mail.MailServiceImpl;
+import com.swiderski.carrental.pdfGenerator.PdfGenerator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static com.swiderski.carrental.crud.specification.SearchOperation.*;
 
@@ -20,10 +25,12 @@ import static com.swiderski.carrental.crud.specification.SearchOperation.*;
 public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> implements CarService {
 
     private final MailServiceImpl mailService;
+    private final EntityManager entityManager;
 
-    public CarServiceImpl(CarMapper carMapper, CarRepository commonRepository, MailServiceImpl mailService) {
+    public CarServiceImpl(CarMapper carMapper, CarRepository commonRepository, MailServiceImpl mailService, EntityManager entityManager) {
         super(carMapper, commonRepository);
         this.mailService = mailService;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -45,10 +52,19 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
 
 
     @Async("asyncExecutor")
-    public void sendPdfEmail(MailSenderConfigurer mailSenderConfigurer, CarParam carParam) {
-        byte[] pdfReport = getPdfReport(carParam);
-        mailSenderConfigurer.setFile(pdfReport);
-        mailService.sendEmailWithAttachment(mailSenderConfigurer);
-        System.out.println("das");
+    public CompletableFuture<String> sendPdfEmail(MailSenderConfigurer mailSenderConfigurer, CarParam carParam) {
+        return CompletableFuture.supplyAsync(() -> {
+            byte[] pdfReport = getPdfReport(carParam);
+            mailSenderConfigurer.setFile(pdfReport);
+            mailService.sendEmailWithAttachment(mailSenderConfigurer);
+            return null;
+        }).handle((ok, ex) -> (ok == null) ? "Email not send" : "Email is send") ;
     }
+
+    @Override
+    public byte[] getPdfReport(CarParam param) {
+        Page<CarDto> all = getAll(param, PageRequest.of(0, 50, Sort.by("id")));
+        return PdfGenerator.build(all.getContent());
+    }
+
 }

@@ -15,6 +15,4 @@ public interface CommonService<D, E> {
     D delete(long id);
 
     Page<D> getAll(E param, Pageable pageable);
-
-    byte[] getPdfReport(E param);
 }
