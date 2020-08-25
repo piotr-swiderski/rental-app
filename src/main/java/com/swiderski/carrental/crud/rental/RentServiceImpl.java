@@ -4,6 +4,7 @@ import com.swiderski.carrental.crud.abstraction.AbstractService;
 import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.car.CarMapper;
+import com.swiderski.carrental.crud.car.CarParam;
 import com.swiderski.carrental.crud.car.CarService;
 import com.swiderski.carrental.crud.car.Car_;
 import com.swiderski.carrental.crud.client.ClientDto;
@@ -11,9 +12,12 @@ import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.CarRentedException;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
+import com.swiderski.carrental.pdfGenerator.PdfGenerator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -103,5 +107,13 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto, RentalPa
         List<CarDto> pageList = carMapper.toListDto(allRentedCars.getContent());
         return new PageImpl<>(pageList, pageable, allRentedCars.getTotalElements());
     }
+
+    @Override
+    public byte[] getPdfReport(RentalParam param) {
+        Page<RentalDto> all = getAll(param, PageRequest.of(0, 50, Sort.by("id")));
+        return PdfGenerator.build(all.getContent());
+    }
+
+
 
 }

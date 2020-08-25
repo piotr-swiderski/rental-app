@@ -8,9 +8,13 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +24,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static com.swiderski.carrental.crud.abstraction.MessageUtils.ID_POSITIVE_MESSAGE;
 
@@ -62,5 +67,14 @@ public class RentalController extends AbstractController<RentService, RentalDto,
     public RentalDto returnCar(@RequestParam @PositiveOrZero(message = ID_POSITIVE_MESSAGE) long rentalId,
                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate returnedDate) {
         return rentService.returnCar(rentalId, returnedDate);
+    }
+
+    @GetMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    @PreAuthorize("hasAuthority('read_profile')")
+    public ResponseEntity<byte[]> getPdf(@ModelAttribute RentalParam param) {
+        byte[] pdfReport = rentService.getPdfReport(param);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report" + LocalDateTime.now() + ".pdf\"")
+                .body(pdfReport);
     }
 }

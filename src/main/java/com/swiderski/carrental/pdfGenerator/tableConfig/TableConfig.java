@@ -1,12 +1,16 @@
-package com.swiderski.carrental.pdfGenerator;
+package com.swiderski.carrental.pdfGenerator.tableConfig;
 
+import com.swiderski.carrental.pdfGenerator.annotation.ColumnRow;
+import com.swiderski.carrental.pdfGenerator.annotation.JoinColumns;
 import com.swiderski.carrental.pdfGenerator.annotation.PdfIgnoreFiled;
 import com.swiderski.carrental.pdfGenerator.annotation.PdfTableName;
+import com.swiderski.carrental.pdfGenerator.exception.IlegallJoinColumnsAnnotation;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -45,9 +49,29 @@ public class TableConfig {
         }
         for (Field field : fields) {
             if (!field.isAnnotationPresent(PdfIgnoreFiled.class)) {
-                columns.add(new ColumnConfig(field));
+                if (field.isAnnotationPresent(JoinColumns.class)) {
+                    columns.addAll(multipleColumns(field));
+                } else {
+                    columns.add(new ColumnConfig(field));
+                }
             }
         }
         return columns;
+    }
+
+    private static Collection<? extends ColumnConfig> multipleColumns(Field field) {
+        JoinColumns annotation = field.getAnnotation(JoinColumns.class);
+        ColumnRow[] columnRows = annotation.value();
+        List<ColumnConfig> columnConfigs = new ArrayList<>();
+        for (ColumnRow columnRow : columnRows) {
+            Field declaredField;
+            try {
+                declaredField = field.getType().getDeclaredField(columnRow.filed());
+            } catch (NoSuchFieldException e) {
+                throw new IlegallJoinColumnsAnnotation(e.getMessage());
+            }
+            columnConfigs.add(new ColumnConfig(field, declaredField, columnRow));
+        }
+        return columnConfigs;
     }
 }

@@ -3,7 +3,7 @@ package com.swiderski.carrental.crud.car;
 
 import com.swiderski.carrental.crud.abstraction.AbstractService;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
-import com.swiderski.carrental.crud.specification.SpecificationBuilder;
+import com.swiderski.carrental.crud.specification.SpecificationBuilder_;
 import com.swiderski.carrental.mail.MailSenderConfigurer;
 import com.swiderski.carrental.mail.MailServiceImpl;
 import com.swiderski.carrental.pdfGenerator.PdfGenerator;
@@ -37,7 +37,7 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
 
     @Override
     public Page<CarDto> getAll(CarParam carParam, Pageable pageable) {
-        SpecificationBuilder<Car> specificationBuilder = new SpecificationBuilder<>();
+        SpecificationBuilder_<Car> specificationBuilder = new SpecificationBuilder_<>();
 
         specificationBuilder
                 .add(new SearchCriteria(Car_.BRAND, carParam.getBrand(), MATCH))
@@ -60,7 +60,7 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
             mailSenderConfigurer.setFile(pdfReport);
             mailService.sendEmailWithAttachment(mailSenderConfigurer);
             return null;
-        }).handle((ok, ex) -> (ok == null) ? "Email not send" : "Email is send") ;
+        }).handle((ok, ex) -> (ok == null) ? "Email not send" : "Email is send");
     }
 
     @Override
@@ -68,7 +68,6 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
         Page<CarDto> all = getAll(param, PageRequest.of(0, 50, Sort.by("id")));
         return PdfGenerator.build(all.getContent());
     }
-
 
 
 }

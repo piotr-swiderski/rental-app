@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swiderski.carrental.crud.abstraction.AbstractDto;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.client.ClientDto;
+import com.swiderski.carrental.pdfGenerator.ColorEnum;
+import com.swiderski.carrental.pdfGenerator.annotation.ColumnRow;
+import com.swiderski.carrental.pdfGenerator.annotation.JoinColumns;
 import com.swiderski.carrental.pdfGenerator.annotation.PdfTableName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +27,11 @@ import static com.swiderski.carrental.crud.rental.RentalMessageUtils.*;
 public class RentalDto extends AbstractDto {
 
     @NotNull(message = CAR_VALID_MESSAGE)
+    @JoinColumns(value = {@ColumnRow(filed = "brand", value = "Car brand", textColor = ColorEnum.GREEN), @ColumnRow(filed = "model", value = "Car model")})
     private CarDto car;
 
     @NotNull(message = CLIENT_VALID_MESSAGE)
+    @JoinColumns(value = {@ColumnRow(filed = "name", value = "Client surname", background = ColorEnum.YELLOW), @ColumnRow(filed = "surname", value = "Client surname")})
     private ClientDto client;
 
     @NotNull(message = RENTAL_BEGIN_VALID_MESSAGE)

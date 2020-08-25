@@ -14,9 +14,8 @@ public class MailServiceImpl implements MailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public CompletableFuture<Void> sendEmailWithAttachment(MailSenderConfigurer mailSenderConfigurer) {
+    public void sendEmailWithAttachment(MailSenderConfigurer mailSenderConfigurer) {
         MailWithAttachment mail = new MailWithAttachment(mailSenderConfigurer);
         javaMailSender.send(mail);
-        return CompletableFuture.completedFuture(null);
     }
 }

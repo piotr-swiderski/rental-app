@@ -6,10 +6,14 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.swiderski.carrental.pdfGenerator.exception.PdfWriterException;
+import com.swiderski.carrental.pdfGenerator.tableConfig.TableConfig;
+import com.swiderski.carrental.pdfGenerator.tableConfig.TableConfigFactory;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Collection;
 
+@Log4j2
 public class PdfGenerator {
 
     private PdfGenerator() {
@@ -21,7 +25,8 @@ public class PdfGenerator {
             PdfPTable pdfPTable = TableBuilder.build(rows);
             Document document = new Document();
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            TableConfig tableConfig = new TableConfig(rows.iterator().next().getClass());
+            Class<?> clazz = rows.iterator().next().getClass();
+            TableConfig tableConfig = TableConfigFactory.getTable(clazz);
 
             PdfWriter.getInstance(document, out);
             document.open();

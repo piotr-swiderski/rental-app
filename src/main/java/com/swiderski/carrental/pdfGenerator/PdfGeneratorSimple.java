@@ -7,6 +7,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.swiderski.carrental.pdfGenerator.annotation.PdfIgnoreFiled;
 import com.swiderski.carrental.pdfGenerator.annotation.PdfTableName;
+import com.swiderski.carrental.pdfGenerator.tableConfig.ColumnConfig;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -70,13 +71,13 @@ public class PdfGeneratorSimple {
         PdfPTable pdfTable = new PdfPTable(columns.size());
 
         for (ColumnConfig c : columns) {
-            PdfPCell cell = new PdfPCell(new Phrase(c.getName()));
+            PdfPCell cell = new PdfPCell(c.getHeader());
             pdfTable.addCell(cell);
         }
 
         for (Object row : rows) {
             for (ColumnConfig c : columns) {
-                PdfPCell cell = new PdfPCell(new Phrase(c.get(row)));
+                PdfPCell cell = new PdfPCell(c.get(row));
                 pdfTable.addCell(cell);
             }
         }

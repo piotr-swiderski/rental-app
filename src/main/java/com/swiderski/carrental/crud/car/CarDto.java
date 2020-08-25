@@ -139,7 +139,15 @@ public class CarDto extends AbstractDto {
 
     @Override
     public String toString() {
-        return  "id=" + id + " " + brand +
-                " " + model   ;
+        return "CarDto{" +
+                "brand='" + brand + '\'' +
+                ", colour='" + colour + '\'' +
+                ", model='" + model + '\'' +
+                ", modelVersion='" + modelVersion + '\'' +
+                ", engineType=" + engineType +
+                ", productionYear=" + productionYear +
+                ", cost=" + cost +
+                ", id=" + id +
+                '}';
     }
 }

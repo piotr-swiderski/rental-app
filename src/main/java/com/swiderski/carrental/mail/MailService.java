@@ -6,5 +6,5 @@ import java.util.concurrent.CompletableFuture;
 
 public interface MailService {
 
-    CompletableFuture<Void> sendEmailWithAttachment(MailSenderConfigurer mailSenderConfigurer);
+    void sendEmailWithAttachment(MailSenderConfigurer mailSenderConfigurer);
 }
