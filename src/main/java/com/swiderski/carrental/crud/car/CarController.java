@@ -44,4 +44,13 @@ public class CarController extends AbstractController<CarService, CarDto, CarPar
                 .body(pdfReport);
     }
 
+    @GetMapping(value = "/xlsx", produces = MediaType.APPLICATION_PDF_VALUE)
+    @PreAuthorize("hasAuthority('read_profile')")
+    public ResponseEntity<byte[]> getExcel(@ModelAttribute CarParam param) {
+        byte[] pdfReport = carService.getXlsxReport(param);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report" + LocalDateTime.now() + ".xlsx\"")
+                .body(pdfReport);
+    }
+
 }

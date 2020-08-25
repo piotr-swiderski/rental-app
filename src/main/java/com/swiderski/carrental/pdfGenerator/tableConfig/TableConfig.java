@@ -5,24 +5,28 @@ import com.swiderski.carrental.pdfGenerator.annotation.JoinColumns;
 import com.swiderski.carrental.pdfGenerator.annotation.PdfIgnoreFiled;
 import com.swiderski.carrental.pdfGenerator.annotation.PdfTableName;
 import com.swiderski.carrental.pdfGenerator.exception.IlegallJoinColumnsAnnotation;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Getter
-@Setter
 public class TableConfig {
 
-    private List<ColumnConfig> columnList;
+    private List<ColumnConfig> columnConfigs;
     private String title;
 
     public TableConfig(Class<?> clazz) {
-        this.columnList = getColumnBuilder(clazz);
+        this.columnConfigs = getColumnBuilder(clazz);
         this.title = getTitle(clazz);
+    }
+
+    public List<ColumnConfig> getColumnConfig() {
+        return columnConfigs;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
 

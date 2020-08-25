@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swiderski.carrental.crud.abstraction.AbstractDto;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.client.ClientDto;
-import com.swiderski.carrental.pdfGenerator.ColorEnum;
+import com.swiderski.carrental.pdfGenerator.utils.ColorEnum;
 import com.swiderski.carrental.pdfGenerator.annotation.ColumnRow;
 import com.swiderski.carrental.pdfGenerator.annotation.JoinColumns;
 import com.swiderski.carrental.pdfGenerator.annotation.PdfTableName;

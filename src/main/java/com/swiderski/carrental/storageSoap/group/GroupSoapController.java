@@ -65,7 +65,7 @@ public class GroupSoapController {
     @GetMapping(value = "/excel", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiPageable
     public ResponseEntity<byte[]> getExcel(@ApiIgnore Pageable pageable, @RequestParam(required = false) String search) {
-        byte[] excel = XlsxGenerator.customersToExcel(groupSoapService.getAllProducts(pageable, search).getContent());
+        byte[] excel = XlsxGenerator.build(groupSoapService.getAllProducts(pageable, search).getContent());
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report" + LocalDateTime.now() + ".xlsx\"")

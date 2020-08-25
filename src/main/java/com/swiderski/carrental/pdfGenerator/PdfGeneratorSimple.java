@@ -77,7 +77,7 @@ public class PdfGeneratorSimple {
 
         for (Object row : rows) {
             for (ColumnConfig c : columns) {
-                PdfPCell cell = new PdfPCell(c.get(row));
+                PdfPCell cell = new PdfPCell(c.getPdfPCell(row));
                 pdfTable.addCell(cell);
             }
         }

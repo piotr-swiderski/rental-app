@@ -3,8 +3,8 @@ package com.swiderski.carrental.pdfGenerator.tableConfig;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
-import com.swiderski.carrental.pdfGenerator.ColorEnum;
 import com.swiderski.carrental.pdfGenerator.annotation.ColumnRow;
+import com.swiderski.carrental.pdfGenerator.utils.ColorEnum;
 
 import java.lang.reflect.Field;
 
@@ -35,12 +35,28 @@ public class ColumnConfig {
         setColumnDefinition(columnDefinition);
     }
 
-    public PdfPCell get(Object row) {
+    public PdfPCell getPdfPCell(Object row) {
         Phrase phrase = new Phrase(getRowValue(row));
         phrase.setFont(font);
         pdfPCell.setPhrase(phrase);
         return pdfPCell;
     }
+
+    public PdfPCell getHeader() {
+        Phrase header = new Phrase(name);
+        header.setFont(font);
+        pdfPCell.setPhrase(header);
+        return pdfPCell;
+    }
+
+    public String getValue(Object row) {
+        return getRowValue(row);
+    }
+
+    public String getHeaderValue() {
+        return name;
+    }
+
 
     private void setColumnDefinition(ColumnRow columnDefinition) {
         if (columnDefinition != null) {
@@ -69,14 +85,6 @@ public class ColumnConfig {
         ColorEnum textColor = columnRow.textColor();
         this.font.setColor(textColor.get());
     }
-
-    public PdfPCell getHeader() {
-        Phrase header = new Phrase(name);
-        header.setFont(font);
-        pdfPCell.setPhrase(header);
-        return pdfPCell;
-    }
-
 
     private String getRowValue(Object row) {
         Object value = getFiledValue(row);

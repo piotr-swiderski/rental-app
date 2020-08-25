@@ -1,6 +1,5 @@
 package com.swiderski.carrental.pdfGenerator;
 
-import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.swiderski.carrental.pdfGenerator.exception.PdfEmptyCollectionException;
@@ -19,16 +18,16 @@ public class TableBuilder {
         }
 
         TableConfig tableConfig = TableConfigFactory.getTable(rows.iterator().next().getClass());
-        PdfPTable pdfTable = new PdfPTable(tableConfig.getColumnList().size());
+        PdfPTable pdfTable = new PdfPTable(tableConfig.getColumnConfig().size());
 
-        for (ColumnConfig c : tableConfig.getColumnList()) {
+        for (ColumnConfig c : tableConfig.getColumnConfig()) {
             PdfPCell cell = new PdfPCell(c.getHeader());
             pdfTable.addCell(cell);
         }
 
         for (Object row : rows) {
-            for (ColumnConfig c : tableConfig.getColumnList()) {
-                PdfPCell cell = c.get(row);
+            for (ColumnConfig c : tableConfig.getColumnConfig()) {
+                PdfPCell cell = c.getPdfPCell(row);
                 pdfTable.addCell(cell);
             }
         }

@@ -4,7 +4,6 @@ import com.swiderski.carrental.crud.abstraction.AbstractService;
 import com.swiderski.carrental.crud.car.Car;
 import com.swiderski.carrental.crud.car.CarDto;
 import com.swiderski.carrental.crud.car.CarMapper;
-import com.swiderski.carrental.crud.car.CarParam;
 import com.swiderski.carrental.crud.car.CarService;
 import com.swiderski.carrental.crud.car.Car_;
 import com.swiderski.carrental.crud.client.ClientDto;
@@ -12,7 +11,9 @@ import com.swiderski.carrental.crud.client.ClientService;
 import com.swiderski.carrental.crud.exception.CarRentedException;
 import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder;
+import com.swiderski.carrental.mail.MailSenderConfigurer;
 import com.swiderski.carrental.pdfGenerator.PdfGenerator;
+import com.swiderski.carrental.xlsxGenerator.XlsxGenerator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static com.swiderski.carrental.crud.specification.SearchOperation.GREATER_THAN_EQUAL;
 import static com.swiderski.carrental.crud.specification.SearchOperation.LESS_THAN_EQUAL;
@@ -114,6 +116,15 @@ public class RentServiceImpl extends AbstractService<Rental, RentalDto, RentalPa
         return PdfGenerator.build(all.getContent());
     }
 
+    @Override
+    public byte[] getXlsxReport(RentalParam param) {
+        Page<RentalDto> all = getAll(param, PageRequest.of(0, 50, Sort.by("id")));
+        return XlsxGenerator.build(all.getContent());
 
+    }
 
+    @Override
+    public CompletableFuture<String> sendPdfEmail(MailSenderConfigurer mailSenderConfigurer, RentalParam param) {
+        return null;
+    }
 }

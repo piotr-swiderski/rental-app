@@ -1,6 +1,6 @@
 package com.swiderski.carrental.pdfGenerator.annotation;
 
-import com.swiderski.carrental.pdfGenerator.ColorEnum;
+import com.swiderski.carrental.pdfGenerator.utils.ColorEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

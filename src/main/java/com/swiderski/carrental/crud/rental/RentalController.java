@@ -77,4 +77,13 @@ public class RentalController extends AbstractController<RentService, RentalDto,
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report" + LocalDateTime.now() + ".pdf\"")
                 .body(pdfReport);
     }
+
+    @GetMapping(value = "/xlsx", produces = MediaType.APPLICATION_PDF_VALUE)
+    @PreAuthorize("hasAuthority('read_profile')")
+    public ResponseEntity<byte[]> getExcel(@ModelAttribute RentalParam param) {
+        byte[] report = rentService.getXlsxReport(param);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report" + LocalDateTime.now() + ".xlsx\"")
+                .body(report);
+    }
 }

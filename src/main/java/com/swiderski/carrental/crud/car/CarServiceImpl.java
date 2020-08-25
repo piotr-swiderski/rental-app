@@ -6,7 +6,8 @@ import com.swiderski.carrental.crud.specification.SearchCriteria;
 import com.swiderski.carrental.crud.specification.SpecificationBuilder_;
 import com.swiderski.carrental.mail.MailSenderConfigurer;
 import com.swiderski.carrental.mail.MailServiceImpl;
-import com.swiderski.carrental.pdfGenerator.PdfGenerator;
+import com.swiderski.carrental.pdfGenerator.service.PdfService;
+import com.swiderski.carrental.xlsxGenerator.XlsxGenerator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -27,12 +28,14 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
     private final MailServiceImpl mailService;
     private final EntityManager entityManager;
     private final CarRepository carRepository;
+    private final PdfService pdfService;
 
-    public CarServiceImpl(CarMapper carMapper, CarRepository commonRepository, MailServiceImpl mailService, EntityManager entityManager) {
+    public CarServiceImpl(CarMapper carMapper, CarRepository commonRepository, MailServiceImpl mailService, EntityManager entityManager, PdfService pdfService) {
         super(carMapper, commonRepository);
         this.mailService = mailService;
         this.entityManager = entityManager;
         this.carRepository = commonRepository;
+        this.pdfService = pdfService;
     }
 
     @Override
@@ -54,6 +57,7 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
 
 
     @Async("asyncExecutor")
+    @Override
     public CompletableFuture<String> sendPdfEmail(MailSenderConfigurer mailSenderConfigurer, CarParam carParam) {
         return CompletableFuture.supplyAsync(() -> {
             byte[] pdfReport = getPdfReport(carParam);
@@ -66,8 +70,12 @@ public class CarServiceImpl extends AbstractService<Car, CarDto, CarParam> imple
     @Override
     public byte[] getPdfReport(CarParam param) {
         Page<CarDto> all = getAll(param, PageRequest.of(0, 50, Sort.by("id")));
-        return PdfGenerator.build(all.getContent());
+        return pdfService.generatePdf(all.getContent());
     }
 
-
+    @Override
+    public byte[] getXlsxReport(CarParam param) {
+        Page<CarDto> all = getAll(param, PageRequest.of(0, 50, Sort.by("id")));
+        return XlsxGenerator.build(all.getContent());
+    }
 }

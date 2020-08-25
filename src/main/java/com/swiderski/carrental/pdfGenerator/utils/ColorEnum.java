@@ -1,4 +1,4 @@
-package com.swiderski.carrental.pdfGenerator;
+package com.swiderski.carrental.pdfGenerator.utils;
 
 import com.itextpdf.text.BaseColor;
 

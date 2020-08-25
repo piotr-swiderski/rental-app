@@ -68,7 +68,7 @@ public abstract class AbstractSoapClientController<E extends AbstractDto, T exte
     @GetMapping(value = "/excel", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> getExcel(V param) {
         Page<E> all = clientServiceProxy.getAll(param, PageRequest.of(0, 20, Sort.unsorted()));
-        byte[] excel = XlsxGenerator.customersToExcel(all.getContent());
+        byte[] excel = XlsxGenerator.build(all.getContent());
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report" + LocalDateTime.now() + ".xlsx\"")

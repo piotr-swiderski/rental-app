@@ -22,6 +22,9 @@ public class SpecificationFactory {
     }
 
     private static Predicate get(Root<?> root, CriteriaBuilder cb, SearchCriteria searchCriteria) {
+        if (searchCriteria.getValue() == null) {
+            return noPropertyExist(root, cb);
+        }
 
         HashMap<SearchOperation, Predicate> mapFactory = getPredicateMap(root, cb, searchCriteria);
 
